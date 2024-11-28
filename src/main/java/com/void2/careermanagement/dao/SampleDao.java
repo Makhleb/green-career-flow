@@ -1,4 +1,4 @@
-package com.vo2d.careermanagement.dao;
+package com.void2.careermanagement.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,4 +1,4 @@
-package com.vo2d.careermanagement.dto;
+package com.void2.careermanagement.dto;
 
 import lombok.Data;
 

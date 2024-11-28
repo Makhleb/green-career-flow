@@ -1,10 +1,10 @@
-package com.vo2d.careermanagement;
+package com.void2.careermanagement;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@MapperScan("com.vo2d.careermanagement.dao")
+@MapperScan("com.void2.careermanagement.dao")
 @SpringBootApplication
 public class CareerManagementApplication {
 
