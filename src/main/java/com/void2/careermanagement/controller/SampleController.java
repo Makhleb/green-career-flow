@@ -2,8 +2,11 @@ package com.void2.careermanagement.controller;
 
 
 import com.void2.careermanagement.dao.SampleDao;
+import com.void2.careermanagement.dto.UserDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class SampleController {
@@ -16,17 +19,16 @@ public class SampleController {
 
     @RequestMapping("/")
     public String root(){
+        List<UserDto> resultList = sampleDao.selectUser();
+
+        for(UserDto item : resultList){
+            System.out.println(item);
+        }
         return "main";
     }
 
-    @PostMapping("/sample-insert")
+    @GetMapping("/sample-user")
     public String sampleInsert(@RequestParam("id") String id){
-        System.out.println("id            :"+ id);
-        if(sampleDao.insertSample(id) > 0){
-            System.out.println("성공");
-        } else{
-            System.out.println("실패");
-        }
         return "redirect:/";
     }
 }

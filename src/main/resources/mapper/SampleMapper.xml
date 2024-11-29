@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.void2.careermanagement.dao.SampleDao">
-    <insert id="insertSample">
-        INSERT INTO tbl_sample values(#{id});
-    </insert>
+    <select id="selectUser" resultType="com.void2.careermanagement.dto.UserDto">
+        SELECT * FROM tbl_user;
+    </select>
 </mapper>
