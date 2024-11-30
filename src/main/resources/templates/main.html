@@ -9,7 +9,7 @@
 <body>
     <h1>메인페이지</h1>
     <hr>
-    <p th:text="'현재 세션 아이디 ' + ${session.user.getUser_id()}"></p>
+    <p th:text="'현재 세션 아이디: ' + (${session.user != null} ? ${session.user.getUser_id()} : '로그인되지 않음')"></p>
     <button onclick="location.href='/user/account/login'">구직자 로그인</button>
 </body>
 </html>
