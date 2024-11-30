@@ -6,4 +6,25 @@
     <select id="selectUser" resultType="com.void2.careermanagement.dto.UserDto">
         SELECT * FROM tbl_user;
     </select>
+    <select id="selectJobPostWithDynamicJoin" resultType="com.void2.careermanagement.dto.JobPostDto">
+        SELECT
+        A.*,
+        <!-- gubnList에서 각 항목의 NAME을 선택 -->
+        <foreach collection="gubnList" item="gubn" index="index" separator=",">
+            ${gubn}.NAME AS ${gubn}_NAME
+        </foreach>
+        FROM
+        tbl_job_post A
+        <!-- gubnList를 기반으로 LEFT JOIN 생성 -->
+        <foreach collection="gubnList" item="gubn" index="index">
+            LEFT JOIN (
+            SELECT *
+            FROM tbl_gubn
+            WHERE group_code = #{gubn}
+            ) ${gubn}
+            ON A.${gubn}_CODE = ${gubn}.CODE
+        </foreach>
+        WHERE
+        job_post_no = #{jobPostNo}
+    </select>
 </mapper>

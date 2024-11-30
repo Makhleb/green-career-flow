@@ -2,10 +2,12 @@ package com.void2.careermanagement.controller;
 
 
 import com.void2.careermanagement.dao.SampleDao;
+import com.void2.careermanagement.dto.JobPostDto;
 import com.void2.careermanagement.dto.UserDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -29,6 +31,13 @@ public class SampleController {
 
     @GetMapping("/sample-user")
     public String sampleInsert(@RequestParam("id") String id){
+        return "redirect:/";
+    }
+    @GetMapping("/select-test-list")
+    public String selectTestList() {
+        List<JobPostDto> results = sampleDao.selectJobPostWithDynamicJoin(1, Arrays.asList("EDUCATION", "JOB_RANK", "WORK_TYPE", "WORK"));
+        System.out.println(results);
+
         return "redirect:/";
     }
 }
