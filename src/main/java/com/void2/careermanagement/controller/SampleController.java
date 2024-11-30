@@ -26,9 +26,4 @@ public class SampleController {
         }
         return "main";
     }
-
-    @GetMapping("/sample-user")
-    public String sampleInsert(@RequestParam("id") String id){
-        return "redirect:/";
-    }
 }
