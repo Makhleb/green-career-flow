@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-<h1>조회결과</h1>
-<hr>
+    <h1>메인페이지</h1>
+    <hr>
+    <p th:text="'현재 세션 아이디 ' + ${session.user.getUser_id()}"></p>
+    <button onclick="location.href='/user/account/login'">구직자 로그인</button>
 </body>
 </html>
