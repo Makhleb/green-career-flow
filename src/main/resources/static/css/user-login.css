@@ -70,6 +70,10 @@ input {
     border: 1px solid #ddd;
     border-radius: 10px;
 }
+input:focus {
+    outline: none;
+    border-color: #8B1FFF;
+}
 
 .login-btn {
     width: 100%;

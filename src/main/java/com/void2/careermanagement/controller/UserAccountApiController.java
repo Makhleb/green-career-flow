@@ -24,7 +24,7 @@ public class UserAccountApiController {
     @PostMapping("/login")
     public boolean userLogin(@RequestBody UserLoginDto user, HttpSession session) {
         if(userAccountDao.loginUserSelect(user.getUser_id(), user.getUser_pw()) != null){
-            session.setAttribute("user", user.getUser_id());
+            session.setAttribute("user", user);
             return true;
         } else{
             return false;
