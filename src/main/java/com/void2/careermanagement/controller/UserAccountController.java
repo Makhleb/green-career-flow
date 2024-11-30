@@ -2,7 +2,6 @@ package com.void2.careermanagement.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -13,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserAccountController {
     @GetMapping("/login")
     public String userLogin() {
-        return "userLogin";
+        return "user-login";
     }
 }

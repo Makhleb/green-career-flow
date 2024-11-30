@@ -7,48 +7,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/userLogin.css}">
+    <link rel="stylesheet" th:href="@{/css/user-login.css}">
 </head>
 <body>
-<div id="content-title">로그인</div>
-<input type="text" id="userId"><br>
-<input type="text" id="userPw"><br>
-<button onclick="login()">로그인</button>
-<script>
-    function login() {
-        if ($('#userId').val() === "") {
-            alert("ID를 입력해주세요!");
-            $('#userId').focus();
-            return;
-        }
-        if ($('#userPw').val() === "") {
-            alert("비밀번호를 입력해주세요");
-            $('#userPw').focus();
-            return;
-        }
+<div id="title-container">
+    <div id="content-title">로그인</div>
+</div>
+    <div id ="login-container">
+        <div class="tabs">
+            <button class="tab active" id="individual-tab">개인회원</button>
+            <button class="tab" id="business-tab">기업회원</button>
+        </div>
 
-        let userId = $("#userId").val();
-        let userPw = $("#userPw").val();
-        axios.post('/api/user/account/login', {
-            user_id: userId,
-            user_pw: userPw
-        })
-            .then(function (response) {
-                if(response.data){
-                    location.href = '/';
-                } else{
-                    alert("아이디 밎 비밀번호를 다시 확인해주세요");
-                }
+        <hr class="purple-line">
+
+        <div class="input-container">
+            <div class="input-explain"><span style="color: #D9310B">* </span>아이디</div>
+            <input type="text" id="userId" placeholder="아이디를 입력하세요"><br>
+            <div class="input-explain"><span style="color: #D9310B">* </span>패스워드</div>
+            <input type="text" id="userPw" placeholder="비밀번호를 입력하세요"><br>
+            <button class="login-btn" onclick="login()">로그인</button>
+        </div>
+
+        <div class="links">
+            <div><a href="#" class="link-item">회원가입</a></div>
+            <div>
+                <a href="#" class="link-item">아이디 찾기</a>
+                <span class="link-item"> | </span>
+                <a href="#" class="link-item">비밀번호 찾기</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            if ($('#userId').val() === "") {
+                alert("ID를 입력해주세요!");
+                $('#userId').focus();
+                return;
+            }
+            if ($('#userPw').val() === "") {
+                alert("비밀번호를 입력해주세요");
+                $('#userPw').focus();
+                return;
+            }
+
+            let userId = $("#userId").val();
+            let userPw = $("#userPw").val();
+            axios.post('/api/user/account/login', {
+                user_id: userId,
+                user_pw: userPw
             })
-            .catch(function (error) {
-                console.log(error);
-            })
-    }
+                .then(function (response) {
+                    if(response.data){
+                        location.href = '/';
+                    } else{
+                        alert("아이디 밎 비밀번호를 다시 확인해주세요");
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
 
 
-</script>
+    </script>
 </body>
 </html>
