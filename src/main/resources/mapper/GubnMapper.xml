@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.void2.careermanagement.dao.GubnDao">
+    <select id="getGubnList" resultType="com.void2.careermanagement.dto.GubnDto">
+        SELECT * FROM tbl_gubn WHERE group_code = #{group_code};
+    </select>
+</mapper>

@@ -46,6 +46,7 @@
         .form p {
             font-size: 1rem; /* 14px */
             font-weight: 400;
+            margin-left: 0.5rem;
         }
 
         input::placeholder {
@@ -67,7 +68,7 @@
             transition: all 0.3s ease;
         }
 
-        input:focus, select:focus, textarea:focus {
+        input:focus, select:focus, textarea:focus, .minus-stack:hover, .add-stack:hover {
             outline: none;
             border: 1px solid #6200EE;
             box-shadow: 0 0 4px rgba(98, 0, 238, 0.3);
@@ -88,15 +89,44 @@
             background-color: #e0e0e0; /* 호버 시 배경색 변경 */
         }
 
-        .add-stack {
+        .stack-wrapper {
+            display: flex; /* 수평 정렬 */
+            flex-wrap: wrap; /* 요소가 화면에 넘칠 경우 줄바꿈 */
+            margin-top: 1rem; /* 상단 여백 */
+            width: 50rem;
+            /*gap: 3px;*/
+        }
+
+        .minus-stack {
             padding: 0.5rem 1rem;
             font-size: 1rem;
             color: white;
             background-color: #6200ee;
-            border: none;
+            border: 1px solid #CECECE;
             border-radius: 0.5rem;
             cursor: pointer;
-            margin: 0.5rem;
+            margin: 3px;
+            width: auto;
+        }
+
+        .minus-stack :hover {
+            background-color: #7a33f0; /* 연한 보라색 */
+        }
+
+        .add-stack {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            background-color: #f0f0f0;
+            border: 1px solid #CECECE;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin: 3px;
+            width: auto;
+
+        }
+
+        .add-stack :hover {
+            background-color: #e0e0e0; /* 호버 시 배경색 변경 */
         }
 
         textarea {
@@ -173,6 +203,10 @@
             width: 13rem; /* 320px */
         }
 
+        .redPoint {
+            color: #D9310B;
+        }
+
         .flex-row {
             display: flex;
             flex-direction: row;
@@ -185,12 +219,12 @@
     <div class="form-container">
         <p class="container-title">채용공고 작성</p>
         <div class="form">
-            <p>* 제목</p>
+            <p><span class="redPoint">* </span>제목</p>
             <input id="title" placeholder="제목을 입력해주세요">
         </div>
 
         <div class="form">
-            <p>* 담당자정보</p>
+            <p><span class="redPoint"><span class="redPoint">* </span></span>담당자정보</p>
             <input id="managerName" placeholder="이름">
             <div class="flex-row">
                 <input id="managerEmail" placeholder="이메일">
@@ -200,7 +234,7 @@
 
         <div class="flex-row">
             <div class="form">
-                <p>* 근무형태</p>
+                <p><span class="redPoint">* </span>근무형태</p>
                 <select id="workTypeCode">
                     <option selected>근무형태</option>
                     <option>인턴</option>
@@ -208,7 +242,7 @@
                 </select>
             </div>
             <div class="form">
-                <p>* 직급/직책</p>
+                <p><span class="redPoint">* </span>직급/직책</p>
                 <select id="jobRankCode">
                     <option selected>직급/직책</option>
                     <option>사원</option>
@@ -216,7 +250,7 @@
                 </select>
             </div>
             <div class="form">
-                <p>* 직무</p>
+                <p><span class="redPoint">* </span>직무</p>
                 <select id="workCode">
                     <option selected>직무</option>
                     <option>백엔드</option>
@@ -246,16 +280,21 @@
         <div class="form">
             <p>보유 기술 스택</p>
             <div class="flex-row stack-wrapper">
-                <div class="stack-item">JAVA</div>
-                <div class="stack-item">ReactJS</div>
-                <div class="stack-item">Python</div>
-                <button class="add-stack">+JAVA</button>
+                <th:block th:each="skill :${skillGubnList}">
+                    <button th:onclick="'popSkill($(this))'" class="add-stack" th:value="${skill.code}"
+                            th:text="'+ ' + ${skill.name}">
+                    </button>
+                </th:block>
+                <!--                <div class="stack-item">JAVA</div>-->
+                <!--                <div class="stack-item">ReactJS</div>-->
+                <!--                <div class="stack-item">Python</div>-->
+                <!--                <button class="add-stack">+JAVA</button>-->
             </div>
         </div>
 
         <div class="form">
             <p>모집부문 및 상세내용</p>
-            <textarea id="content" placeholder="모집부문 및 상세내용을 입력해주세요" rows="3" style="width: 100%;"></textarea>
+            <textarea id="content" placeholder="모집부문 및 상세내용을 입력해주세요"></textarea>
         </div>
 
         <div class="form">
@@ -275,7 +314,7 @@
 
         <div class="form">
             <p>유의사항</p>
-            <textarea id="addNotice" placeholder="유의사항을 입력해주세요" rows="3" style="width: 100%;"></textarea>
+            <textarea id="addNotice" placeholder="유의사항을 입력해주세요"></textarea>
         </div>
 
         <div class="form">
@@ -290,7 +329,7 @@
         <div class="form">
             <div class="flex-row">
                 <div class="form">
-                    <p>* 공고 시작일시</p>
+                    <p><span class="redPoint">* </span>공고 시작일시</p>
                     <input type="datetime-local" id="startDate" placeholder="날짜와 시간을 선택하세요">
                 </div>
                 <div class="form">
@@ -312,4 +351,19 @@
     </div>
 </div>
 </body>
+<script>
+    function popSkill(ele) {
+        const skillClass = ['add-stack', 'minus-stack'];
+        console.log(ele);
+        const eleClass = ele.attr('class');
+
+        const addCheck = eleClass === skillClass[0]; // add-stack true
+
+        ele.removeClass(eleClass);
+        ele.addClass(addCheck ? skillClass[1] : skillClass[0]);
+
+        ele.text(addCheck ? ele.text().replace('+', '-') : ele.text().replace('-', '+'));
+    }
+
+</script>
 </html>
