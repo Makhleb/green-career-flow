@@ -72,6 +72,11 @@ function validateCheck() {
     return true;
 }
 
+/**
+ * 중복검사, 비밀번호 일치, 빈값체크, 유효성 검사
+ * 통합 검사 함수
+ * @returns {boolean}
+ */
 function totalCheck() {
     if (!nullCheck()) {
         return false
@@ -95,15 +100,13 @@ function totalCheck() {
 }
 
 /**
- * 회원등록 함수
+ * 회원등록api 함수
  */
 function regist() {
 
     if (!totalCheck()) {
         return;
     }
-
-    //TODO 로그인 전 오류 처리 코드 하나로 묶어놓으세요(중복검사, 빈값체크, 유효성 검사, 정규식 적용 등등)
 
     axios.post("/api/user/account/regist", {
         user_id: $("#userId").val(),
