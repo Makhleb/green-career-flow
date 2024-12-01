@@ -4,6 +4,6 @@
 
 <mapper namespace="com.void2.careermanagement.dao.GubnDao">
     <select id="getGubnList" resultType="com.void2.careermanagement.dto.GubnDto">
-        SELECT * FROM tbl_gubn WHERE group_code = #{group_code};
+        SELECT * FROM tbl_gubn WHERE group_code = #{groupCode};
     </select>
 </mapper>

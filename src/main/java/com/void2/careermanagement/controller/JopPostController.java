@@ -1,7 +1,8 @@
 package com.void2.careermanagement.controller;
 
-import com.void2.careermanagement.dao.GubnDao;
+import com.void2.careermanagement.service.GubnService;
 import com.void2.careermanagement.type.GroupCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,17 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/job-post")
 public class JopPostController {
 
-    private final GubnDao gubnDao;
+    private final GubnService gubnService;
 
-    public JopPostController(GubnDao gubnDao) {
-        this.gubnDao = gubnDao;
+    @Autowired
+    public JopPostController(GubnService groupService) {
+        this.gubnService = groupService;
     }
 
     @GetMapping("/register")
     public String regist(Model model) {
 
-        System.out.println(gubnDao.getGubnList(GroupCode.SKILL.name()));
-        model.addAttribute("skillGubnList", gubnDao.getGubnList(GroupCode.SKILL.name()));
+        System.out.println(gubnService.getGubnList(GroupCode.SKILL.name()));
+        model.addAttribute("skillGubnList", gubnService.getGubnList(GroupCode.SKILL.name()));
         return "jobPost/jobPostRegister";
     }
 }
