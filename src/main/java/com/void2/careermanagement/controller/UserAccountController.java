@@ -10,8 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user/account")
 public class UserAccountController {
+
     @GetMapping("/login")
     public String userLogin() {
         return "user-login";
+    }
+
+    @GetMapping("/regist")
+    public String userRegist() {
+        return "user-regist";
     }
 }
