@@ -35,7 +35,7 @@
             user_birth = #{U.userBirth},
             user_modify_date = CURRENT_TIMESTAMP()
         WHERE
-            userId = #{U.userId}
+            user_id = #{U.userId}
     </update>
     <delete id="userDelete">
         DELETE FROM tbl_user WHERE user_id=#{userId}

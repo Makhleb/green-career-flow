@@ -21,8 +21,9 @@
     <button class="deleteBtn" onclick="deleteUser()">회원 삭제</button>
 </div>
 <script th:inline="javascript">
+    const userSession = [[${session.user}]];
+
     window.onload = function sessionCheck() {
-        const userSession = [[${session.user}]];
         if (userSession == null) {
             alert("로그인된 세션이 없습니다. 메인으로 이동합니다.");
             location.href = "/";
@@ -31,10 +32,12 @@
 
     function deleteUser() {
         if (confirm("정말 삭제하시겠습니까? ")) {
+            console.log(userSession);
             axios.delete('/api/user/account/delete/' + userSession.userId)
                 .then(function (response) {
                     if (response.data) {
                         alert("삭제가 완료되었습니다. 감사합니다.");
+                        location.href = "/";
                     }
                 })
                 .catch(function (error) {
