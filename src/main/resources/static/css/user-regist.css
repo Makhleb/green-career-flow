@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.red-point{
+    color: #D9310B;
+}
+
+#title-container{
+    display: flex;
+    justify-content: center;
+}
+
+#content-title{
+    font-weight: 600;
+    font-size: 24px;
+    margin-top: 23px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 10px;
+    color: #D9D9D9;
+    background-color: white;
+    border: none;
+    outline: none;
+}
+.tab.active {
+    background-color: #8B1FFF;
+    color: white;
+}
+
+.purple-line {
+    border: none;
+    border-top: 2px solid #8B1FFF; /* 보라색 선 */
+    margin: 0;
+}
+
+#input-container{
+    width: 30%;
+    min-width: 540px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 27px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.id-container {
+    display: grid;
+    grid-template-columns: 3.5fr 1.5fr;
+    gap: 30px;
+    align-items: center;
+}
+
+#userId {
+    width: 100%;
+}
+
+.duplicate-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #8B1FFF;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.birth-and-gender-container{
+    display: grid;
+    grid-template-columns: 3.5fr 1.5fr;
+    gap: 30px;
+    align-items: center;
+}
+
+.input-container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+/*커스텀 라디오 버튼*/
+.gender-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.gender-radio {
+    margin-top: 3px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+.gender-option {
+    font-size: 14px;
+    padding: 10px 20px;
+    border: 1px solid #E5E5E5;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gender-radio input {
+    display: none;
+}
+
+.gender-radio input:checked + .gender-option {
+    background-color: #8B1FFF;
+    color: white;
+    border-color: #8B1FFF;
+}
+
+.gender-radio input:not(:checked) + .gender-option {
+    background-color: #fff;
+    color: #333;
+}
+
+.radius-zero-left{
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.radius-zero-right{
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/*커스텀 라디오 버튼(끝)*/
+
+.input-explain{
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+input {
+    margin-top: 3px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+input:focus {
+    outline: none;
+    border-color: #8B1FFF;
+}
+
+#registBtn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 20px;
+    background-color: #8B1FFF;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}

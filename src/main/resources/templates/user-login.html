@@ -6,7 +6,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>구직자 로그인</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -25,15 +25,15 @@
         <hr class="purple-line">
 
         <div class="input-container">
-            <div class="input-explain"><span style="color: #D9310B">* </span>아이디</div>
+            <div class="input-explain"><span class="red-point">* </span>아이디</div>
             <input type="text" id="userId" placeholder="아이디를 입력하세요">
-            <div class="input-explain"><span style="color: #D9310B">* </span>패스워드</div>
+            <div class="input-explain"><span class="red-point">* </span>패스워드</div>
             <input type="text" id="userPw" placeholder="비밀번호를 입력하세요">
             <button class="login-btn" onclick="login()">로그인</button>
         </div>
 
         <div class="links">
-            <div><a href="#" class="link-item">회원가입</a></div>
+            <div><a href="/user/account/regist" class="link-item">회원가입</a></div>
             <div>
                 <a href="#" class="link-item">아이디 찾기</a>
                 <span class="link-item"> | </span>
