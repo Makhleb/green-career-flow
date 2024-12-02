@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        #all{
-            margin: 20px;
+        #all {
+            margin-top: 20px;
         }
+
         button {
             background-color: #b99bdb; /* 보라색 배경 */
             font-weight: bold;
@@ -14,11 +15,13 @@
             padding: 5px 10px; /* 버튼 내부 여백 */
             border-radius: 10px; /* 둥근 모서리 */
         }
+
         .button-container {
             text-align: right; /* 버튼을 오른쪽으로 정렬 */
             margin-bottom: 20px; /* 버튼과 테이블 간의 여백 */
         }
-        table{
+
+        table {
             text-align: center;
             width: 100%;
             border-collapse: collapse;
@@ -26,6 +29,7 @@
             border-top: 2px solid #b99bdb;
             border-bottom: 2px solid #b99bdb;
         }
+
         th, td {
             padding: 10px;
             border-top: 1px solid #e0e0e0; /* 연한 회색 선 */
@@ -34,31 +38,38 @@
     </style>
 </head>
 <body>
-<div id="all">
-    <h2>구직자 커뮤니티</h2>
-    <div class="button-container">
-        <a th:href="@{/registForm}"><button>작성</button></a>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<main>
+    <div id="all">
+        <h2>구직자 커뮤니티</h2>
+        <div class="button-container">
+            <a th:href="@{/registForm}">
+                <button>작성</button>
+            </a>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>글번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>조회수</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="dto, state : ${list}">
+                <td>[[${list.size() - state.index}]]</td>
+                <td><a th:href="@{/Board/detail/{communityNo}(communityNo=${dto.communityNo})}">[[${dto.title}]]</a>
+                </td>
+                <td>[[${dto.userId}]]</td>
+                <td>[[${dto.viewCnt}]]</td>
+                <td>[[${dto.createDate}]]</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <table>
-        <thead>
-        <tr>
-            <th>글번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>조회수</th>
-            <th>작성일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="dto, state : ${list}">
-            <td>[[${list.size() - state.index}]]</td>
-            <td><a th:href="@{/Board/detail/{communityNo}(communityNo=${dto.communityNo})}">[[${dto.title}]]</a></td>
-            <td>[[${dto.userId}]]</td>
-            <td>[[${dto.viewCnt}]]</td>
-            <td>[[${dto.createDate}]]</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 </html>
