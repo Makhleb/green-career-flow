@@ -109,13 +109,13 @@ function regist() {
     }
 
     axios.post("/api/user/account/regist", {
-        user_id: $("#userId").val(),
-        user_pw: $("#userPw").val(),
-        user_name: $("#userName").val(),
-        user_phone: $("#userPhone").val(),
-        user_email: $("#userEmail").val(),
-        user_gender: $("input[name='optionGender']:checked").val(),
-        user_birth: $("#userBirth").val()
+        userId: $("#userId").val(),
+        userPw: $("#userPw").val(),
+        userName: $("#userName").val(),
+        userPhone: $("#userPhone").val(),
+        userEmail: $("#userEmail").val(),
+        userGender: $("input[name='optionGender']:checked").val(),
+        userBirth: $("#userBirth").val()
     })
         .then(function (response) {
             if (response.data) {

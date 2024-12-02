@@ -58,8 +58,8 @@
             let userId = $("#userId").val();
             let userPw = $("#userPw").val();
             axios.post('/api/user/account/login', {
-                user_id: userId,
-                user_pw: userPw
+                userId: userId,
+                userPw: userPw
             })
                 .then(function (response) {
                     if(response.data){
