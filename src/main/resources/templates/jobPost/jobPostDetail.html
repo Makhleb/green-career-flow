@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        main {
+            width: 80vw;
+            margin: 0 auto;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+        }
+        #companyButton {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-left: 4px;
+        }
+        #likeImg {
+            margin-right: 3px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<main>
+    <div class="top-wrapper">
+        <div class="top-sub-wrapper-left">
+            <div class="top-sub-wrapper-left-top">
+                <div class="flex-row">
+                    <span th:text="${jobPostInfo.companyName}"></span>
+                    <button id="companyButton"><img id="likeImg" width="18px" height="18px" src="/static/images/empty_heart.png"> 관심기업</button>
+                </div>
+                <h1 th:text="${jobPostInfo.title}"></h1>
+            </div>
+            <div class="top-sub-wrapper-left-bottom"></div>
+        </div>
+        <div class="top-sub-wrapper-right">
+
+        </div>
+    </div>
+
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
+</body>
+</html>
