@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.void2.careermanagement.dao.CompanyDao">
+    <select id="getHighRatingList" resultType="com.void2.careermanagement.dto.CompanyDto">
+        SELECT company_name, company_address, title, start_date, company_image
+        <choose>
+            <when test="endDate == null">
+                '상시'
+            </when>
+            <otherwise>
+                ${endDate}
+            </otherwise>
+        </choose> AS end_date,
+               score
+        FROM tbl_company c, tbl_job_post j, tbl_company_score s
+        WHERE c.company_id = j.company_id AND j.company_id = s.company_id
+        ORDER BY score DESC LIMIT 8
+    </select>
+</mapper>
