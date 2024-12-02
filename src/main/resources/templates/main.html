@@ -10,7 +10,16 @@
 
     <h1>메인페이지</h1>
     <hr>
-    <p th:text="'현재 세션 아이디: ' + (${session.user != null} ? ${session.user.getUserId()} : '로그인되지 않음')"></p>
+    <div th:if="${session.user != null}">
+        <div th:if="${session.userType == 'U'}">
+            <p th:text="'현재 구직자 아이디: ' + ${session.user.getUserId()}"></p>
+        </div>
+        <div th:if="${session.userType == 'C'}">
+            <p th:text="'현재 기업 아이디: ' + ${session.user.getCompanyId()}"></p>
+        </div>
+
+    </div>
+
     <button onclick="location.href='/user/account/login'">구직자 로그인</button>
     <button onclick="location.href='/user/account/update'">구직자 정보수정</button>
 

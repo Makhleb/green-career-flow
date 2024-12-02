@@ -8,17 +8,17 @@
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
 <main>
+    
     <div id="title-container">
         <div id="content-title">로그인</div>
     </div>
     <div id="login-container">
         <div class="tabs">
-            <button class="tab active" id="individual-tab">개인회원</button>
-            <button class="tab" id="business-tab">기업회원</button>
+            <button class="tab active" data-tab="user">개인회원</button>
+            <button class="tab" data-tab="company">기업회원</button>
         </div>
 
         <hr class="purple-line">
-
         <div class="input-container">
             <div class="input-explain"><span class="red-point">* </span>아이디</div>
             <input type="text" id="userId" placeholder="아이디를 입력하세요">
@@ -39,6 +39,13 @@
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 <script>
+    $(document).ready(function(){
+        $('.tab').click(function(){
+            $('.tab').removeClass('active');
+            $(this).addClass('active')
+        })
+    })
+
     function login() {
         if ($('#userId').val() === "") {
             alert("ID를 입력해주세요!");
@@ -53,9 +60,36 @@
 
         let userId = $("#userId").val();
         let userPw = $("#userPw").val();
+        let activeTab = $('.tab.active').attr('data-tab');
+
+        if(activeTab === 'user'){
+            indiLogin(userId, userPw);
+        } else{
+            companyLogin(userId, userPw);
+        }
+    }
+
+    function indiLogin(userId, userPw){
         axios.post('/api/user/account/login', {
             userId: userId,
             userPw: userPw
+        })
+            .then(function (response) {
+                if (response.data) {
+                    location.href = '/';
+                } else {
+                    alert("아이디 밎 비밀번호를 다시 확인해주세요");
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    function companyLogin(userId, userPw){
+        axios.post('/api/company/account/login', {
+            companyId: userId,
+            companyPw: userPw
         })
             .then(function (response) {
                 if (response.data) {

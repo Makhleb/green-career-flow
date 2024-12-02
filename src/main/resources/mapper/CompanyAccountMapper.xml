@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.void2.careermanagement.dao.CompanyAccountDao">
+    <select id="loginCompanySelect" resultType="com.void2.careermanagement.dto.CompanyDto">
+        SELECT *
+        FROM tbl_company
+        WHERE company_id = #{C.companyId}
+          AND company_pw = #{C.companyPw};
+    </select>
+    <insert id="companyInsert">
+        INSERT INTO tbl_company
+        VALUES
+            (#{C.companyId}, #{C.companyPw}, #{C.companyName}, #{C.companyNumber}, #{C.companyInfo}, #{C.companyImage},
+             #{C.companyAddress}, #{C.companyAddressDetail}, #{C.companyZonecode}, #{C.companyContact}, #{C.companyWebsite},
+             #{C.companyEmail}, #{C.companyBirth}, #{C.companyEmployee}, NOW(), NULL)
+    </insert>
+    <select id="findCompanyIdSelect" resultType="_integer">
+        SELECT COUNT(*)
+        FROM tbl_company
+        WHERE company_id = #{companyId}
+    </select>
+    <update id="companyUpdate">
+        UPDATE tbl_company
+        SET
+            company_pw = #{C.companyPw},
+            company_name = #{C.companyName},
+            company_number = #{C.companyNumber},
+            company_info = #{C.companyInfo},
+            company_image = #{C.companyImage},
+            company_address = #{C.companyAddress},
+            company_address_detail = #{C.companyAddressDetail},
+            company_zonecode = #{C.companyZonecode},
+            company_contact = #{C.companyContact},
+            company_website = #{C.companyWebsite},
+            company_email = #{C.companyEmail},
+            company_birth = #{C.companyBirth},
+            company_employee = #{C.companyEmployee},
+            company_modify_date = NOW()
+        WHERE company_id = #{C.companyId}
+    </update>
+    <delete id="companyDelete">
+        DELETE
+        FROM tbl_company
+        WHERE company_id = #{companyId}
+    </delete>
+    <select id="sessionSelect" resultType="com.void2.careermanagement.dto.CompanyDto">
+        SELECT *
+        FROM tbl_company
+        WHERE company_id = #{companyId}
+    </select>
+</mapper>
