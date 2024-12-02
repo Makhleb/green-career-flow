@@ -11,7 +11,7 @@
 <h2>구직자 커뮤니티</h2>
 <hr>
 <form th:action="@{/board/registform}" method="post">
-    <input type="text" name="userId" th:value="${session.user}">
+    <input type="hidden" name="userId" th:value="${session.user.userId}"> 작성자 : [[${session.user.userId}]]
     <input type="text" name="title" placeholder="제목을 입력하세요"><br>
     <textarea name="content" placeholder="내용을 입력하세요"></textarea><br>
     <input type="submit" value="글 게시하기">
