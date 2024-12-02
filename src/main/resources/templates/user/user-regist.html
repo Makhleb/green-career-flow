@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>구직자 로그인</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" th:href="@{/static/css/user-regist.css}">
+    <link rel="stylesheet" href="/static/css/user-regist.css">
 </head>
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
@@ -67,6 +64,6 @@
     </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
-<script type="text/javascript" th:src="@{/static/js/userRegist.js}"></script>
+<script type="text/javascript" src="/static/js/userRegist.js"></script>
 </body>
 </html>

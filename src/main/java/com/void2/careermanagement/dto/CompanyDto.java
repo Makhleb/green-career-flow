@@ -1,17 +1,22 @@
 package com.void2.careermanagement.dto;
 
-import org.springframework.web.multipart.MultipartFile;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CompanyDto {
     private String companyId;
     private String companyPw;
     private String companyName;
     private String companyNumber;
     private String companyInfo;
-    private String companyImage;
+    private byte[] companyImage;
     private String companyAddress;
     private String companyAddressDetail;
     private String companyZonecode;

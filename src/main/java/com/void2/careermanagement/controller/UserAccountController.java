@@ -1,8 +1,6 @@
 package com.void2.careermanagement.controller;
 
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,14 +13,14 @@ public class UserAccountController {
 
     @GetMapping("/login")
     public String userLogin() {
-        return "user-login";
+        return "user/user-login";
     }
     @GetMapping("/regist")
     public String userRegist() {
-        return "user-regist";
+        return "user/user-regist";
     }
     @GetMapping("/update")
     public String userUpdate() {
-        return "user-update";
+        return "user/user-update";
     }
 }
