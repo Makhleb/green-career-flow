@@ -23,6 +23,8 @@
     </style>
 </head>
 <body>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<main>
 <div id="all">
 <h2>구직자 커뮤니티</h2>
 <hr>
@@ -43,5 +45,7 @@
     </tbody>
 </table>
 </div>
+</main>
 </body>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
 </html>

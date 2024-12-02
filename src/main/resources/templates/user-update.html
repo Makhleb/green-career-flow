@@ -9,6 +9,8 @@
     <link rel="stylesheet" th:href="@{/static/css/user-update.css}">
 </head>
 <body>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<main>
 <div class="title-container">
     <div class="content-title">회원 정보 수정</div>
 </div>
@@ -80,6 +82,8 @@
         </div>
     </div>
 </div>
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
 <script th:inline="javascript">
     const userSession = [[${session.user}]];
 </script>

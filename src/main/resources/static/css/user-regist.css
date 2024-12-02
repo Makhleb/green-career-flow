@@ -1,12 +1,3 @@
-* {
-    margin: 0;
-    font-family: 'Noto Sans KR', sans-serif;
-}
-
-.red-point{
-    color: #D9310B;
-}
-
 #title-container{
     display: flex;
     justify-content: center;
