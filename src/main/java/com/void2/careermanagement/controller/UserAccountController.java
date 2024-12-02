@@ -26,8 +26,4 @@ public class UserAccountController {
     public String userUpdate() {
         return "user-update";
     }
-    @GetMapping("/delete")
-    public String userDelete() {
-        return "user-delete";
-    }
 }
