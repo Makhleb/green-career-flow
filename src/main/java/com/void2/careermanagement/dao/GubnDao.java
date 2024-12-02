@@ -10,5 +10,6 @@ import java.util.List;
  */
 @Mapper
 public interface GubnDao {
+
     List<GubnDto> getGubnList(String groupCode);
 }
