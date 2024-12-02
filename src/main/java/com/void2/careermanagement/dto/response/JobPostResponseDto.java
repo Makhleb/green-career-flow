@@ -3,6 +3,7 @@ package com.void2.careermanagement.dto.response;
 import com.void2.careermanagement.dto.GubnDto;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class JobPostResponseDto {
     private String companyName;
     private String companyAddress;
     private String companyAddressDetail;
-    private String companyBirth;
+    private LocalDate companyBirth;
     private String companyImage;
     private String companyEmail;
     private int companyEmployee;

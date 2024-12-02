@@ -42,7 +42,7 @@ public class JopPostController {
 
         return "jobPost/jobPostRegister";
     }
-    @GetMapping("/{jobPostNo}")
+    @GetMapping("/detail/{jobPostNo}")
     public String jobPost(@PathVariable int jobPostNo, Model model) {
         model.addAttribute("jobPostInfo", jobPostService.getJobDetail(jobPostNo));
         return "jobPost/jobPostDetail";
