@@ -24,10 +24,14 @@ public class JopPostController {
     }
 
     @GetMapping("/register")
-    public String regist(Model model) {
+    public String register(Model model) {
 
-        System.out.println(gubnService.getGubnList(GroupCode.SKILL.name()));
         model.addAttribute("skillGubnList", gubnService.getGubnList(GroupCode.SKILL.name()));
+        model.addAttribute("workTypeList", gubnService.getGubnList(GroupCode.WORK_TYPE.name()));
+        model.addAttribute("workList", gubnService.getGubnList(GroupCode.WORK.name()));
+        model.addAttribute("educationGubnList", gubnService.getGubnList(GroupCode.EDUCATION.name()));
+        model.addAttribute("jobRankList", gubnService.getGubnList(GroupCode.JOB_RANK.name()));
+
         return "jobPost/jobPostRegister";
     }
 }
