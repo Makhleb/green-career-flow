@@ -24,10 +24,11 @@ public class JopPostController {
     }
 
     @GetMapping("/register")
-    public String regist(Model model) {
+    public String register(Model model) {
 
+        System.out.println("안녕");
         System.out.println(gubnService.getGubnList(GroupCode.SKILL.name()));
         model.addAttribute("skillGubnList", gubnService.getGubnList(GroupCode.SKILL.name()));
-        return "jobPost/jobPostRegister";
+        return "/jobPost/jobPostRegister";
     }
 }
