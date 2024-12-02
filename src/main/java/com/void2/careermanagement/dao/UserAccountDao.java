@@ -9,7 +9,10 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface UserAccountDao {
-    UserDto loginUserSelect(@Param("user_id") String user_id, @Param("user_pw") String user_pw);
+    UserDto loginUserSelect(@Param("userId") String userId, @Param("userPw") String userPw);
     int userInsert(@Param("U") UserDto userDto);
-    int findUserIdSelect(@Param("user_id") String user_id);
+    int findUserIdSelect(@Param("userId") String userId);
+    int userUpdate(@Param("U") UserDto userDto);
+    int userDelete(String userId);
+    UserDto sessionSelect(@Param("userId") String userId);
 }

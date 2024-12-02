@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>구직자 정보수정</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/user-update.css}">
+</head>
+<body>
+<div class="title-container">
+    <div class="content-title">회원 정보 수정</div>
+</div>
+
+<div id="input-container">
+    <div class="main-tab">개인회원 정보 수정</div>
+    <hr class="purple-line">
+
+    <div class="input-contents">
+        <div class="input-explain"><span class="red-point">* </span>아이디</div>
+        <input type="text" id="userId" maxlength="20" readonly="readonly">
+
+        <div class="input-explain"><span class="red-point">* </span>패스워드</div>
+        <input type="text" id="userPw" data-name="비밀번호" placeholder="비밀번호를 입력하세요" maxlength="20" readonly="readonly">
+
+        <button onclick="modalToggle()">비밀번호 수정</button>
+
+        <div class="input-explain"><span class="red-point">* </span>이름</div>
+        <input type="text" id="userName" data-name="이름" placeholder="이름을 입력하세요" maxlength="20">
+        <div class="birth-and-gender-container">
+            <div class="birth-container">
+                <div class="input-explain"><span class="red-point">* </span>생년월일</div>
+                <input type="text" id="userBirth" data-name="생년월일" placeholder="생년월일을 입력하세요" maxlength="8"
+                       style="width: 100%">
+            </div>
+            <div class="gender-container">
+                <div class="input-explain"><span class="red-point">* </span>성별</div>
+                <div class="gender-radio">
+                    <input type="radio" id="gender-male" class="gender-radio" name="optionGender" value="M"/>
+                    <label class="gender-option radius-zero-right" for="gender-male" style="color: #E2E2E2;">남자</label>
+
+                    <input type="radio" id="gender-female" class="gender-radio" name="optionGender" value="F"/>
+                    <label class="gender-option radius-zero-left" for="gender-female" style="color: #E2E2E2;">여자</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-explain"><span class="red-point">* </span>이메일</div>
+        <input type="text" id="userEmail" data-name="이메일" placeholder="이메일을 입력하세요" maxlength="100">
+
+        <div class="input-explain"><span class="red-point">* </span>휴대폰 번호</div>
+        <input type="text" id="userPhone" data-name="휴대폰번호" placeholder="휴대폰번호를 입력하세요" maxlength="20">
+
+        <button class="updateBtn" onclick="update()">회원 정보수정</button>
+    </div>
+</div>
+<div class="modal">
+    <div class="modal-content">
+        <img th:src="@{/images/modal_close_btn.svg}" class="modal-img" onclick="modalToggle()" alt="닫기 이미지">
+        <div class="title-container">
+<!-- todo 패스워드 수정 디자인 적용하기 -->
+            <div class="content-title">패스워드 수정</div>
+        </div>
+
+        <div id="modal-input">
+            <div class="main-tab">개인회원 정보 수정</div>
+            <hr class="purple-line">
+
+            <div class="input-contents">
+                <div class="input-explain"><span class="red-point">* </span>수정할 패스워드</div>
+                <input type="text" id="modal-userPw" data-name="비밀번호" placeholder="비밀번호를 재입력하세요" maxlength="20">
+
+                <div class="input-explain"><span class="red-point">* </span>수정할 패스워드 확인</div>
+                <input type="text" id="modal-userPwCheck" data-name="비밀번호 확인" placeholder="비밀번호를 재입력하세요" maxlength="20">
+
+                <button class="updateBtn" onclick="pwEdit()">패스워드 수정</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    // todo 유효성 검사 추가바람
+    window.onload = function sessionCheck() {
+        const userSession = [[${session.user}]];
+        if (userSession == null) {
+            alert("로그인된 세션이 없습니다. 메인으로 이동합니다.");
+            location.href = "/";
+        } else {
+            $('#userId').val(userSession.userId);
+            $('#userPw').val(userSession.userPw);
+            $('#userName').val(userSession.userName);
+            $('#userBirth').val(userSession.userBirth);
+            $('#userEmail').val(userSession.userEmail);
+            $('#userPhone').val(userSession.userPhone);
+
+            if (userSession.userGender === "M") {
+                $('#gender-male').prop('checked', true);
+            } else if (userSession.userGender === "F") {
+                $('#gender-female').prop('checked', true);
+            }
+        }
+    }
+
+    function modalToggle() {
+        console.log("모달 발동")
+        if($('.modal').css('display') === "none") {
+            $('.modal').css('display', 'block');
+        } else {
+            $('.modal').css('display', 'none');
+        }
+    }
+
+    function pwEdit() {
+        if($('#modal-userPw').val() !== $('#modal-userPwCheck').val()) {
+            alert("비밀번호 일치여부를 확인해주세요");
+        } else{
+            $('#userPw').val($('#modal-userPwCheck').val());
+            modalToggle();
+        }
+    }
+
+    function update() {
+        axios.put("/api/user/account/update", {
+            userId: $("#userId").val(),
+            userPw: $("#userPw").val(),
+            userName: $("#userName").val(),
+            userPhone: $("#userPhone").val(),
+            userEmail: $("#userEmail").val(),
+            userGender: $("input[name='optionGender']:checked").val(),
+            userBirth: $("#userBirth").val()
+        })
+            .then(function (response) {
+                if (response.data) {
+                    sessionUpdate()
+                    alert("회원정보 수정 성공")
+                    location.reload(true);
+                } else {
+                    alert("로그인 오류 발생");
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    function sessionUpdate(){
+        axios.post("/api/user/account/session-edit")
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
+</script>
+</body>
+</html>
