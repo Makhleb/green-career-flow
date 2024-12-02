@@ -16,5 +16,5 @@ public class CompanyResponseDto {
     private String endDate;
     private String companyImage;
     private int jobHistory;
-    private int score;
+    private double rating;
 }

@@ -7,6 +7,8 @@
     <title>Main</title>
 </head>
 <body>
+<div th:replace="~{layout/fragments/header ::  header}"></div>
+<main>
 <div id="wrapper">
     <div class="grid-container">
         <div class="grid-item-left"></div>
@@ -65,13 +67,12 @@
                     [[${company.endDate}]]<br/>
                     <img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}">
                     <p>
-                        [[${company.companyName}]]
-                        <th:block th:each="num :  ${#numbers.sequence(1,${company.score})}">
-                            <i class="bi bi-star-fill" style="color:#F2AE2E"></i>
-                        </th:block>
+                        [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
+                        <i class="bi bi-star-fill" style="color:#F2AE2E"></i>&nbsp;&nbsp;
+                        [[${company.score}]]
                     </p>
                     <span>[[${company.companyAddress}]]
-                        <span class="side_line">|</span>
+                        <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                         <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
                         <span th:if="${company.jobHistory <= 0}"> 신입 </span>
                     </span>
@@ -79,18 +80,16 @@
                 </div>
             </div>
         </div>
+        <div class="grid-item"></div>
+        <div class="grid-item">
+            채용 임박 공고
+            <span style="float:right">
+                    <a href="" style="color:darkgray">더보기<i class="bi bi-plus"></i></a>
+                </span>
+        </div>
         <div class="grid-item-right"></div>
     </div>
 </div>
-<div th:replace="~{layout/fragments/header ::  header}"></div>
-<main>
-
-    <h1>메인페이지</h1>
-    <hr>
-    <p th:text="'현재 세션 아이디: ' + (${session.user != null} ? ${session.user.getUserId()} : '로그인되지 않음')"></p>
-    <button onclick="location.href='/user/account/login'">구직자 로그인</button>
-    <button onclick="location.href='/user/account/update'">구직자 정보수정</button>
-
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
