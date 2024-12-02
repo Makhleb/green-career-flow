@@ -30,4 +30,8 @@ public class BoardService {
     public void registBoard(BoardDto board) {
         boardDao.registBoard(board);
     }
+
+    public void updateBoard(BoardDto board) {
+        boardDao.updateBoard(board);
+    }
 }
