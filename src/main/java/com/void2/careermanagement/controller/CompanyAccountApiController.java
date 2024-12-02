@@ -2,11 +2,8 @@ package com.void2.careermanagement.controller;
 
 import com.void2.careermanagement.dao.CompanyAccountDao;
 import com.void2.careermanagement.dto.CompanyDto;
-import com.void2.careermanagement.dto.CompanyDto;
-import com.void2.careermanagement.dto.UserDto;
 import com.void2.careermanagement.service.CompanyAccountService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -57,10 +54,10 @@ public class CompanyAccountApiController {
     @PostMapping("/session-edit")
     public boolean sessionEdit(HttpSession session) {
         CompanyDto sessionUser = (CompanyDto) session.getAttribute("user");
-        if(sessionUser != null){
-            session.setAttribute("user",companyAccountDao.sessionSelect(sessionUser.getCompanyId()));
+        if (sessionUser != null) {
+            session.setAttribute("user", companyAccountDao.sessionSelect(sessionUser.getCompanyId()));
             return true;
-        } else{
+        } else {
             return false;
         }
     }
