@@ -52,11 +52,6 @@ public class UserAccountService {
             return true;
         }
         return false;
-//    if (userAccountDao.userDelete(userId) != 0) {
-//        session.removeAttribute("user");
-//        return true;
-//    }
-//        return false;
     }
 }
 
