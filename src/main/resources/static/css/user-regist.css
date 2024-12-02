@@ -37,6 +37,10 @@
     margin: 0;
 }
 
+.input-contents.view-div{
+    display : flex;
+}
+
 #input-container{
     width: 30%;
     min-width: 540px;
@@ -77,8 +81,8 @@
     align-items: center;
 }
 
-.input-container{
-    display: flex;
+.input-contents{
+    display: none;
     flex-direction: column;
     margin-top: 10px;
 }
@@ -152,7 +156,7 @@ input:focus {
     border-color: #8B1FFF;
 }
 
-#registBtn {
+.registBtn {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -164,3 +168,4 @@ input:focus {
     border-radius: 10px;
     cursor: pointer;
 }
+
