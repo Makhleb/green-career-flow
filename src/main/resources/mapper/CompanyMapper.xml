@@ -5,10 +5,10 @@
     <select id="getHighRatingList" resultType="com.void2.careermanagement.dto.CompanyDto">
         SELECT company_name, company_address, title, start_date, company_image
         <if test="end_date == null">
-            end_date = '상시'
+            '상시'
         </if>
         <if test="end_date != null">
-            end_date = ${end_date}
+            ${end_date}
         </if>,
         score
         FROM tbl_company c, tbl_job_post j, tbl_company_score s
