@@ -22,4 +22,8 @@
         SET title = #{title}, content = #{content}, modify_date = #{modifyDate}
         WHERE community_no = #{communityNo}
     </update>
+    <delete id="deleteBoard">
+        DELETE FROM tbl_community
+        WHERE community_no = #{communityNo}
+    </delete>
 </mapper>

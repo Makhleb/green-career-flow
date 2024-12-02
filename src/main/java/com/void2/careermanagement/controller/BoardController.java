@@ -66,6 +66,12 @@ public class BoardController {
         return "redirect:/board/detail/"+b.getCommunityNo();
     }
 
+    @RequestMapping("/delete/{communityNo}")
+    public String delete(@PathVariable("communityNo")int communityNo){
+        boardService.deleteBoard(communityNo);
+        return "redirect:/board/boardmain";
+    }
+
 
 
 }
