@@ -71,9 +71,8 @@
 .duplicate-btn {
     width: 100%;
     padding: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    background-color: #8B1FFF;
+    font-size: 12px;
+    background-color: #B067FF;
     color: white;
     border: none;
     border-radius: 10px;
@@ -124,9 +123,9 @@
 }
 
 .gender-radio input:checked + .gender-option {
-    background-color: #8B1FFF;
+    background-color: #B067FF;
     color: white;
-    border-color: #8B1FFF;
+    border-color: #B067FF;
 }
 
 .gender-radio input:not(:checked) + .gender-option {
