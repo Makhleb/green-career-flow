@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<main>
 <h2>구직자 커뮤니티</h2>
 <hr>
 <form th:action="@{/board/update}" method="post">
@@ -14,5 +16,7 @@
     <textarea name="content" >[[${board.content}]]</textarea><br>
     <input type="submit" value="글 수정하기">
 </form>
+</main>
 </body>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
 </html>
