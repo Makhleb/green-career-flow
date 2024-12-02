@@ -29,6 +29,6 @@ public class JopPostController {
         System.out.println("안녕");
         System.out.println(gubnService.getGubnList(GroupCode.SKILL.name()));
         model.addAttribute("skillGubnList", gubnService.getGubnList(GroupCode.SKILL.name()));
-        return "/jobPost/jobPostRegister";
+        return "jobPost/jobPostRegister";
     }
 }
