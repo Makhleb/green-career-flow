@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 기업 채용공고 컨트롤러
  */
 @Controller
-@RequestMapping("/job-post")
+//@RequestMapping("")
 public class JopPostController {
 
     private final GubnService gubnService;
@@ -23,7 +23,7 @@ public class JopPostController {
         this.gubnService = groupService;
     }
 
-    @GetMapping("/register")
+    @GetMapping("/job-post/register")
     public String register(Model model) {
 
         System.out.println("안녕");
