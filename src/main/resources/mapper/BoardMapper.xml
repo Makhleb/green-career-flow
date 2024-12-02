@@ -14,4 +14,7 @@
         SET viewCnt = viewCnt + 1
         WHERE community_no = #{communityNo}
     </update>
+    <insert id="registBoard">
+        INSERT INTO tbl_community VALUES (null, #{userId}, #{title}, #{content}, 0, #{createDate}, null)
+    </insert>
 </mapper>

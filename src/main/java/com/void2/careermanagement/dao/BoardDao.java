@@ -12,4 +12,5 @@ public interface BoardDao {
     public BoardDto getBoard(int communityNo);
     public void increaseViewCnt(int communityNo);
 
+    public void registBoard(BoardDto board);
 }
