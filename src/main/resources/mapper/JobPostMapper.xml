@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.void2.careermanagement.dao.JobPostDao">
+    <select id="maxJopPostNo">
+        SELECT MAX(job_post_no) + 1 FROM tbl_job_post
+    </select>
+    <insert id="insertJobPost" parameterType="com.void2.careermanagement.dto.request.JopPostRequestDto">
+        INSERT INTO tbl_job_post
+        (job_post_no,
+         company_id,
+         title,
+         work_code,
+         job_history,
+         job_salary,
+         education_code,
+         job_rank_code,
+         work_type_code,
+         start_date,
+         end_date,
+         content,
+         work_condition,
+         process,
+         method,
+         add_notice,
+         manager_name,
+         manager_phone,
+         manager_email)
+        VALUES (#{jobPost.jobPostNo},
+                #{jobPost.companyId},
+                #{jobPost.title},
+                #{jobPost.workCode},
+                #{jobPost.jobHistory},
+                #{jobPost.jobSalary},
+                #{jobPost.educationCode},
+                #{jobPost.jobRankCode},
+                #{jobPost.workTypeCode},
+                #{jobPost.startDate},
+                #{jobPost.endDate},
+                #{jobPost.content},
+                #{jobPost.workCondition},
+                #{jobPost.process},
+                #{jobPost.method},
+                #{jobPost.addNotice},
+                #{jobPost.managerName},
+                #{jobPost.managerPhone},
+                #{jobPost.managerEmail});
+    </insert>
+    <insert id="insertJobPostBenefit">
+        INSERT INTO tbl_benefit
+        VALUES
+        <foreach collection="benefitList" item="benefit" separator=",">
+             (#{jobPostNo}, #{benefit})
+        </foreach>
+    </insert>
+    <insert id="insertJobPostSkill">
+        INSERT INTO tbl_job_post_skill
+        VALUES
+        <foreach collection="skillList" item="skill" separator=",">
+            (#{jobPostNo}, #{skill})
+        </foreach>
+    </insert>
+</mapper>
