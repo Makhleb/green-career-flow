@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
+<div th:replace="~{layout/fragments/header ::  header}"></div>
+<main>
+
     <h1>메인페이지</h1>
     <hr>
     <p th:text="'현재 세션 아이디: ' + (${session.user != null} ? ${session.user.getUserId()} : '로그인되지 않음')"></p>
     <button onclick="location.href='/user/account/login'">구직자 로그인</button>
     <button onclick="location.href='/user/account/update'">구직자 정보수정</button>
+
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 </html>

@@ -1,0 +1,133 @@
+/*header & footer 기본 css, body 기본 css*/
+
+/*header-css*/
+header {
+    padding-top: 35px;
+    background-color: white;
+}
+
+.logo-search-container{
+    display: flex;
+}
+
+.header-container{
+    margin: 0 auto;
+    width: 80vw;
+}
+
+.first-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    cursor: pointer;
+    width: 120px;
+    height: auto;
+}
+
+.search-bar{
+    margin-left: 30px;
+    position: relative;
+    width: 100%;
+}
+
+.search-input {
+    margin: 0;
+    padding: 10px;
+    font-size: 21px;
+    border: 2px solid #8B1FFF;
+    border-radius: 10px;
+    width: 40vw;
+    outline: none;
+}
+
+.search-icon{
+    width: 30px;
+    height: auto;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.search-input::placeholder {
+    color: #D9D9D9;
+}
+
+.nav-links ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links .margin-left {
+    margin-left: 45px;
+}
+
+.nav-links .margin-right {
+    margin-right: 45px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-size: 24px;
+    white-space: nowrap;
+    min-width: 100px;
+    display: inline-block;
+}
+
+.nav-links a:hover {
+    color: #8B1FFF;
+}
+
+/*/header-css*/
+
+/*common-css*/
+
+* {
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+main{
+    width: 80vw;
+    margin: 0 auto;
+    min-height: 80vh;
+}
+
+.red-point {
+    color: #D9310B;
+}
+
+/*/common-css*/
+
+/* footer-css*/
+footer {
+    margin-top: 20px;
+    background-color: #8B1FFF;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.footer-logo {
+    width: 150px;
+    height: auto;
+}
+
+.footer-text span {
+    font-size: 24px;
+    color: white;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+/* /footer-css */

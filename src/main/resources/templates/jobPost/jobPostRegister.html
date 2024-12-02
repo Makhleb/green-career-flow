@@ -3,11 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>채용공고 등록</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <style>
         html {
             font-size: 18px; /* 기본 글꼴 크기를 18px로 설정 (150% 확대 기준) */
@@ -212,6 +207,8 @@
     </style>
 </head>
 <body>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<main>
 <div class="container">
     <div class="form-container">
         <p class="container-title">채용공고 작성</p>
@@ -361,9 +358,12 @@
         </div>
     </div>
 </div>
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 <script>
     let checkAlways = false;
+
     function popSkill(ele) {
         const skillClass = ['add-stack', 'minus-stack'];
         // console.log(ele);
@@ -381,12 +381,16 @@
         const benefit = $('#benefit');
         const benefitAddDiv = $('.benefit-add-wrapper');
         const benefitVal = benefit.val().trim();
-        if(benefitVal === ''){benefit.val(''); return;}
+        if (benefitVal === '') {
+            benefit.val('');
+            return;
+        }
         benefit.val('');
 
 
         benefitAddDiv.append('<button onclick="$(this).remove()" value="' + benefitVal + '" class="add-benefit">- ' + benefitVal + '</button>');
     }
+
     function propAlways() {
         const endDate = $('#endDate');
         endDate.val('');

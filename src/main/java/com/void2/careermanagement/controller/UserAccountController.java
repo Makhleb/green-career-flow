@@ -17,7 +17,6 @@ public class UserAccountController {
     public String userLogin() {
         return "user-login";
     }
-
     @GetMapping("/regist")
     public String userRegist() {
         return "user-regist";
