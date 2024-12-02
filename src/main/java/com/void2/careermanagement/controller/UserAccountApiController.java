@@ -30,6 +30,7 @@ public class UserAccountApiController {
         UserDto sessionUser = userAccountDao.loginUserSelect(user.getUserId(), user.getUserPw());
         if (sessionUser != null) {
             session.setAttribute("user", sessionUser);
+            session.setAttribute("userType","U");
             return true;
         } else {
             return false;
