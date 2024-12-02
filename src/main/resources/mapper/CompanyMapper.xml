@@ -4,15 +4,13 @@
 <mapper namespace="com.void2.careermanagement.dao.CompanyDao">
     <select id="getHighRatingList" resultType="com.void2.careermanagement.dto.CompanyDto">
         SELECT company_name, company_address, title, start_date, company_image
-        <choose>
-            <when test="endDate == null">
-                '상시'
-            </when>
-            <otherwise>
-                ${endDate}
-            </otherwise>
-        </choose> AS end_date,
-               score
+        <if test='end_date == "null"'>
+            end_date = '상시'
+        </if>
+        <if test='end_date != "null"'>
+            end_date = ${end_date}
+        </if>,
+        score
         FROM tbl_company c, tbl_job_post j, tbl_company_score s
         WHERE c.company_id = j.company_id AND j.company_id = s.company_id
         ORDER BY score DESC LIMIT 8
