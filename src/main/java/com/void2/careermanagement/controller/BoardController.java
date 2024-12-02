@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/Board")
+@RequestMapping("/board")
 public class BoardController {
 
     @Autowired
@@ -22,7 +22,12 @@ public class BoardController {
     public String boardmain(Model model){
         List<BoardDto> list = boardService.getList();
         model.addAttribute("list", list);
-        return "Board/board-main";
+        return "/board/board-main";
+    }
+
+    @RequestMapping("/registform")
+    public String registform() {
+        return "/board/board-registform";
     }
 
     @RequestMapping("/detail/{communityNo}")
@@ -30,19 +35,15 @@ public class BoardController {
         BoardDto board = boardService.getBoard(communityNo);
         boardService.increaseViewCnt(communityNo);
         model.addAttribute("board", board);
-        return "Board/board-detail";
+        return "/board/board-detail";
     }
 
-//    @RequestMapping("/registForm")
-//    public String registForm() {
-//        return "registForm";
-//    }
-
-//    @RequestMapping("/regiest")
-//    public String regist(){
-//
-//        return "redirect:/BoardMain";
-//    }
+    @RequestMapping("/regist")
+    public String regist(BoardDto b){
+        BoardDto board = boardService.registBoard(b);
+        System.out.println(board);
+        return "redirect:/board/board-main";
+    }
 
 
 

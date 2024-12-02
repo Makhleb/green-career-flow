@@ -37,7 +37,7 @@
 <div id="all">
     <h2>구직자 커뮤니티</h2>
     <div class="button-container">
-        <a th:href="@{/registForm}"><button>작성</button></a>
+        <a th:href="@{/board/registform}"><button>작성</button></a>
     </div>
     <table>
         <thead>
@@ -52,7 +52,7 @@
         <tbody>
         <tr th:each="dto, state : ${list}">
             <td>[[${list.size() - state.index}]]</td>
-            <td><a th:href="@{/Board/detail/{communityNo}(communityNo=${dto.communityNo})}">[[${dto.title}]]</a></td>
+            <td><a th:href="@{/board/detail/{communityNo}(communityNo=${dto.communityNo})}">[[${dto.title}]]</a></td>
             <td>[[${dto.userId}]]</td>
             <td>[[${dto.viewCnt}]]</td>
             <td>[[${dto.createDate}]]</td>
