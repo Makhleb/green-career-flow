@@ -68,25 +68,10 @@
             transition: all 0.3s ease;
         }
 
-        input:focus, select:focus, textarea:focus, .minus-stack:hover, .add-stack:hover {
+        input:focus, select:focus, textarea:focus, .minus-stack:hover, .add-stack:hover, .add-benefit:hover {
             outline: none;
             border: 1px solid #6200EE;
             box-shadow: 0 0 4px rgba(98, 0, 238, 0.3);
-        }
-
-        .stack-item {
-            display: inline-block; /* 글자 길이에 맞게 크기 조정 */
-            padding: 0.5rem 1rem; /* 위아래 8px, 좌우 16px */
-            background-color: #f0f0f0;
-            border-radius: 0.5rem; /* 모서리 둥글게 */
-            font-size: 1rem; /* 글자 크기 */
-            margin: 0.5rem; /* 스택 간 여백 */
-            white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-            cursor: default;
-        }
-
-        .stack-item:hover {
-            background-color: #e0e0e0; /* 호버 시 배경색 변경 */
         }
 
         .stack-wrapper {
@@ -109,10 +94,6 @@
             width: auto;
         }
 
-        .minus-stack :hover {
-            background-color: #7a33f0; /* 연한 보라색 */
-        }
-
         .add-stack {
             padding: 0.5rem 1rem;
             font-size: 1rem;
@@ -122,11 +103,6 @@
             cursor: pointer;
             margin: 3px;
             width: auto;
-
-        }
-
-        .add-stack :hover {
-            background-color: #e0e0e0; /* 호버 시 배경색 변경 */
         }
 
         textarea {
@@ -161,7 +137,7 @@
             width: 12rem; /* 192px */
         }
 
-        .benefits-wrapper {
+        .benefit-wrapper {
             display: flex;
             gap: 0.5rem; /* 8px */
             margin-top: 0.5rem;
@@ -169,15 +145,16 @@
             align-items: center;
         }
 
-        .add-benefit, .remove-benefit {
-            padding: 0.5rem 0.8rem;
+        .add-benefit {
+            padding: 0.5rem 1rem;
             font-size: 1rem;
             color: white;
             background-color: #6200ee;
-            border: none;
+            border: 1px solid #CECECE;
             border-radius: 0.5rem;
             cursor: pointer;
-            height: 3rem; /* 48px */
+            margin: 3px;
+            width: auto;
         }
 
         label {
@@ -205,6 +182,26 @@
 
         .redPoint {
             color: #D9310B;
+        }
+
+        .benefit-add-wrapper {
+            display: flex; /* 수평 정렬 */
+            flex-wrap: wrap; /* 요소가 화면에 넘칠 경우 줄바꿈 */
+            margin-top: 1rem; /* 상단 여백 */
+            width: 50rem;
+            /*gap: 3px;*/
+        }
+
+        .minus-benefit {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            color: white;
+            background-color: #6200ee;
+            border: 1px solid #CECECE;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin: 3px;
+            width: auto;
         }
 
         .flex-row {
@@ -236,25 +233,34 @@
             <div class="form">
                 <p><span class="redPoint">* </span>근무형태</p>
                 <select id="workTypeCode">
-                    <option selected>근무형태</option>
-                    <option>인턴</option>
-                    <option>정규직</option>
+                    <option value="" selected>근무형태</option>
+                    <th:block th:each="workType :${workTypeList}">
+                        <option th:value="${workType.code}" th:text="${workType.name}"></option>
+                    </th:block>
+                    <!--                    <option>인턴</option>-->
+                    <!--                    <option>정규직</option>-->
                 </select>
             </div>
             <div class="form">
                 <p><span class="redPoint">* </span>직급/직책</p>
                 <select id="jobRankCode">
-                    <option selected>직급/직책</option>
-                    <option>사원</option>
-                    <option>이사</option>
+                    <option value="" selected>직급/직책</option>
+                    <th:block th:each="jobRank :${jobRankList}">
+                        <option th:value="${jobRank.code}" th:text="${jobRank.name}"></option>
+                    </th:block>
+                    <!--                    <option>사원</option>-->
+                    <!--                    <option>이사</option>-->
                 </select>
             </div>
             <div class="form">
                 <p><span class="redPoint">* </span>직무</p>
                 <select id="workCode">
-                    <option selected>직무</option>
-                    <option>백엔드</option>
-                    <option>프론트엔드</option>
+                    <option value="" selected>직무</option>
+                    <th:block th:each="work :${workList}">
+                        <option th:value="${work.code}" th:text="${work.name}"></option>
+                    </th:block>
+                    <!--                    <option>백엔드</option>-->
+                    <!--                    <option>프론트엔드</option>-->
                 </select>
             </div>
         </div>
@@ -268,8 +274,11 @@
                 <p>희망 학력</p>
                 <select id="educationCode">
                     <option selected>희망 학력</option>
-                    <option>4년제 대학</option>
-                    <option>전문대</option>
+                    <th:block th:each="education :${educationGubnList}">
+                        <option th:value="${education.code}" th:text="${education.name}"></option>
+                    </th:block>
+                    <!--                    <option>4년제 대학</option>-->
+                    <!--                    <option>전문대</option>-->
                 </select>
             </div>
             <div class="form">
@@ -281,7 +290,7 @@
             <p>보유 기술 스택</p>
             <div class="flex-row stack-wrapper">
                 <th:block th:each="skill :${skillGubnList}">
-                    <button th:onclick="'popSkill($(this))'" class="add-stack" th:value="${skill.code}"
+                    <button onclick="popSkill($(this))" class="add-stack" th:value="${skill.code}"
                             th:text="'+ ' + ${skill.name}">
                     </button>
                 </th:block>
@@ -319,10 +328,12 @@
 
         <div class="form">
             <p>복리후생</p>
-            <div class="flex-row benefits-wrapper">
-                <input type="text" placeholder="내용(4대보험)" class="benefit-item">
-                <button class="add-benefit">추가 +</button>
-                <!--            <button class="remove-benefit">- 4대보험</button>-->
+            <div class="flex-row benefit-wrapper">
+                <input type="text" id="benefit" placeholder="복리후생을 입력해주세요" class="benefit-item">
+                <button onclick="addBenefit()" class="add-benefit">추가 +</button>
+            </div>
+            <div class="benefit-add-wrapper">
+
             </div>
         </div>
 
@@ -339,7 +350,7 @@
                 <div class="form">
                     <p>&nbsp;</p>
                     <label>
-                        <input type="checkbox" id="ongoingHiring">상시채용
+                        <input onclick="propAlways()" type="checkbox" id="ongoingHiring">상시채용
                     </label>
                 </div>
             </div>
@@ -352,9 +363,10 @@
 </div>
 </body>
 <script>
+    let checkAlways = false;
     function popSkill(ele) {
         const skillClass = ['add-stack', 'minus-stack'];
-        console.log(ele);
+        // console.log(ele);
         const eleClass = ele.attr('class');
 
         const addCheck = eleClass === skillClass[0]; // add-stack true
@@ -363,6 +375,23 @@
         ele.addClass(addCheck ? skillClass[1] : skillClass[0]);
 
         ele.text(addCheck ? ele.text().replace('+', '-') : ele.text().replace('-', '+'));
+    }
+
+    function addBenefit() {
+        const benefit = $('#benefit');
+        const benefitAddDiv = $('.benefit-add-wrapper');
+        const benefitVal = benefit.val().trim();
+        if(benefitVal === ''){benefit.val(''); return;}
+        benefit.val('');
+
+
+        benefitAddDiv.append('<button onclick="$(this).remove()" value="' + benefitVal + '" class="add-benefit">- ' + benefitVal + '</button>');
+    }
+    function propAlways() {
+        const endDate = $('#endDate');
+        endDate.val('');
+        checkAlways = !checkAlways;
+        endDate.prop('disabled', checkAlways);
     }
 
 </script>
