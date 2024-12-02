@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<header th:fragment="header">
+    <!-- 외부 스타일 및 스크립트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+    <link rel="stylesheet" th:href="@{/static/css/common.css}">
+
+        <div class="header-container">
+            <div class="first-line">
+                <div class="logo-search-container">
+                    <div class="logo">
+                        <img th:src="@{/static/images/vo2d_logo.png}" onclick="location.href='/'" alt="Logo" class="footer-logo">
+                    </div>
+                    <div class="search-bar">
+                        <input type="text" placeholder="검색어를 입력해주세요" class="search-input">
+                        <img th:src="@{/static/images/purple_search_btn.svg}" alt="조회버튼" class="search-icon">
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <ul th:if="${session.user != null}">
+                        <li class="margin-left"><a href="/profile">내 프로필</a></li>
+                        <li class="margin-left"><a href="/logout">로그아웃</a></li>
+                    </ul>
+
+                    <ul th:unless="${session.user != null}">
+                        <li class="margin-left"><a href="/user/account/login">로그인</a></li>
+                        <li class="margin-left"><a href="/user/account/regist">회원가입</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="nav-links">
+                <ul>
+                    <li class="margin-right"><a href="#">이력서 등록</a></li>
+                    <li class="margin-right"><a href="#">기술스택매칭</a></li>
+                    <li class="margin-right"><a href="/Board/boardmain">커뮤니티</a></li>
+                </ul>
+            </nav>
+        </div>
+
+</header>
