@@ -14,7 +14,7 @@ public class BoardDto {
     public String userId;
     public String title;
     public String content;
-    public String viewCnt;
+    public int viewCnt;
     public String createDate;
     public String modifyDate;
 

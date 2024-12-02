@@ -9,4 +9,9 @@
     <select id="getBoard" resultType="com.void2.careermanagement.dto.BoardDto">
         SELECT * FROM tbl_community WHERE community_no = #{communityNo}
     </select>
+    <update id="increaseViewCnt" >
+        UPDATE tbl_community
+        SET viewCnt = viewCnt + 1
+        WHERE community_no = #{communityNo}
+    </update>
 </mapper>

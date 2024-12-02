@@ -22,14 +22,13 @@ public class BoardController {
     public String boardmain(Model model){
         List<BoardDto> list = boardService.getList();
         model.addAttribute("list", list);
-        System.out.println(list);
         return "Board/board-main";
     }
 
     @RequestMapping("/detail/{communityNo}")
     public String detail(@PathVariable("communityNo")int communityNo, Model model){
-        System.out.println(communityNo);
         BoardDto board = boardService.getBoard(communityNo);
+        boardService.increaseViewCnt(communityNo);
         model.addAttribute("board", board);
         return "Board/board-detail";
     }
