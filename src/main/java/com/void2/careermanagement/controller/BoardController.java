@@ -33,6 +33,14 @@ public class BoardController {
         return "/board/board-registform";
     }
 
+    @RequestMapping("/updateform/{communityNo}")
+    public String updateform(@PathVariable("communityNo")int communityNo, Model model) {
+        BoardDto board = boardService.getBoard(communityNo);
+        model.addAttribute("board",board);
+        model.addAttribute("communityNo", communityNo);
+        return "/board/board-updateform";
+    }
+
     @RequestMapping("/detail/{communityNo}")
     public String detail(@PathVariable("communityNo")int communityNo, Model model){
         BoardDto board = boardService.getBoard(communityNo);
@@ -50,6 +58,13 @@ public class BoardController {
         return "redirect:/board/boardmain";
     }
 
+    @RequestMapping("/update")
+    public String update(BoardDto b){
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        BoardDto board = BoardDto.builder().communityNo(b.getCommunityNo()).title(b.getTitle()).content(b.getContent()).modifyDate(now).build();
+        boardService.updateBoard(board);
+        return "redirect:/board/detail/"+b.getCommunityNo();
+    }
 
 
 
