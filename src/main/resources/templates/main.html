@@ -60,9 +60,24 @@
                 </span>
         </div>
         <div class="grid-item">
-            <th:block th:each="company : ${cList}">
-                
-            </th:block>
+            <div class="grid_posting">
+                <div class="grid_posting_item" th:each="company : ${cList}">
+                    [[${company.endDate}]]<br/>
+                    <img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}">
+                    <p>
+                        [[${company.companyName}]]
+                        <th:block th:each="num :  ${#numbers.sequence(1,${company.score})}">
+                            <i class="bi bi-star-fill" style="color:#F2AE2E"></i>
+                        </th:block>
+                    </p>
+                    <span>[[${company.companyAddress}]]
+                        <span class="side_line">|</span>
+                        <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
+                        <span th:if="${company.jobHistory <= 0}"> 신입 </span>
+                    </span>
+
+                </div>
+            </div>
         </div>
         <div class="grid-item-right"></div>
     </div>

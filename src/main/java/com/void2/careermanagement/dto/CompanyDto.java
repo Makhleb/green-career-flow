@@ -11,7 +11,7 @@ public class CompanyDto {
     private String companyName;
     private String companyNumber;
     private String companyInfo;
-    private MultipartFile companyImage;
+    private String companyImage;
     private String companyAddress;
     private String companyAddressDetail;
     private String companyZonecode;

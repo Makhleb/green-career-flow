@@ -4,6 +4,7 @@ package com.void2.careermanagement.controller;
 import com.void2.careermanagement.dao.SampleDao;
 import com.void2.careermanagement.dto.CompanyDto;
 import com.void2.careermanagement.dto.UserDto;
+import com.void2.careermanagement.response.CompanyResponseDto;
 import com.void2.careermanagement.service.CompanyService;
 import com.void2.careermanagement.service.GubnService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ public class SampleController {
     @RequestMapping("/")
     public String root(Model model){
         System.out.println("main");
-        List<CompanyDto> cList = companyService.getHighRatingCompanyList();
-        for(CompanyDto c : cList) System.out.println(c);
+        List<CompanyResponseDto> cList = companyService.getHighRatingCompanyList();
+        for(CompanyResponseDto c : cList) System.out.println(c);
         model.addAttribute("cList", cList);
         return "main";
     }
