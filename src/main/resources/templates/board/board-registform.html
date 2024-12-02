@@ -11,22 +11,36 @@
         #head {
             margin: 10px 0px;
         }
-
-        #text{
-            width: 100%; height: 30px;
-            border-collapse: collapse;
-            margin: 10px 0px;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 20px;
+        input, textarea {
+            box-sizing: border-box;
+            height: 3rem; /* 48px */
+            border-radius: 0.5rem; /* 8px */
+            margin: 5px 0; /* 8px */
+            padding-left: 0.5rem; /* 8px */
+            font-weight: 500;
+            font-size: 1rem; /* 16px */
+            width: 100%;
         }
+
         textarea{
-            width: 100%; height: 500px;
-            padding: 10px;
-            font-size: 20px;
-            border-collapse: collapse;
+            height: 500px;
             resize : none;
-            border-radius: 10px;
+        }
+
+        input, textarea {
+            border: 1px solid #CECECE;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus, .minus-stack:hover, .add-stack:hover, .add-benefit:hover {
+            outline: none;
+            border: 1px solid #6200EE;
+            box-shadow: 0 0 4px rgba(98, 0, 238, 0.3);
+        }
+        #btn_container{
+            width: 100%;
+            display: flex;
+            justify-content: right;
         }
         #btn {
             width: 120px;
@@ -53,10 +67,12 @@
             <input type="hidden" name="userId" th:value="${session.user.userId}">작성자 :[[${session.user.userId}]]<br>
             <input type="text" id="text" name="title" placeholder="제목을 입력하세요"><br>
             <textarea name="content" placeholder="내용을 입력하세요"></textarea><br>
-            <input id="btn" type="submit" value="글 게시하기">
+            <div id="btn_container">
+                <input id="btn" type="submit" value="글 게시하기">
+            </div>
         </form>
     </div>
 </main>
-</body>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
+</body>
 </html>
