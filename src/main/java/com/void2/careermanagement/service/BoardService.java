@@ -26,4 +26,8 @@ public class BoardService {
     public void increaseViewCnt(int communityNo) {
         boardDao.increaseViewCnt(communityNo);
     }
+
+    public void registBoard(BoardDto board) {
+        boardDao.registBoard(board);
+    }
 }
