@@ -17,4 +17,5 @@ public class CompanyResponseDto {
     private String companyImage;
     private int jobHistory;
     private double rating;
+    private int jobPostNo;
 }
