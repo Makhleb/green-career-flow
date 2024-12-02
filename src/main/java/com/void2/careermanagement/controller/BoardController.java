@@ -6,9 +6,12 @@ import com.void2.careermanagement.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -40,9 +43,11 @@ public class BoardController {
 
     @RequestMapping("/regist")
     public String regist(BoardDto b){
-        BoardDto board = boardService.registBoard(b);
-        System.out.println(board);
-        return "redirect:/board/board-main";
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        BoardDto board = BoardDto.builder().title(b.getTitle()).content(b.getContent()).userId(b.getUserId())
+                        .createDate(now).build();
+        boardService.registBoard(board);
+        return "redirect:/board/boardmain";
     }
 
 
