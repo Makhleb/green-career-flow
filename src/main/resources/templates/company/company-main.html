@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/static/css/company-main.css}"/>
+    <title>기업 메인페이지</title>
+</head>
+<body>
+<div th:replace="~{layout/fragments/header ::  header}"></div>
+<main>
+    <div class="wrapper">
+      <div class="grid-container">
+          <div class="grid-item-left"></div>
+          <div class="grid-item">
+              <img th:src="@{/static/images/with_computer.jpg}">
+              <div class="imgText_main">Vo.2D<br>최고의 IT기업</div>
+          </div>
+          <div class="grid-item-blank" ></div>
+          <div class="grid-item">관심등록 인기 회원 Top 8</div>
+            <div class="grid-resume-container">
+                <div class="grid-resume-item">
+                    <div class="grid-resume-item-rank">Top 1</div>
+                </div>
+            </div>
+          <div class="grid-item-right"></div>
+      </div>
+    </div>
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
+</body>
+</html>
