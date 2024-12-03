@@ -55,7 +55,13 @@
         th {
             background-color: #b99bdb; /* 연한 회색 배경 */
         }
-
+        .thStart{
+            text-align: left;
+        }
+        .thEnd{
+            width: 100px;
+            text-align: right;
+        }
         #title {
             display: flex;
             justify-content: space-between;
@@ -95,7 +101,10 @@
             border: 1px solid #6200EE;
             box-shadow: 0 0 4px rgba(98, 0, 238, 0.3);
         }
-
+        .modi{
+            text-align: end;
+            width: 50px;
+        }
 
         #btn_container {
             display: flex;
@@ -135,15 +144,15 @@
         <table>
             <thead>
             <tr>
-                <th>[[${board.userId}]]</th>
+                <th class="thStart">[[${board.userId}]]</th>
                 <th:block th:if="${board.modifyDate == null}">
-                    <th colspan="4">[[${board.createDate}]]</th>
+                    <th class="thStart" colspan="4">[[${board.createDate}]]</th>
                 </th:block>
                 <th:block th:if="${board.modifyDate != null}">
-                    <th colspan="4">[[${board.modifyDate}]]</th>
+                    <th class="thStart" colspan="4">[[${board.modifyDate}]]</th>
                 </th:block>
-                <th>조회수[[${board.viewCnt+1}]]</th>
-                <th>댓글수[[${commentCnt}]]</th>
+                <th class="thEnd">조회수[[${board.viewCnt+1}]]</th>
+                <th class="thEnd">댓글수[[${commentCnt}]]</th>
             </tr>
             </thead>
             <tbody>
@@ -167,8 +176,9 @@
                 <th:block th:if="${dto.commentModifyDate != null}">
                     <td>[[${dto.commentModifyDate}]]</td>
                 </th:block>
-                <td>수정</td>
-                <td>삭제</td>
+
+                <td class="modi" onclick="modi()">수정</td>
+                <td class="modi" onclick="dele()">삭제</td>
             </tr>
             </tbody>
         </table>
@@ -191,11 +201,12 @@
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 <script>
-    const communityNo = document.getElementById("communityNo").value;
-    const userId = document.getElementById("userId").value;
-    const commentContent = document.getElementById("commentContent");
+
     
     function post(){
+        const communityNo = document.getElementById("communityNo").value;
+        const userId = document.getElementById("userId").value;
+        const commentContent = document.getElementById("commentContent");
         axios.post('/commentregist', {
             communityNo: communityNo,
             userId : userId,
