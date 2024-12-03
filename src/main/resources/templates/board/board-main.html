@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         #all {
             margin-top: 20px;
@@ -60,11 +62,12 @@
             <th>작성일</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="tbody">
         <tr th:each="dto, state : ${list}">
-            <td>[[${list.size() - state.index}]]</td>
+            <td>[[${dto.communityNo}]]</td>
             <th:block th:if="${session.user != null}">
-                <td><a th:href="@{/board/detail/{communityNo}(communityNo=${dto.communityNo})}">[[${dto.title}]]</a></td>
+                <td><a th:href="@{/board/detail/{communityNo}(communityNo=${dto.communityNo})}">[[${dto.title}]]</a>
+                </td>
             </th:block>
             <th:block th:if="${session.user == null}">
                 <td><a th:href="@{/user/account/login}">[[${dto.title}]]</a></td>
@@ -72,16 +75,58 @@
             <td>[[${dto.userId}]]</td>
             <td>[[${dto.viewCnt}]]</td>
             <th:block th:if="${dto.modifyDate == null}">
-            <td>[[${dto.createDate}]]</td>
+                <td>[[${dto.createDate}]]</td>
             </th:block>
             <th:block th:if="${dto.modifyDate != null}">
                 <td>[[${dto.modifyDate}]]</td>
             </th:block>
         </tr>
+        <div id="addTr"></div>
         </tbody>
     </table>
-    </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
+<script>
+    const sessionUser = /*[[${session.user != null}]]*/ false;
+    const listCnt = /*[[${listCnt}]]*/ false;
+    console.log(listCnt)
+    let startNum = 0;
+    const addSize = 10;
+    window.addEventListener('scroll', (e) => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const windowHeight = window.innerHeight;
+        if (scrollTop + windowHeight >= scrollHeight) {
+            startNum += addSize;
+            axios.get("/api/board?pageNum=" + startNum)
+                .then(response => {
+                    console.log(response);
+                    const data = response.data;
+                    console.log(data)
+                    if (data.length > 0) {
+                            const tbody = document.getElementById("tbody");
+                        data.forEach((board) => {
+                            const addTr = document.createElement("tr");
+                            addTr.innerHTML = `
+                                            <td>${board.communityNo}</td>
+                                            <td>
+                                                ${sessionUser
+                                                        ? `<a href="/board/detail/${board.communityNo}">${board.title}</a>`
+                                                        : `<a href="/user/account/login">${board.title}</a>`}
+                                            </td>
+                                            <td>${board.userId}</td>
+                                            <td>${board.viewCnt}</td>
+                                            <td>${board.modifyDate || board.createDate}</td>
+                                        `;
+
+                            tbody.appendChild(addTr);
+                        });
+                    }
+                }).catch(error => {
+                console.log(error);
+            })
+        }
+    })
+</script>
 </html>

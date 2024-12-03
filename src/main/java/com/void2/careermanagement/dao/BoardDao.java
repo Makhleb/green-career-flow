@@ -8,7 +8,8 @@ import java.util.List;
 @Mapper
 public interface BoardDao {
 
-    public List<BoardDto> getList();
+    public int getListCnt();
+    public List<BoardDto> getList(int startNum);
     public BoardDto getBoard(int communityNo);
     public void increaseViewCnt(int communityNo);
 

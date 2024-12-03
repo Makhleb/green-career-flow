@@ -4,7 +4,12 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.void2.careermanagement.dao.BoardDao">
     <select id="getList" resultType="com.void2.careermanagement.dto.BoardDto">
-        SELECT * FROM tbl_community ORDER BY community_no DESC
+        SELECT * FROM tbl_community
+        ORDER BY community_no DESC
+        LIMIT #{startNum}, 10
+    </select>
+    <select id="getListCnt" resultType="_int">
+        SELECT COUNT(*) FROM tbl_community
     </select>
     <select id="getBoard" resultType="com.void2.careermanagement.dto.BoardDto">
         SELECT * FROM tbl_community WHERE community_no = #{communityNo}
