@@ -185,7 +185,27 @@ textarea{
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 130px;
-    background-color: #D9D9D9;
+    height: 300px;
+    border: 1px solid #ddd;
     border-radius: 10px;
+    position: relative;
+}
+
+.preview{
+    border-radius: 10px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.img-btn{
+    width: 20px;
+    height: auto;
+    cursor: pointer;
+}
+.img-btn.close{
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }

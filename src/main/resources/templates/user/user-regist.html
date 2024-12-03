@@ -66,7 +66,8 @@
         <div class="input-contents" id="company-container">
             <div class="input-explain"><span class="red-point">* </span>아이디</div>
             <div class="id-container">
-                <input type="text" id="companyId" data-name="아이디" placeholder="아이디를 입력하세요" maxlength="20" style="width: 100%">
+                <input type="text" id="companyId" data-name="아이디" placeholder="아이디를 입력하세요" maxlength="20"
+                       style="width: 100%">
                 <button class="sub-btn" onclick="duplicateCompanyCheck()">중복 확인</button>
             </div>
             <div class="input-explain"><span class="red-point">* </span>패스워드</div>
@@ -79,15 +80,19 @@
             <input type="text" id="companyName" data-name="회사명" placeholder="회사명을 입력하세요" maxlength="50">
 
             <div class="input-explain"><span class="red-point">* </span>사업자 등록 번호</div>
-            <input type="text" id="companyNumber" data-name="사업자 번호" placeholder="사업자 번호('-' 제외 10자리)를 입력하세요" maxlength="10">
+            <input type="text" id="companyNumber" data-name="사업자 번호" placeholder="사업자 번호('-' 제외 10자리)를 입력하세요"
+                   maxlength="10">
 
             <div class="input-explain"><span class="red-point">* </span>주소번호</div>
             <div class="id-container">
-                <input type="text" id="companyZonecode" data-name="우편 번호" placeholder="우편번호"style="width: 100%" readonly>
+                <input type="text" id="companyZonecode" data-name="우편 번호" placeholder="우편번호" style="width: 100%"
+                       readonly>
                 <button class="sub-btn" onclick="addressFind()">주소 찾기</button>
             </div>
-            <input type="text" id="companyAddress" class="add-margin" data-name="주소" placeholder="회사 주소를 입력하세요" readonly>
-            <input type="text" id="companyAddressDetail" class="add-margin" data-name="상세주소" placeholder="상세주소를 입력하세요" maxlength="50">
+            <input type="text" id="companyAddress" class="add-margin" data-name="주소" placeholder="회사 주소를 입력하세요"
+                   readonly>
+            <input type="text" id="companyAddressDetail" class="add-margin" data-name="상세주소" placeholder="상세주소를 입력하세요"
+                   maxlength="50">
 
             <div class="input-explain">회사 웹사이트</div>
             <input type="text" id="companyWeb" data-name="웹사이트" placeholder="웹사이트를 입력하세요" maxlength="100">
@@ -105,14 +110,19 @@
             <input type="text" id="companyEmplyoee" data-name="직원수" placeholder="직원수" maxlength="7">
 
             <div class="input-explain">회사 소개글</div>
-            <textarea id="company-introduce" data-name="소개글" placeholder="회사 소개글을 입력해주세요" style="width: 100%"></textarea>
+            <textarea id="company-introduce" data-name="소개글" placeholder="회사 소개글을 입력해주세요"
+                      style="width: 100%"></textarea>
 
             <div class="input-explain">회사 대표 이미지</div>
             <div class="image-attach">
-                <img src="/static/images/black_plus_btn.svg" width="30" height="auto" alt="플러스 이미지">
+                <img class="img-btn close" src="/static/images/modal_close_btn.svg" onclick="imgDelete()">
+                <label for="companyAttachment">
+                    <img class="img-btn" src="/static/images/black_plus_btn.svg" width="30" height="auto" alt="플러스 이미지">
+                </label>
+                <img class="preview" src="#" style="display:none">
             </div>
-            <input type="file" id="companyAttachment" accept="image/*">
 
+            <input type="file" id="companyAttachment" accept="image/*" onchange="imgPreview(event)" style="display:none;">
             <button class="registBtn" onclick="companyRegist()">회원가입</button>
         </div>
 
@@ -138,6 +148,12 @@
 <script type="text/javascript" src="/static/js/userRegist.js"></script>
 <script>
     let duplicateCompany = true;
+    let base64img = null;
+
+    /**
+     * 회사 id 중복확인
+     * @returns {boolean}
+     */
     function duplicateCompanyCheck() {
         if (!/^[a-zA-Z0-9]{4,20}$/.test($('#companyId').val())) {
             alert("ID는 영문/숫자로 4자 ~ 20자 이내로만 작성가능합니다.")
@@ -161,11 +177,42 @@
     }
 
     /**
+     * 이미지 삭제 함수
+     */
+    function imgDelete(){
+        $('.preview').attr('src','#').hide();
+        $('#companyAttachment').val('');
+        $('label[for="companyAttachment"]').show();
+        $('.close').hide();
+        base64img = null;
+    }
+
+    /**
+     * 이미지 삽입 및 프리뷰 함수
+     * @param event
+     */
+    function imgPreview(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                $('.preview').attr('src',e.target.result).show();
+                console.log($('.preview').attr(e.target.result));
+                $('label[for="companyAttachment"]').hide();
+                $('.close').show();
+                base64img = e.target.result;
+            };
+            reader.readAsDataURL(file); // 파일을 Base64로 읽음
+
+        }
+    }
+
+    /**
      * 주소 찾기
      */
-    function addressFind(){
+    function addressFind() {
         new daum.Postcode({
-            oncomplete: function(data) {
+            oncomplete: function (data) {
                 console.log(data);
                 $('#companyZonecode').val(data.zonecode);
                 $('#companyAddress').val(data.address);
@@ -174,8 +221,8 @@
     }
 
     /**
-    * 기업등록api 함수
-    */
+     * 기업등록api 함수
+     */
     function companyRegist() {
         axios.post("/api/company/account/regist", {
             companyId: $("#companyId").val(),
@@ -188,9 +235,9 @@
             companyWebsite: $("#companyWeb").val(),
             companyEmail: $("#companyEmail").val(),
             companyContact: $("#companyPhone").val(),
-            companyBirth: $("#companyBirth").val(), // YYYYMMDD 형식
-            companyInfo: $("#company-introduce").val(), // textarea 값
-            companyImage: null, // 이미지 업로드 기능 추가 필요
+            companyBirth: $("#companyBirth").val(),
+            companyInfo: $("#company-introduce").val(),
+            companyImage: base64img,
             companyEmployee: $('#companyEmplyoee').val()
         })
             .then(function (response) {
