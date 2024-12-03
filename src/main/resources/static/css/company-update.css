@@ -9,6 +9,12 @@
     margin-top: 23px;
 }
 
+.input-contents {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
 .main-tab {
     flex: 1;
     padding: 10px;
@@ -22,27 +28,51 @@
     outline: none;
 }
 
+#input-container {
+    width: 30%;
+    min-width: 540px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 27px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#title-container {
+    display: flex;
+    justify-content: center;
+}
+
+#content-title {
+    font-weight: 600;
+    font-size: 24px;
+    margin-top: 23px;
+}
+
 .purple-line {
     border: none;
     border-top: 2px solid #8B1FFF; /* 보라색 선 */
     margin: 0;
 }
 
-.password-container{
+.address-container {
     display: grid;
     grid-template-columns: 3.5fr 1.5fr;
-    gap: 10px;
+    gap: 30px;
     align-items: center;
 }
-.passwordEditBtn{
-    width: 100%;
+
+input, textarea {
+    margin-top: 3px;
     padding: 10px;
-    font-size: 12px;
-    background-color: #B067FF;
-    color: white;
-    border: none;
+    border: 1px solid #ddd;
     border-radius: 10px;
-    cursor: pointer;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #8B1FFF;
 }
 
 #input-container {
@@ -56,105 +86,31 @@
     margin-right: auto;
 }
 
-.birth-and-gender-container {
+.password-container {
     display: grid;
     grid-template-columns: 3.5fr 1.5fr;
-    gap: 30px;
+    gap: 10px;
     align-items: center;
 }
 
-.input-contents {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-}
-
-/*커스텀 라디오 버튼*/
-.gender-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.gender-radio {
-    margin-top: 3px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-}
-
-.gender-option {
-    font-size: 14px;
-    padding: 10px 20px;
-    border: 1px solid #E5E5E5;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.gender-radio input {
-    display: none;
-}
-
-.gender-radio input:checked + .gender-option {
-    background-color: #B067FF;
-    color: white;
-    border-color: #B067FF;
-}
-
-.gender-radio input:not(:checked) + .gender-option {
-    background-color: #fff;
-    color: #333;
-}
-
-.radius-zero-left {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-}
-
-.radius-zero-right {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-}
-
-/*커스텀 라디오 버튼(끝)*/
-
-.input-explain {
-    margin-top: 5px;
-    font-size: 14px;
-}
-
-input {
-    margin-top: 3px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-}
-
-input:focus {
-    outline: none;
-    border-color: #8B1FFF;
-}
-
-.updateBtn {
+.sub-btn {
     width: 100%;
     padding: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    margin-top: 20px;
-    background-color: #8B1FFF;
+    font-size: 12px;
+    background-color: #B067FF;
     color: white;
     border: none;
     border-radius: 10px;
     cursor: pointer;
 }
 
+.fifty-top-margin {
+    margin-top: 15px;
+}
+
 .modal {
     position: absolute;
-    display:none;
+    display: none;
     justify-content: center;
     top: 0;
     left: 0;
@@ -174,12 +130,14 @@ input:focus {
     transform: translate(-50%, -50%);
     background-color: white;
 }
-.modal-img{
+
+.modal-img {
     align-self: end;
     margin-top: 16px;
     margin-right: 16px;
     cursor: pointer;
 }
+
 #modal-input {
     margin-top: 18px;
     margin-right: auto;
@@ -189,6 +147,20 @@ input:focus {
     flex-direction: column;
     justify-content: center;
 }
+
+.updateBtn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 20px;
+    background-color: #8B1FFF;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
 .deleteBtn {
     width: 100%;
     padding: 10px;
@@ -200,4 +172,45 @@ input:focus {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+}
+
+textarea {
+    resize: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 280px;
+}
+
+.image-attach {
+    margin-top: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    position: relative;
+}
+
+.preview {
+    border-radius: 10px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.img-btn {
+    width: 20px;
+    height: auto;
+    cursor: pointer;
+}
+
+#close-btn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+#plus-btn{
+    display: none;
 }

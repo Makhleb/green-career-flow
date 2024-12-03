@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>기업 정보 수정</title>
+</head>
+<body>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<link rel="stylesheet" href="/static/css/company-update.css">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<main>
+    <div id="title-container">
+        <div id="content-title">회원 정보 수정</div>
+    </div>
+    <div id="input-container">
+        <div class="main-tab">기업회원 정보 수정</div>
+        <hr class="purple-line">
+        <div class="input-contents">
+            <div class="input-explain"><span class="red-point">* </span>아이디</div>
+            <input type="text" id="companyId" data-name="아이디" maxlength="20" readonly>
+
+            <div class="input-explain"><span class="red-point">* </span>패스워드</div>
+            <div class="password-container">
+                <input type="text" id="companyPw" data-name="비밀번호" placeholder="비밀번호를 입력하세요" maxlength="20"
+                       readonly="readonly">
+                <button class="sub-btn" onclick="modalToggle()">비밀번호 수정</button>
+            </div>
+
+            <div class="input-explain"><span class="red-point">* </span>회사명</div>
+            <input type="text" id="companyName" data-name="회사명" placeholder="회사명을 입력하세요" maxlength="50">
+
+            <div class="input-explain"><span class="red-point">* </span>사업자 등록 번호</div>
+            <input type="text" id="companyNumber" data-name="사업자 번호" placeholder="사업자 번호('-' 제외 10자리)를 입력하세요"
+                   maxlength="10">
+
+            <div class="input-explain"><span class="red-point">* </span>주소번호</div>
+            <div class="address-container">
+                <input type="text" id="companyZonecode" data-name="우편 번호" placeholder="우편번호" style="width: 100%"
+                       readonly>
+                <button class="sub-btn" onclick="addressFind()">주소 찾기</button>
+            </div>
+            <input type="text" id="companyAddress" class="fifty-top-margin" data-name="주소" placeholder="회사 주소를 입력하세요"
+                   readonly>
+            <input type="text" id="companyAddressDetail" class="fifty-top-margin" data-name="상세주소"
+                   placeholder="상세주소를 입력하세요"
+                   maxlength="50">
+
+            <div class="input-explain">회사 웹사이트</div>
+            <input type="text" id="companyWebsite" data-name="웹사이트" placeholder="웹사이트를 입력하세요" maxlength="100">
+
+            <div class="input-explain"><span class="red-point">* </span>이메일</div>
+            <input type="text" id="companyEmail" data-name="이메일" placeholder="이메일을 입력하세요" maxlength="100">
+
+            <div class="input-explain"><span class="red-point">* </span>대표 번호</div>
+            <input type="text" id="companyContact" data-name="대표번호" placeholder="대표번호를 입력하세요" maxlength="20">
+
+            <div class="input-explain">창시일</div>
+            <input type="date" id="companyBirth" data-name="창시일" placeholder="창시일(YYYYMMDD)" maxlength="8">
+
+            <div class="input-explain">직원수</div>
+            <input type="text" id="companyEmployee" data-name="직원수" placeholder="직원수" maxlength="7">
+
+            <div class="input-explain">회사 소개글</div>
+            <textarea id="companyInfo" data-name="소개글" placeholder="회사 소개글을 입력해주세요"
+                      style="width: 100%"></textarea>
+
+            <div class="input-explain">회사 대표 이미지</div>
+            <div class="image-attach">
+                <img class="img-btn" id="close-btn" src="/static/images/modal_close_btn.svg" onclick="imgDelete()">
+                <label for="companyAttachment">
+                    <img class="img-btn" id="plus-btn" src="/static/images/black_plus_btn.svg" width="30" height="auto"
+                         alt="플러스 이미지">
+                </label>
+                <img class="preview" src="#">
+            </div>
+
+            <input type="file" id="companyAttachment" accept="image/*" onchange="imgPreview(event)"
+                   style="display:none;">
+            <button class="updateBtn" onclick="update()">회원수정</button>
+            <button class="deleteBtn" onclick="deleteCompany()">회원 삭제</button>
+        </div>
+    </div>
+    <div class="modal" onclick="modalToggle()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <img src="/static/images/modal_close_btn.svg" class="modal-img" onclick="modalToggle()" alt="닫기 이미지">
+            <div class="title-container">
+                <div class="content-title">패스워드 수정</div>
+            </div>
+
+            <div id="modal-input">
+                <div class="main-tab">개인회원 정보 수정</div>
+                <hr class="purple-line">
+
+                <div class="input-contents">
+                    <div class="input-explain"><span class="red-point">* </span>수정할 패스워드</div>
+                    <input type="text" id="modal-userPw" data-name="비밀번호" placeholder="비밀번호를 재입력하세요" maxlength="20">
+
+                    <div class="input-explain"><span class="red-point">* </span>수정할 패스워드 확인</div>
+                    <input type="text" id="modal-userPwCheck" data-name="비밀번호 확인" placeholder="비밀번호를 재입력하세요"
+                           maxlength="20">
+
+                    <button class="updateBtn" onclick="pwEdit()">패스워드 수정</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
+<script th:inline="javascript">
+    const userSession = [[${session.user}]];
+</script>
+<script>
+    //세션 체크 후 정보 입력
+    window.onload = function sessionCheck() {
+        console.log(userSession);
+        if (userSession == null) {
+            alert("로그인된 세션이 없습니다. 메인으로 이동합니다.");
+            location.href = "/";
+        } else {
+            let img = userSession.companyImage;
+            console.log(loadImage(img));
+            $('#companyId').val(userSession.companyId);
+            $('#companyPw').val(userSession.companyPw);
+            $('#companyName').val(userSession.companyName);
+            $("#companyNumber").val(userSession.companyNumber);
+            $("#companyZonecode").val(userSession.companyZonecode);
+            $("#companyAddress").val(userSession.companyAddress);
+            $("#companyAddressDetail").val(userSession.companyAddressDetail);
+            $("#companyWebsite").val(userSession.companyWebsite);
+            $('#companyBirth').val(userSession.companyBirth);
+            $('#companyEmail').val(userSession.companyEmail);
+            $('#companyContact').val(userSession.companyContact);
+            $("#companyInfo").val(userSession.companyInfo);
+            $('.preview').attr('src', `data:image/jpeg;base64,${img}`);
+            $('#companyEmployee').val(userSession.companyEmployee);
+        }
+    }
+
+    /**
+     * 비밀번호 일치확인 함수
+     */
+    function pwEdit() {
+        if ($('#modal-userPw').val() !== $('#modal-userPwCheck').val()) {
+            alert("비밀번호 일치여부를 확인해주세요");
+        } else {
+            $('#companyPw').val($('#modal-userPwCheck').val());
+            modalToggle();
+        }
+    }
+
+    /**
+     * 장소 팝업 오픈
+     */
+    function addressFind() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                console.log(data);
+                $('#companyZonecode').val(data.zonecode);
+                $('#companyAddress').val(data.address);
+            }
+        }).open();
+    }
+
+    /**
+     * 세션 갱신
+     */
+    function sessionUpdate() {
+        axios.post("/api/company/account/session-edit")
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    /**
+     * 업데이트 함수
+     */
+    function update() {
+        axios.put("/api/company/account/update", {
+            companyId: $("#companyId").val(),
+            companyPw: $("#companyPw").val(),
+            companyName: $("#companyName").val(),
+            companyNumber: $("#companyNumber").val(),
+            companyZonecode: $("#companyZonecode").val(),
+            companyAddress: $("#companyAddress").val(),
+            companyAddressDetail: $("#companyAddressDetail").val(),
+            companyWebsite: $("#companyWebsite").val(),
+            companyEmail: $("#companyEmail").val(),
+            companyContact: $("#companyContact").val(),
+            companyBirth: $("#companyBirth").val(),
+            companyInfo: $("#companyInfo").val(),
+            companyImage: base64img.split(',')[1],
+            companyEmployee: $('#companyEmployee').val()
+        })
+            .then(function (response) {
+                if (response.data) {
+                    sessionUpdate()
+                    alert("회원정보 수정 성공")
+                    location.reload(true);
+                } else {
+                    alert("오류 발생(수정되지 않음)");
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    /**
+     * 회원 탈퇴 코드
+     */
+    function deleteCompany() {
+        if (confirm("정말 삭제하시겠습니까? ")) {
+            axios.delete('/api/company/account/delete/' + userSession.companyId)
+                .then(function (response) {
+                    if (response.data) {
+                        alert("삭제가 완료되었습니다. 감사합니다.");
+                        location.href = "/";
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+    }
+
+    /**
+     * 이미지 삽입 및 프리뷰 함수
+     * @param event
+     */
+    function imgPreview(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                $('.preview').attr('src', e.target.result).show();
+                $('label[for="companyAttachment"]').hide();
+                $('#close-btn').show();
+                base64img = e.target.result;
+                console.log(base64img);
+            }
+            reader.readAsDataURL(file); // 파일을 Base64로 읽음
+        }
+    }
+
+    /**
+     * 이미지 삭제 함수
+     */
+    function imgDelete() {
+        $('.preview').attr('src', '').hide();
+        $('#companyAttachment').val('');
+        $('label[for="companyAttachment"]').show();
+        $('#close-btn').hide();
+        $('#plus-btn').show();
+        base64img = null;
+    }
+</script>
+<script src="/static/js/utils.js"></script>
+</body>
+</html>

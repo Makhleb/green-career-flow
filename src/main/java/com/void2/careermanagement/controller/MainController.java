@@ -25,6 +25,12 @@ public class MainController {
 
     @RequestMapping("/")
     public String root(Model model, HttpSession session) {
+        // 세션 null일시 만든 임시 경로
+        // todo 비회원페이지 생성시 여기다 경로 적으세요
+        if(session.getAttribute("user") == null) {
+            return "/company/company-main";
+        }
+
         String userType = (String) session.getAttribute("userType");
         System.out.println(userType);
         if (userType.equals("C")) {
