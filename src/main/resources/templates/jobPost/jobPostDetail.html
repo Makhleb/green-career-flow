@@ -19,14 +19,14 @@
             box-sizing: border-box; /* 모든 요소에 박스 모델 적용 */
         }
 
-        main {
-            /*width: 100vw;*/
-            /*height: 150vh;*/
-            min-height: 1400px;
-            max-height: 1400px;
-            height: 1400px;
-            /*margin: 0 0 100px 0;*/
-        }
+        /*main {*/
+        /*    !*width: 100vw;*!*/
+        /*    !*height: 150vh;*!*/
+        /*    min-height: 1400px;*/
+        /*    max-height: 1400px;*/
+        /*    height: 1400px;*/
+        /*    !*margin: 0 0 100px 0;*!*/
+        /*}*/
 
         .flex-row {
             display: flex;
@@ -38,11 +38,16 @@
             flex-direction: column;
         }
 
-        #companyButton {
+        #like-btn {
             display: flex;
             flex-direction: row;
             align-items: center;
             margin-left: 4px;
+            background-color: white;
+            border: 1px solid black;
+            padding: 3px;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
         #likeImg {
@@ -51,7 +56,6 @@
 
         .container {
             width: 60%;
-            height: 100vh;
             display: flex;
             flex-direction: column;
             min-width: 1000px;
@@ -136,7 +140,7 @@
             text-align: end;
         }
 
-        .company-detail-btn {
+        .company-detail-btn-container {
             height: 20%;
             display: flex;
             flex-direction: row;
@@ -144,13 +148,19 @@
             align-items: end;
         }
 
-        .company-detail-btn button {
-            margin-bottom: 10px;
+        #company-detail-btn {
+            background-color: white;
+            border: 1px solid black;
+            padding: 3px;
+            border-radius: 5px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            cursor: pointer;
         }
 
         .middle-wrapper {
             height: 10%;
-            max-height: 100px;
+            max-height: 120px;
             min-height: 80px;
             justify-content: center;
             align-items: center;
@@ -160,14 +170,16 @@
         #apply-btn, #scrap-btn {
             font-size: 18px;
             font-weight: 600;
-            height: 40%;
+            height: 70%;
             width: 12%;
             cursor: pointer;
+            padding-top: 5px;
+            padding-bottom: 5px;
         }
 
         #apply-btn {
             color: white;
-            background-color: #6200ee;
+            background-color: #8B1FFF;
             margin-right: 10px;
             border: none;
         }
@@ -189,7 +201,7 @@
         }
 
         .bottom-wrapper {
-            height: 100%;
+            /*height: 100%;*/
             margin-top: 20px;
         }
 
@@ -217,7 +229,7 @@
             padding: 0.5rem 1rem;
             font-size: 1rem;
             color: white;
-            background-color: #6200ee;
+            background-color: #8B1FFF;
             border: 1px solid #CECECE;
             border-radius: 0.5rem;
             margin: 3px;
@@ -247,6 +259,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .benefit {
             width: 100%;
             height: 100%;
@@ -263,12 +276,17 @@
             padding: 0.5rem 1rem;
             font-size: 1rem;
             color: white;
-            background-color: #6200ee;
+            background-color: #8B1FFF;
             border: 1px solid #CECECE;
             border-radius: 0.5rem;
             margin: 3px;
             width: auto;
         }
+        .manager-form {
+            width: 20px;
+            min-width: 450px;
+        }
+
 
     </style>
     <link rel="stylesheet" href="/static/css/common.css">
@@ -282,8 +300,8 @@
                 <div class="top-sub-wrapper-left-top flex-col">
                     <div class="flex-row" style="margin-top: 10px">
                         <span th:text="${jobPostInfo.companyName}"></span>
-                        <button id="companyButton"><img id="likeImg" width="18px" height="18px"
-                                                        src="/static/images/empty_heart.png"> 관심기업
+                        <button id="like-btn"><img id="likeImg" width="18px" height="18px"
+                                                   src="/static/images/empty_heart.png"> 관심기업
                         </button>
                     </div>
                     <h1 th:text="${jobPostInfo.title}"></h1>
@@ -294,30 +312,33 @@
                         <p class="title">자격 요건</p>
                         <div class="left-form flex-row">
                             <div class="label">경력</div>
-                            <div class="value">경력 무관</div>
+                            <div class="value"
+                                 th:text="${jobPostInfo.jobHistory == 0 || jobPostInfo.jobHistory == ''  ? '경력 무관' : jobPostInfo.jobHistory + '년'}"></div>
                         </div>
                         <div class="left-form flex-row">
                             <div class="label">학력</div>
-                            <div class="value">학력 무관</div>
+                            <div class="value"
+                                 th:text="${jobPostInfo.educationCode == '' ? '학력 무관' : jobPostInfo.educationName}"></div>
                         </div>
                     </div>
                     <div class="flex-col top-sub-wrapper-left-bottom-right">
                         <p class="title">근무 요건</p>
                         <div class="left-form flex-row">
                             <div class="label">근무 형태</div>
-                            <div class="value">정규직 등</div>
+                            <div class="value" th:text="${jobPostInfo.workTypeName}"></div>
                         </div>
                         <div class="left-form flex-row">
                             <div class="label">연봉</div>
-                            <div class="value">회사 내규에 따라 다름</div>
+                            <div class="value"
+                                 th:text="${#strings.isEmpty(jobPostInfo.jobSalary) || jobPostInfo.jobSalary == 0 ? '회사 내규에 따름' : #numbers.formatInteger(jobPostInfo.jobSalary,3,'COMMA') + '원'}"></div>
                         </div>
                         <div class="left-form flex-row">
                             <div class="label">직급/직책</div>
-                            <div class="value">사원</div>
+                            <div class="value" th:text="${jobPostInfo.jobRankName}"></div>
                         </div>
                         <div class="left-form flex-row">
                             <div class="label">직무</div>
-                            <div class="value">B/E 개발자</div>
+                            <div class="value" th:text="${jobPostInfo.workName}"></div>
                         </div>
 
                     </div>
@@ -343,11 +364,11 @@
                     </div>
                     <div class="right-form flex-row">
                         <div class="label">사원 수</div>
-                        <div class="value" th:text="${jobPostInfo.companyEmployee} + '명'"></div>
+                        <div class="value" th:text="${#numbers.formatInteger(jobPostInfo.companyEmployee,3,'COMMA')} + '명'"></div>
                     </div>
                 </div>
-                <div class="company-detail-btn">
-                    <button>기업 정보 >></button>
+                <div class="company-detail-btn-container">
+                    <button id="company-detail-btn">기업 정보 >></button>
                 </div>
             </div>
         </div>
@@ -411,6 +432,23 @@
                 <span class="content-form-title">유의사항</span>
                 <div class="content-form-content">
                     <p th:text="${jobPostInfo.addNotice}"></p>
+                </div>
+            </div>
+            <div class="content-form">
+                <span class="content-form-title">담당자 정보</span>
+                <div class="content-form-content">
+                    <div class="manager-form flex-row">
+                        <div class="label">담당자</div>
+                        <div class="value" th:text="${jobPostInfo.managerName}"></div>
+                    </div>
+                    <div class="manager-form flex-row">
+                        <div class="label">담당자 번호</div>
+                        <div class="value" th:text="${jobPostInfo.managerPhone}"></div>
+                    </div>
+                    <div class="manager-form flex-row">
+                        <div class="label">담당자 이메일</div>
+                        <div class="value" th:text="${jobPostInfo.managerEmail}"></div>
+                    </div>
                 </div>
             </div>
         </div>
