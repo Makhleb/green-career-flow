@@ -2,7 +2,9 @@ package com.void2.careermanagement.controller;
 
 
 import com.void2.careermanagement.dto.BoardDto;
+import com.void2.careermanagement.dto.CommentDto;
 import com.void2.careermanagement.service.BoardService;
+import com.void2.careermanagement.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,9 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping("/boardmain")
     public String boardmain(Model model){
@@ -45,6 +50,10 @@ public class BoardController {
     public String detail(@PathVariable("communityNo")int communityNo, Model model){
         BoardDto board = boardService.getBoard(communityNo);
         boardService.increaseViewCnt(communityNo);
+        List<CommentDto> cList = commentService.getListComment(communityNo);
+        int commentCnt = cList.size();
+        model.addAttribute("commentCnt", commentCnt);
+        model.addAttribute("cList",cList);
         model.addAttribute("board", board);
         return "/board/board-detail";
     }
