@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #all {
+            margin-top: 20px;
+        }
+
+        button {
+            width: 100px;
+            font-size: 18px;
+            background-color: #b99bdb; /* 보라색 배경 */
+            font-weight: bold;
+            border: none;
+            padding: 5px 10px; /* 버튼 내부 여백 */
+            border-radius: 10px; /* 둥근 모서리 */
+        }
+
+        #title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        table {
+            text-align: center;
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border-top: 2px solid #b99bdb;
+            border-bottom: 2px solid #b99bdb;
+        }
+
+        th, td {
+            padding: 10px;
+            border-top: 1px solid #e0e0e0; /* 연한 회색 선 */
+            border-bottom: 1px solid #e0e0e0; /* 연한 회색 선 */
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<main>
+    <div id="all">
+        <div id="title">
+            <h2>구직자 커뮤니티</h2>
+            <button onclick="location.href='/board/registform'">작성</button>
+        </div>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>글번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dto, state : ${list}">
+            <td>[[${list.size() - state.index}]]</td>
+            <td><a th:href="@{/board/detail/{communityNo}(communityNo=${dto.communityNo})}">[[${dto.title}]]</a>
+            </td>
+            <td>[[${dto.userId}]]</td>
+            <td>[[${dto.viewCnt}]]</td>
+            <th:block th:if="${dto.modifyDate == null}">
+            <td>[[${dto.createDate}]]</td>
+            </th:block>
+            <th:block th:if="${dto.modifyDate != null}">
+                <td>[[${dto.modifyDate}]]</td>
+            </th:block>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
+</body>
+</html>

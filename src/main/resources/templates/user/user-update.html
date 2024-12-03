@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" th:href="@{/static/css/user-update.css}">
+    <link rel="stylesheet" href="/static/css/user-update.css">
 </head>
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
@@ -61,7 +61,7 @@
 </div>
 <div class="modal" onclick="modalToggle()">
     <div class="modal-content" onclick="event.stopPropagation()">
-        <img th:src="@{/static/images/modal_close_btn.svg}" class="modal-img" onclick="modalToggle()" alt="닫기 이미지">
+        <img src="/static/images/modal_close_btn.svg" class="modal-img" onclick="modalToggle()" alt="닫기 이미지">
         <div class="title-container">
             <div class="content-title">패스워드 수정</div>
         </div>
@@ -87,6 +87,6 @@
 <script th:inline="javascript">
     const userSession = [[${session.user}]];
 </script>
-<script th:src="@{/static/js/userUpdate.js}"></script>
+<script src="/static/js/userUpdate.js"></script>
 </body>
 </html>
