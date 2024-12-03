@@ -61,21 +61,54 @@
             justify-content: space-between;
             align-items: center;
         }
-        #comment_container{
+
+        #comment_container {
             margin-top: 100px;
         }
+
         #commentTable th, #commentTable td {
             padding: 10px;
             border-top: 1px solid #e0e0e0; /* 연한 회색 선 */
             border-bottom: 1px solid #e0e0e0; /* 연한 회색 선 */
         }
-        #btn_container{
+        #comment_container form{
+            margin-top: 30px;
+        }
+        #comment_container input{
+            box-sizing: border-box;
+            height: 3rem; /* 48px */
+            border-radius: 0.5rem; /* 8px */
+            margin: 5px 0; /* 8px */
+            padding-left: 0.5rem; /* 8px */
+            font-weight: 500;
+            font-size: 1rem; /* 16px */
+            width: 100%;
+        }
+
+        #comment_container input{
+            border: 1px solid #CECECE;
+            transition: all 0.3s ease;
+        }
+
+        #comment_container input:focus{
+            outline: none;
+            border: 1px solid #6200EE;
+            box-shadow: 0 0 4px rgba(98, 0, 238, 0.3);
+        }
+
+
+        #btn_container {
             display: flex;
             justify-content: center;
         }
-        #btn{
+        #postBtn_container{
+            display: flex;
+            justify-content: end;
+        }
+
+        #btn {
             margin: 10px;
-            width:150px;
+            width: 150px;
         }
     </style>
 </head>
@@ -110,7 +143,7 @@
                     <th colspan="4">[[${board.modifyDate}]]</th>
                 </th:block>
                 <th>조회수[[${board.viewCnt+1}]]</th>
-                <th>댓글수</th>
+                <th>댓글수[[${commentCnt}]]</th>
             </tr>
             </thead>
             <tbody>
@@ -144,10 +177,36 @@
                 <button id="btn">댓글 더보기</button>
             </th:block>
         </div>
+        <form method="post">
+            <p>작성자 : [[${session.user.userId}]]</p>
+            <input type="hidden" name="communityNo" id="communityNo" th:value="${board.communityNo}">
+            <input type="hidden" name="userId" id="userId" th:value="${session.user.userId}">
+            <input type="text" name="commentContent" id="commentContent" placeholder="댓글을 입력하세요">
+            <div id="postBtn_container">
+                <button onclick="post()">등록</button>
+            </div>
+        </form>
     </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 <script>
+    const communityNo = document.getElementById("communityNo").value;
+    const userId = document.getElementById("userId").value;
+    const commentContent = document.getElementById("commentContent");
+
+    function post(){
+        axios.post('/commentregist', {
+            communityNo: communityNo,
+            userId : userId,
+            commentContent : commentContent.value
+        })
+        .then(function (response){
+            console.log(response);
+        })
+        .catch(function (error){
+            console.log(error);
+        })
+    }
 </script>
 </html>

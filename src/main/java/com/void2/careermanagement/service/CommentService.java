@@ -22,5 +22,7 @@ public class CommentService {
         return list;
     }
 
-
+    public void registComment(CommentDto commentDto) {
+        commentDao.registComment(commentDto);
+    }
 }
