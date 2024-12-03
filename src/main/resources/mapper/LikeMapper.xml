@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.void2.careermanagement.dao.LikeDao">
+    <update id="insertOrDelete">
+        INSERT INTO tbl_like (column1, column2, ,like_type)
+        SELECT #{param1}, #{param2}
+        WHERE NOT EXISTS (
+            SELECT 1 FROM tbl_like
+            WHERE column1 = #{param1} AND column2 = #{param2}
+        );
+
+        DELETE FROM tbl_like
+        WHERE EXISTS (
+            SELECT 1 FROM tbl_like
+            WHERE column1 = #{param1} AND column2 = #{param2}
+        );
+    </update>
+</mapper>

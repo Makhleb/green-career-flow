@@ -19,15 +19,6 @@
             box-sizing: border-box; /* 모든 요소에 박스 모델 적용 */
         }
 
-        /*main {*/
-        /*    !*width: 100vw;*!*/
-        /*    !*height: 150vh;*!*/
-        /*    min-height: 1400px;*/
-        /*    max-height: 1400px;*/
-        /*    height: 1400px;*/
-        /*    !*margin: 0 0 100px 0;*!*/
-        /*}*/
-
         .flex-row {
             display: flex;
             flex-direction: row;
@@ -282,6 +273,7 @@
             margin: 3px;
             width: auto;
         }
+
         .manager-form {
             width: 20px;
             min-width: 450px;
@@ -300,8 +292,11 @@
                 <div class="top-sub-wrapper-left-top flex-col">
                     <div class="flex-row" style="margin-top: 10px">
                         <span th:text="${jobPostInfo.companyName}"></span>
-                        <button id="like-btn"><img id="likeImg" width="18px" height="18px"
-                                                   src="/static/images/empty_heart.png"> 관심기업
+                        <button id="like-btn" th:onclick="'actLike(' + ${jobPostInfo.companyId} + ')'"><img id="likeImg"
+                                                                                                            width="18px"
+                                                                                                            height="18px"
+                                                                                                            src="/static/images/empty_heart.png">
+                            관심기업
                         </button>
                     </div>
                     <h1 th:text="${jobPostInfo.title}"></h1>
@@ -364,7 +359,8 @@
                     </div>
                     <div class="right-form flex-row">
                         <div class="label">사원 수</div>
-                        <div class="value" th:text="${#numbers.formatInteger(jobPostInfo.companyEmployee,3,'COMMA')} + '명'"></div>
+                        <div class="value"
+                             th:text="${#numbers.formatInteger(jobPostInfo.companyEmployee,3,'COMMA')} + '명'"></div>
                     </div>
                 </div>
                 <div class="company-detail-btn-container">
@@ -377,8 +373,8 @@
                 <img style="" width="15px" height="14px" src="/static/images/check.png">
                 &nbsp;즉시 지원
             </button>
-            <button id="scrap-btn">
-                <img style="" width="18px" height="18px" src="/static/images/empty_star.png">
+            <button id="scrap-btn" th:onclick="'actScrap(' + ${jobPostInfo.jobPostNo} + ')'">
+                <img id="scrapImg" style="" width="18px" height="18px" src="/static/images/empty_star.png">
                 &nbsp;스크랩
             </button>
         </div>
@@ -455,5 +451,39 @@
     </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
+<script>
+    const likeImagesSrc = ["/static/images/empty_heart.jpg", "/static/images/heart.jpg"];
+    const likeImage = $('#likeImg');
+    let likeImageIndex = likeImagesSrc.findIndex(likeImage.src);
+
+    const scrapImagesSrc = ["/static/images/empty_start.jpg", "/static/images/start.jpg"];
+    const scrapImage = $('#scrapImg');
+    let scrapImageIndex = scrapImagesSrc.findIndex(scrapImage.src);
+
+    function actLike(companyId) {
+        axios.post("/api/like/" + companyId)
+            .then(res => {
+                console.log(res);
+                if (res.data == 1) {
+                    likeImage.src = likeImagesSrc[likeImageIndex + 1 % 2];
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    function actScrap(jobPostNo) {
+        axios.post("/api/scrap/" + jobPostNo)
+            .then(res => {
+                if (res.data == 1) {
+                    scrapImage.src = scrapImage[scrapImageIndex + 1 % 2];
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+</script>
 </body>
 </html>
