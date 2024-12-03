@@ -4,7 +4,8 @@
                 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.void2.careermanagement.dao.CommentDao">
         <select id="getListComment" resultType="com.void2.careermanagement.dto.CommentDto">
-                SELECT * FROM tbl_comment WHERE community_no = #{communityNo}
+                SELECT * FROM tbl_comment
+                WHERE community_no = #{communityNo}
         </select>
         <insert id="registComment">
                 INSERT INTO tbl_comment (community_no, user_id, comment_content)

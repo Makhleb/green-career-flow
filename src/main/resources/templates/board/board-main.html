@@ -88,9 +88,10 @@
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 <script>
-    const sessionUser = /*[[${session.user != null}]]*/ false;
-    const listCnt = /*[[${listCnt}]]*/ false;
-    console.log(listCnt)
+    // const sessionUser = /*[[${session.user != null}]]*/ false;
+    // console.log(sessionUser);
+    // const listCnt = /*[[${listCnt}]]*/ false;
+    // console.log(listCnt)
     let startNum = 0;
     const addSize = 10;
     window.addEventListener('scroll', (e) => {
@@ -111,9 +112,7 @@
                             addTr.innerHTML = `
                                             <td>${board.communityNo}</td>
                                             <td>
-                                                ${sessionUser
-                                                        ? `<a href="/board/detail/${board.communityNo}">${board.title}</a>`
-                                                        : `<a href="/user/account/login">${board.title}</a>`}
+                                                <a href="/board/detail/${board.communityNo}">${board.title}</a>
                                             </td>
                                             <td>${board.userId}</td>
                                             <td>${board.viewCnt}</td>
