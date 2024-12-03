@@ -18,4 +18,5 @@ public class CompanyResponseDto {
     private int jobHistory;
     private double rating;
     private int jobPostNo;
+    private char likeYN; // 좋아요 했으면 유저가 기업 관심한 거 Y
 }
