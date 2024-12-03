@@ -18,15 +18,6 @@ window.onload = function sessionCheck() {
     }
 }
 
-function modalToggle() {
-    console.log("모달 발동")
-    if($('.modal').css('display') === "none") {
-        $('.modal').css('display', 'block');
-    } else {
-        $('.modal').css('display', 'none');
-    }
-}
-
 function pwEdit() {
     if($('#modal-userPw').val() !== $('#modal-userPwCheck').val()) {
         alert("비밀번호 일치여부를 확인해주세요");
@@ -52,7 +43,7 @@ function update() {
                 alert("회원정보 수정 성공")
                 location.reload(true);
             } else {
-                alert("로그인 오류 발생");
+                alert("오류 발생(수정되지 않음)");
             }
         })
         .catch(function (error) {

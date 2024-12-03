@@ -20,7 +20,7 @@
                 <div class="nav-links">
                     <ul th:if="${session.user != null}">
                         <li class="margin-left"><a href="/profile">내 프로필</a></li>
-                        <li class="margin-left"><a href="/logout">로그아웃</a></li>
+                        <li class="margin-left"><a href="/account/logout">로그아웃</a></li>
                     </ul>
 
                     <ul th:unless="${session.user != null}">
