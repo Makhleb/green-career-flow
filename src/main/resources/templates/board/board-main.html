@@ -63,8 +63,12 @@
         <tbody>
         <tr th:each="dto, state : ${list}">
             <td>[[${list.size() - state.index}]]</td>
-            <td><a th:href="@{/board/detail/{communityNo}(communityNo=${dto.communityNo})}">[[${dto.title}]]</a>
-            </td>
+            <th:block th:if="${session.user != null}">
+                <td><a th:href="@{/board/detail/{communityNo}(communityNo=${dto.communityNo})}">[[${dto.title}]]</a></td>
+            </th:block>
+            <th:block th:if="${session.user == null}">
+                <td><a th:href="@{/user/account/login}">[[${dto.title}]]</a></td>
+            </th:block>
             <td>[[${dto.userId}]]</td>
             <td>[[${dto.viewCnt}]]</td>
             <th:block th:if="${dto.modifyDate == null}">

@@ -11,5 +11,9 @@ import java.util.List;
 @Mapper
 public interface CommentDao {
     public List<CommentDto> getListComment(int communityNo);
-    public void registComment(CommentDto comment);
+    public int registComment(CommentDto comment);
+
+    int delete(int commentNo);
+
+    int update(CommentDto commentDto);
 }

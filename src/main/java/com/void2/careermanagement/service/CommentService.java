@@ -22,7 +22,34 @@ public class CommentService {
         return list;
     }
 
-    public void registComment(CommentDto commentDto) {
-        commentDao.registComment(commentDto);
+    public int registComment(CommentDto commentDto) {
+        try {
+            commentDao.registComment(commentDto);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int delete(int commentNo) {
+
+        try {
+            commentDao.delete(commentNo);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int update(CommentDto commentDto) {
+        try {
+            commentDao.update(commentDto);
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
