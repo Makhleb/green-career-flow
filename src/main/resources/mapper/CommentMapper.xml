@@ -10,4 +10,14 @@
                 INSERT INTO tbl_comment (community_no, user_id, comment_content)
                 VALUES(#{communityNo}, #{userId}, #{commentContent})
         </insert>
+        <update id="update">
+                UPDATE  tbl_comment
+                SET comment_content = #{commentContent},
+                comment_modify_date = now()
+                WHERE comment_no = #{commentNo}
+        </update>
+        <delete id="delete">
+                DELETE FROM tbl_comment
+                WHERE comment_no = #{commentNo}
+        </delete>
 </mapper>

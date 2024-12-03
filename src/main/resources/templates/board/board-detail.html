@@ -43,6 +43,10 @@
             margin-top: 10px;
             border-top: 2px solid #8B1FFF;
         }
+        #commentTable td input{
+            height: 30px;
+            font-size: 15px;
+        }
 
         a {
             text-decoration: none;
@@ -54,6 +58,15 @@
 
         th {
             background-color: #b99bdb; /* 연한 회색 배경 */
+        }
+
+        .thStart {
+            text-align: left;
+        }
+
+        .thEnd {
+            width: 100px;
+            text-align: right;
         }
 
         #title {
@@ -71,10 +84,12 @@
             border-top: 1px solid #e0e0e0; /* 연한 회색 선 */
             border-bottom: 1px solid #e0e0e0; /* 연한 회색 선 */
         }
-        #comment_container form{
+
+        #comment_container form {
             margin-top: 30px;
         }
-        #comment_container input{
+
+        #comment_container input {
             box-sizing: border-box;
             height: 3rem; /* 48px */
             border-radius: 0.5rem; /* 8px */
@@ -85,23 +100,43 @@
             width: 100%;
         }
 
-        #comment_container input{
+        #comment_container input {
             border: 1px solid #CECECE;
             transition: all 0.3s ease;
         }
 
-        #comment_container input:focus{
+        #comment_container input:focus {
             outline: none;
             border: 1px solid #6200EE;
             box-shadow: 0 0 4px rgba(98, 0, 238, 0.3);
         }
 
+        .date {
+            text-align: end;
+        }
+
+        .modi {
+            width: 50px;
+        }
+
+        .modi button {
+            width: 50px;
+            text-align: end;
+            background: none; /* 배경 제거 */
+            border: none; /* 테두리 제거 */
+            padding: 0; /* 여백 제거 */
+            margin: 0; /* 외부 여백 제거 */
+            font: inherit; /* 부모 요소의 폰트 스타일 상속 */
+            color: inherit; /* 부모 요소의 텍스트 색상 상속 */
+            cursor: pointer; /* 클릭 가능한 커서 설정 */
+        }
 
         #btn_container {
             display: flex;
             justify-content: center;
         }
-        #postBtn_container{
+
+        #postBtn_container {
             display: flex;
             justify-content: end;
         }
@@ -135,15 +170,15 @@
         <table>
             <thead>
             <tr>
-                <th>[[${board.userId}]]</th>
+                <th class="thStart">[[${board.userId}]]</th>
                 <th:block th:if="${board.modifyDate == null}">
-                    <th colspan="4">[[${board.createDate}]]</th>
+                    <th class="thStart" colspan="4">[[${board.createDate}]]</th>
                 </th:block>
                 <th:block th:if="${board.modifyDate != null}">
-                    <th colspan="4">[[${board.modifyDate}]]</th>
+                    <th class="thStart" colspan="4">[[${board.modifyDate}]]</th>
                 </th:block>
-                <th>조회수[[${board.viewCnt+1}]]</th>
-                <th>댓글수[[${commentCnt}]]</th>
+                <th class="thEnd">조회수[[${board.viewCnt+1}]]</th>
+                <th class="thEnd">댓글수[[${commentCnt}]]</th>
             </tr>
             </thead>
             <tbody>
@@ -155,35 +190,51 @@
     </div>
 
     <div id="comment_container">
-        <p>[[${commentCnt}]]개의 댓글</p>
-        <table id="commentTable">
-            <tbody>
-            <tr th:each="dto : ${cList}">
-                <td>[[${dto.userId}]]</td>
-                <td>[[${dto.commentContent}]]</td>
-                <th:block th:if="${dto.commentModifyDate == null}">
-                    <td>[[${dto.commentCreateDate}]]</td>
-                </th:block>
-                <th:block th:if="${dto.commentModifyDate != null}">
-                    <td>[[${dto.commentModifyDate}]]</td>
-                </th:block>
-                <td>수정</td>
-                <td>삭제</td>
-            </tr>
-            </tbody>
-        </table>
-        <div id="btn_container">
-            <th:block th:if="${commentCnt!=0}">
-                <button id="btn">댓글 더보기</button>
-            </th:block>
-        </div>
         <form method="post">
+            <p>[[${commentCnt}]]개의 댓글</p>
+            <table id="commentTable">
+                <tbody>
+                <tr th:each="dto : ${cList}">
+                    <td>[[${dto.userId}]]</td>
+                    <th:block th:if="${session.user.userId != dto.userId}">
+                        <td th:id="'commentContent_' + ${dto.commentNo}">[[${dto.commentContent}]]</td>
+                    </th:block>
+                    <th:block th:if="${session.user.userId == dto.userId}">
+                        <td><input type="text" th:id="'commentContent_' + ${dto.commentNo}" th:value="${dto.commentContent}"></td>
+                    </th:block>
+                    <th:block th:if="${dto.commentModifyDate == null}">
+                        <td class="date">[[${dto.commentCreateDate}]]</td>
+                    </th:block>
+                    <th:block th:if="${dto.commentModifyDate != null}">
+                        <td class="date">[[${dto.commentModifyDate}]]</td>
+                    </th:block>
+                    <th:block th:if="${session.user.userId == dto.userId}">
+                        <td class="modi">
+                            <button th:onclick="'updateComment(' + ${dto.commentNo} + ')'">수정</button>
+                        </td>
+                        <td class="modi">
+                            <button th:onclick="'deleteComment(' + ${dto.commentNo} + ')'">삭제</button>
+                        </td>
+                    </th:block>
+                    <th:block th:if="${session.user.userId != dto.userId}">
+                        <td></td>
+                        <td></td>
+                    </th:block>
+                </tr>
+                </tbody>
+            </table>
+            <div id="btn_container">
+                <th:block th:if="${commentCnt!=0}">
+                    <button id="btn">댓글 더보기</button>
+                </th:block>
+            </div>
+
             <p>작성자 : [[${session.user.userId}]]</p>
             <input type="hidden" name="communityNo" id="communityNo" th:value="${board.communityNo}">
             <input type="hidden" name="userId" id="userId" th:value="${session.user.userId}">
             <input type="text" name="commentContent" id="commentContent" placeholder="댓글을 입력하세요">
             <div id="postBtn_container">
-                <button onclick="post()">등록</button>
+                <button onclick="writeComment()">등록</button>
             </div>
         </form>
     </div>
@@ -191,22 +242,47 @@
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 <script>
-    const communityNo = document.getElementById("communityNo").value;
-    const userId = document.getElementById("userId").value;
-    const commentContent = document.getElementById("commentContent");
-    
-    function post(){
-        axios.post('/commentregist', {
+
+
+    function writeComment() {
+        const communityNo = document.getElementById("communityNo").value;
+        const userId = document.getElementById("userId").value;
+        const commentContent = document.getElementById("commentContent").value;
+        axios.post('/api/comment', {
             communityNo: communityNo,
-            userId : userId,
-            commentContent : commentContent.value
+            userId: userId,
+            commentContent: commentContent
         })
-        .then(function (response){
-            console.log(response);
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    function updateComment(commentNo) {
+        const commentContent = document.getElementById("commentContent_" + commentNo).value;
+        axios.put('/api/comment', {
+            commentNo: commentNo,
+            commentContent: commentContent
         })
-        .catch(function (error){
-            console.log(error);
-        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    function deleteComment(commentNo) {
+        axios.delete('/api/comment/' + commentNo)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
 </script>
 </html>
