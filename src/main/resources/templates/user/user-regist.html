@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>구직자 로그인</title>
     <link rel="stylesheet" href="/static/css/user-regist.css">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
@@ -23,7 +24,7 @@
             <div class="input-explain"><span class="red-point">* </span>아이디</div>
             <div class="id-container">
                 <input type="text" id="userId" data-name="아이디" placeholder="아이디를 입력하세요" maxlength="20">
-                <button class="duplicate-btn" onclick="duplicateCheck()">중복 확인</button>
+                <button class="sub-btn" onclick="duplicateCheck()">중복 확인</button>
             </div>
             <div class="input-explain"><span class="red-point">* </span>패스워드</div>
             <input type="text" id="userPw" data-name="비밀번호" placeholder="비밀번호를 입력하세요" maxlength="20">
@@ -36,7 +37,7 @@
             <div class="birth-and-gender-container">
                 <div class="birth-container">
                     <div class="input-explain"><span class="red-point">* </span>생년월일</div>
-                    <input type="text" id="userBirth" data-name="생년월일" placeholder="생년월일을 입력하세요" maxlength="8"
+                    <input type="date" id="userBirth" data-name="생년월일" placeholder="생년월일을 입력하세요" maxlength="8"
                            style="width: 100%">
                 </div>
                 <div class="gender-container">
@@ -65,8 +66,8 @@
         <div class="input-contents" id="company-container">
             <div class="input-explain"><span class="red-point">* </span>아이디</div>
             <div class="id-container">
-                <input type="text" id="companyId" data-name="아이디" placeholder="아이디를 입력하세요" maxlength="20">
-                <button class="duplicate-btn" onclick="duplicateCheck()">중복 확인</button>
+                <input type="text" id="companyId" data-name="아이디" placeholder="아이디를 입력하세요" maxlength="20" style="width: 100%">
+                <button class="sub-btn" onclick="duplicateCompanyCheck()">중복 확인</button>
             </div>
             <div class="input-explain"><span class="red-point">* </span>패스워드</div>
             <input type="text" id="companyPw" data-name="비밀번호" placeholder="비밀번호를 입력하세요" maxlength="20">
@@ -74,35 +75,45 @@
             <div class="input-explain"><span class="red-point">* </span>패스워드 확인</div>
             <input type="text" id="companyPwCheck" data-name="비밀번호 재입력" placeholder="비밀번호를 재입력하세요" maxlength="20">
 
-            <div class="input-explain"><span class="red-point">* </span>이름</div>
-            <input type="text" id="companyName" data-name="이름" placeholder="이름을 입력하세요" maxlength="20">
-            <div class="birth-and-gender-container">
-                <div class="birth-container">
-                    <div class="input-explain"><span class="red-point">* </span>생년월일</div>
-                    <input type="text" id="companyBirth" data-name="생년월일" placeholder="생년월일을 입력하세요" maxlength="8"
-                           style="width: 100%">
-                </div>
-                <div class="gender-container">
-                    <div class="input-explain"><span class="red-point">* </span>성별</div>
-                    <div class="gender-radio">
-                        <input type="radio" id="company-gender-male" class="gender-radio" name="optionGender" value="M"/>
-                        <label class="gender-option radius-zero-right" for="gender-male"
-                               style="color: #E2E2E2;">남자</label>
+            <div class="input-explain"><span class="red-point">* </span>회사명</div>
+            <input type="text" id="companyName" data-name="회사명" placeholder="회사명을 입력하세요" maxlength="50">
 
-                        <input type="radio" id="company-gender-female" class="gender-radio" name="optionGender" value="F"/>
-                        <label class="gender-option radius-zero-left" for="gender-female"
-                               style="color: #E2E2E2;">여자</label>
-                    </div>
-                </div>
+            <div class="input-explain"><span class="red-point">* </span>사업자 등록 번호</div>
+            <input type="text" id="companyNumber" data-name="사업자 번호" placeholder="사업자 번호('-' 제외 10자리)를 입력하세요" maxlength="10">
+
+            <div class="input-explain"><span class="red-point">* </span>주소번호</div>
+            <div class="id-container">
+                <input type="text" id="companyZonecode" data-name="우편 번호" placeholder="우편번호"style="width: 100%" readonly>
+                <button class="sub-btn" onclick="addressFind()">주소 찾기</button>
             </div>
+            <input type="text" id="companyAddress" class="add-margin" data-name="주소" placeholder="회사 주소를 입력하세요" readonly>
+            <input type="text" id="companyAddressDetail" class="add-margin" data-name="상세주소" placeholder="상세주소를 입력하세요" maxlength="50">
+
+            <div class="input-explain">회사 웹사이트</div>
+            <input type="text" id="companyWeb" data-name="웹사이트" placeholder="웹사이트를 입력하세요" maxlength="100">
 
             <div class="input-explain"><span class="red-point">* </span>이메일</div>
             <input type="text" id="companyEmail" data-name="이메일" placeholder="이메일을 입력하세요" maxlength="100">
 
-            <div class="input-explain"><span class="red-point">* </span>휴대폰 번호</div>
-            <input type="text" id="companyPhone" data-name="휴대폰번호" placeholder="휴대폰번호를 입력하세요" maxlength="20">
+            <div class="input-explain"><span class="red-point">* </span>대표 번호</div>
+            <input type="text" id="companyPhone" data-name="대표번호" placeholder="대표번호를 입력하세요" maxlength="20">
 
-            <button class="registBtn" onclick="regist()">회원가입</button>
+            <div class="input-explain">창시일</div>
+            <input type="date" id="companyBirth" data-name="창시일" placeholder="창시일(YYYYMMDD)" maxlength="8">
+
+            <div class="input-explain">직원수</div>
+            <input type="text" id="companyEmplyoee" data-name="직원수" placeholder="직원수" maxlength="7">
+
+            <div class="input-explain">회사 소개글</div>
+            <textarea id="company-introduce" data-name="소개글" placeholder="회사 소개글을 입력해주세요" style="width: 100%"></textarea>
+
+            <div class="input-explain">회사 대표 이미지</div>
+            <div class="image-attach">
+                <img src="/static/images/black_plus_btn.svg" width="30" height="auto" alt="플러스 이미지">
+            </div>
+            <input type="file" id="companyAttachment" accept="image/*">
+
+            <button class="registBtn" onclick="companyRegist()">회원가입</button>
         </div>
 
     </div>
@@ -125,6 +136,75 @@
     })
 </script>
 <script type="text/javascript" src="/static/js/userRegist.js"></script>
+<script>
+    let duplicateCompany = true;
+    function duplicateCompanyCheck() {
+        if (!/^[a-zA-Z0-9]{4,20}$/.test($('#companyId').val())) {
+            alert("ID는 영문/숫자로 4자 ~ 20자 이내로만 작성가능합니다.")
+            return true;
+        }
 
+        let companyId = $('#companyId').val();
+        axios.get('/api/company/account/check-id/' + companyId)
+            .then(function (response) {
+                if (response.data !== 0) {
+                    alert("중복된 id 입니다");
+                    duplicateCompany = true;
+                } else {
+                    alert("사용가능한 id 입니다");
+                    duplicateCompany = false;
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    /**
+     * 주소 찾기
+     */
+    function addressFind(){
+        new daum.Postcode({
+            oncomplete: function(data) {
+                console.log(data);
+                $('#companyZonecode').val(data.zonecode);
+                $('#companyAddress').val(data.address);
+            }
+        }).open();
+    }
+
+    /**
+    * 기업등록api 함수
+    */
+    function companyRegist() {
+        axios.post("/api/company/account/regist", {
+            companyId: $("#companyId").val(),
+            companyPw: $("#companyPw").val(),
+            companyName: $("#companyName").val(),
+            companyNumber: $("#companyNumber").val(),
+            companyZonecode: $("#companyZonecode").val(),
+            companyAddress: $("#companyAddress").val(),
+            companyAddressDetail: $("#companyAddressDetail").val(),
+            companyWebsite: $("#companyWeb").val(),
+            companyEmail: $("#companyEmail").val(),
+            companyContact: $("#companyPhone").val(),
+            companyBirth: $("#companyBirth").val(), // YYYYMMDD 형식
+            companyInfo: $("#company-introduce").val(), // textarea 값
+            companyImage: null, // 이미지 업로드 기능 추가 필요
+            companyEmployee: $('#companyEmplyoee').val()
+        })
+            .then(function (response) {
+                if (response.data) {
+                    alert("회원등록 성공 로그인으로 이동합니다.")
+                    location.href = "/user/account/login";
+                } else {
+                    alert("로그인 오류 발생");
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+</script>
 </body>
 </html>

@@ -7,7 +7,7 @@ let duplicateId = true;
 function duplicateCheck() {
     if (!/^[a-zA-Z0-9]{4,20}$/.test($('#userId').val())) {
         alert("ID는 영문/숫자로 4자 ~ 20자 이내로만 작성가능합니다.")
-        return false;
+        return;
     }
 
     let userId = $('#userId').val();
@@ -30,11 +30,12 @@ function duplicateCheck() {
  * input 빈값 체크용 함수
  */
 function nullCheck() {
-    const $fields = $('input[type="text"]');
+    const $fields = $('#user-container input[type="text"]');
 
     for (let field of $fields) {
         const $field = $(field);
         if (!$field.val().trim()) {
+            console.log($field.data('name'))
             alert(`${$field.data('name')}을(를) 입력해주세요.`);
             return false;
         }
@@ -55,10 +56,6 @@ function nullCheck() {
 function validateCheck() {
     if (!/^[a-zA-Z0-9]{8,20}$/.test($('#userPw').val())) {
         alert("패스워드는 영문/숫자로 8자 ~ 20자 이내로만 작성가능합니다.")
-        return false;
-    }
-    if (!/^\d{4}[0-1][0-9][0-3][0-9]$/.test($('#userBirth').val())) {
-        alert("생년월일은 YYYYMMDD형식을 준수해주세요");
         return false;
     }
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test($('#userEmail').val())) {
