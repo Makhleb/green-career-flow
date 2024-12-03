@@ -72,10 +72,11 @@ a{
 }
 
 .grid-resume-item-rank{
-    width:80px;
+    width:90px;
     height: 26px;
+    margin: 10px 20px;
     background-color: #F20F38;
-    border-radius: 16px;
+    border-radius: 20px;
     text-align: center;
     align-items: center;
     color: white;
