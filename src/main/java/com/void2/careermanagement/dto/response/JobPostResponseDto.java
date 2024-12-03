@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 public class JobPostResponseDto {
-    private int job_no;
+    private int jobPostNo;
     private String companyId;
     private String companyName;
     private String companyAddress;

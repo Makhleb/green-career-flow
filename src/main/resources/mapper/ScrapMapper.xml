@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.void2.careermanagement.dao.ScrapDao">
+    <select id="checkScrap">
+        SELECT COUNT(*)
+        FROM tbl_jpl
+        WHERE user_id = #{userId}
+          AND job_post_no = #{jobPostNo}
+    </select>
+    <delete id="delete">
+        DELETE
+        FROM tbl_jpl
+        WHERE user_id = #{userId}
+          AND job_post_no = #{jobPostNo}
+    </delete>
+    <insert id="insert">
+        INSERT INTO tbl_jpl(user_id, job_post_no, scrap_date)
+        VALUES (#{userId}, #{jobPostNo}, NOW())
+    </insert>
+</mapper>

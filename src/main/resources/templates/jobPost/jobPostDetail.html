@@ -19,15 +19,6 @@
             box-sizing: border-box; /* 모든 요소에 박스 모델 적용 */
         }
 
-        /*main {*/
-        /*    !*width: 100vw;*!*/
-        /*    !*height: 150vh;*!*/
-        /*    min-height: 1400px;*/
-        /*    max-height: 1400px;*/
-        /*    height: 1400px;*/
-        /*    !*margin: 0 0 100px 0;*!*/
-        /*}*/
-
         .flex-row {
             display: flex;
             flex-direction: row;
@@ -282,9 +273,77 @@
             margin: 3px;
             width: auto;
         }
+
         .manager-form {
             width: 20px;
             min-width: 450px;
+        }
+
+        /* Modal Background */
+        .modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        /* Resume List */
+        .resume-list {
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .resume-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .resume-item:hover {
+            background: #dcdcdc;
+        }
+
+        /* Apply Button */
+        .apply-btn {
+            background: #8B1FFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
         }
 
 
@@ -300,8 +359,10 @@
                 <div class="top-sub-wrapper-left-top flex-col">
                     <div class="flex-row" style="margin-top: 10px">
                         <span th:text="${jobPostInfo.companyName}"></span>
-                        <button id="like-btn"><img id="likeImg" width="18px" height="18px"
-                                                   src="/static/images/empty_heart.png"> 관심기업
+                        <button id="like-btn" onclick="actLike(this)" th:data-company-id="${jobPostInfo.companyId}">
+                            <img id="likeImg" width="18px" height="18px"
+                                 th:src="${likeYn eq 'Y'} ? '/static/images/heart.png' : '/static/images/empty_heart.png'">
+                            관심기업
                         </button>
                     </div>
                     <h1 th:text="${jobPostInfo.title}"></h1>
@@ -364,7 +425,8 @@
                     </div>
                     <div class="right-form flex-row">
                         <div class="label">사원 수</div>
-                        <div class="value" th:text="${#numbers.formatInteger(jobPostInfo.companyEmployee,3,'COMMA')} + '명'"></div>
+                        <div class="value"
+                             th:text="${#numbers.formatInteger(jobPostInfo.companyEmployee,3,'COMMA')} + '명'"></div>
                     </div>
                 </div>
                 <div class="company-detail-btn-container">
@@ -373,14 +435,38 @@
             </div>
         </div>
         <div class="middle-wrapper flex-row">
-            <button id="apply-btn">
+            <button id="apply-btn" onclick="openResumeModal()">
                 <img style="" width="15px" height="14px" src="/static/images/check.png">
                 &nbsp;즉시 지원
             </button>
-            <button id="scrap-btn">
-                <img style="" width="18px" height="18px" src="/static/images/empty_star.png">
+            <button id="scrap-btn" onclick="actScrap(this)" th:data-job-post-no="${jobPostInfo.jobPostNo}">
+                <img id="scrapImg" style="" width="18px" height="18px"
+                     th:src="${scrapYn eq 'Y'}? '/static/images/star.png' : '/static/images/empty_star.png'">
                 &nbsp;스크랩
             </button>
+        </div>
+        <!-- 이력서 선택 모달 -->
+        <div id="resumeModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeResumeModal()">×</button>
+                <h2>이력서 선택</h2>
+                <hr class="divider">
+                <div class="resume-list">
+                    <div class="resume-item">
+                        <span class="date">YYYY / MM / DD</span>
+                        <span class="title">이력서 제목 1</span>
+                    </div>
+                    <div class="resume-item">
+                        <span class="date">YYYY / MM / DD</span>
+                        <span class="title">이력서 제목 2</span>
+                    </div>
+                    <div class="resume-item">
+                        <span class="date">YYYY / MM / DD</span>
+                        <span class="title">이력서 제목 3</span>
+                    </div>
+                </div>
+                <button class="apply-btn">지원하기</button>
+            </div>
         </div>
 
         <div class="bottom-wrapper flex-col">
@@ -455,5 +541,56 @@
     </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
+<script>
+    const likeImageSrc = ["/static/images/empty_heart.png", "/static/images/heart.png"];
+    const likeImage = $('#likeImg');
+    let likeImageIndex = likeImageSrc.indexOf(likeImage.attr('src'));
+
+    const scrapImageSrc = ["/static/images/empty_star.png", "/static/images/star.png"];
+    const scrapImage = $('#scrapImg');
+    let scrapImageIndex = scrapImageSrc.indexOf(scrapImage.attr('src'));
+
+    function actLike(ele) {
+        axios.post("/api/like/" + ele.getAttribute("data-company-id"))
+            .then(res => {
+                const data = res.data;
+                if (data == -1) {
+                    alert("로그인 후 사용해주세요.");
+                    location.href = '/user/account/login';
+                } else if (data == 1) {
+                    likeImage.attr('src', likeImageSrc[(likeImageIndex += 1) % 2]);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    function actScrap(ele) {
+        axios.post("/api/scrap/" + ele.getAttribute("data-job-post-no"))
+            .then(res => {
+                const data = res.data;
+                if (data == -1) {
+                    alert("로그인 후 사용해주세요.");
+                    location.href = '/user/account/login';
+                } else if (data == 1) {
+                    scrapImage.attr('src', scrapImageSrc[(scrapImageIndex += 1) % 2]);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+    // 모달 열기
+    function openResumeModal() {
+        document.getElementById("resumeModal").style.display = "flex";
+    }
+
+    // 모달 닫기
+    function closeResumeModal() {
+        document.getElementById("resumeModal").style.display = "none";
+    }
+</script>
+
 </body>
 </html>

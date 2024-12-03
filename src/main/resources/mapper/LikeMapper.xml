@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.void2.careermanagement.dao.LikeDao">
+    <insert id="insert">
+        INSERT INTO tbl_like (${inputColumnName}, ${receiveColumnName}, like_date, like_type)
+        VALUES (#{inputId}, #{likeId}, NOW(), #{gubn})
+    </insert>
+    <delete id="delete">
+        DELETE
+        FROM tbl_like
+        WHERE ${inputColumnName} = #{inputId}
+          AND ${receiveColumnName} = #{likeId}
+          AND like_type = #{gubn}
+    </delete>
+    <select id="checkLike">
+        SELECT COUNT(*)
+        FROM tbl_like
+        WHERE ${inputColumnName} = #{inputId}
+        AND ${receiveColumnName} = #{likeId}
+        AND like_type = #{gubn}
+    </select>
+</mapper>
