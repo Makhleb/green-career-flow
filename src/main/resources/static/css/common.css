@@ -4,6 +4,7 @@
 header {
     padding-top: 35px;
     background-color: white;
+    margin-bottom: 30px;
 }
 
 .logo-search-container{
@@ -107,7 +108,7 @@ main{
 
 /* footer-css*/
 footer {
-    margin-top: 20px;
+    margin-top: 40px;
     background-color: #8B1FFF;
     text-align: center;
 }

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: "Noto Sans KR", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-style: normal;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* 모든 요소에 박스 모델 적용 */
+        }
+
+        /*main {*/
+        /*    !*width: 100vw;*!*/
+        /*    !*height: 150vh;*!*/
+        /*    min-height: 1400px;*/
+        /*    max-height: 1400px;*/
+        /*    height: 1400px;*/
+        /*    !*margin: 0 0 100px 0;*!*/
+        /*}*/
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #like-btn {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-left: 4px;
+            background-color: white;
+            border: 1px solid black;
+            padding: 3px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #likeImg {
+            margin-right: 3px;
+        }
+
+        .container {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            min-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .top-sub-wrapper-left {
+            width: 70%;
+        }
+
+        .top-sub-wrapper-right {
+            width: 30%;
+            border-left: 1px solid black;
+        }
+
+        .top-wrapper {
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            width: 100%;
+            height: 30%;
+            max-height: 300px;
+            min-height: 276px;
+        }
+
+        .top-hr {
+            margin: 10px 10px 10px 0;
+        }
+
+        .title {
+            font-weight: bold;
+        }
+
+        .top-sub-wrapper-left-bottom {
+            width: 100%;
+        }
+
+        .top-sub-wrapper-left-bottom-left, .top-sub-wrapper-left-bottom-right {
+            width: 40%;
+        }
+
+        /*.top-sub-wrapper-left-bottom-left {*/
+        /*    margin-right: 10px;*/
+        /*}*/
+
+        .left-form {
+            margin: 5px 0 5px 0;
+        }
+
+        .label, .value {
+            font-weight: 400;
+        }
+
+        .label {
+            width: 30%;
+        }
+
+        .value {
+            width: 70%;
+        }
+
+
+        .top-sub-wrapper-right {
+            height: 100%;
+        }
+
+        .top-sub-wrapper-right img {
+            width: 40%;
+            height: 40%;
+            align-self: center;
+        }
+
+        .company-info {
+            height: 40%;
+            margin-left: 10px;
+        }
+
+        .right-form {
+            margin: 1px 0 1px 0;
+        }
+
+        .right-form .value {
+            text-align: end;
+        }
+
+        .company-detail-btn-container {
+            height: 20%;
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+            align-items: end;
+        }
+
+        #company-detail-btn {
+            background-color: white;
+            border: 1px solid black;
+            padding: 3px;
+            border-radius: 5px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .middle-wrapper {
+            height: 10%;
+            max-height: 120px;
+            min-height: 80px;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid black;
+        }
+
+        #apply-btn, #scrap-btn {
+            font-size: 18px;
+            font-weight: 600;
+            height: 70%;
+            width: 12%;
+            cursor: pointer;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        #apply-btn {
+            color: white;
+            background-color: #8B1FFF;
+            margin-right: 10px;
+            border: none;
+        }
+
+        #scrap-btn {
+            color: black;
+            background-color: white;
+            margin-right: 10px;
+            border: 1px solid black;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-form {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .bottom-wrapper {
+            /*height: 100%;*/
+            margin-top: 20px;
+        }
+
+        .content-form-content {
+            margin-top: 10px;
+        }
+
+        .content-form-content p {
+            font-weight: 400;
+        }
+
+        .stack {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            /*max-height: 4.5rem; !* 스크롤 가능한 높이 제한 *!*/
+            /*overflow-y: auto;*/
+            /*padding: 10px;*/
+            /*border: 1px solid #ddd;*/
+        }
+
+        .stack-item {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            color: white;
+            background-color: #8B1FFF;
+            border: 1px solid #CECECE;
+            border-radius: 0.5rem;
+            margin: 3px;
+            width: auto;
+        }
+
+        .process {
+            height: 100px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dash {
+            margin-left: 10px;
+            margin-right: 10px;
+            font-size: 24px;
+        }
+
+        .process-item {
+            height: 80px;
+            width: 80px;
+            background-color: #CECECE;
+            color: white;
+            border-radius: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .benefit {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            /*max-height: 4.5rem; !* 스크롤 가능한 높이 제한 *!*/
+            /*overflow-y: auto;*/
+            /*padding: 10px;*/
+            /*border: 1px solid #ddd;*/
+        }
+
+        .benefit-item {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            color: white;
+            background-color: #8B1FFF;
+            border: 1px solid #CECECE;
+            border-radius: 0.5rem;
+            margin: 3px;
+            width: auto;
+        }
+        .manager-form {
+            width: 20px;
+            min-width: 450px;
+        }
+
+
+    </style>
+    <link rel="stylesheet" href="/static/css/common.css">
+</head>
+<body>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<main>
+    <div class="container">
+        <div class="top-wrapper flex-row">
+            <div class="top-sub-wrapper-left">
+                <div class="top-sub-wrapper-left-top flex-col">
+                    <div class="flex-row" style="margin-top: 10px">
+                        <span th:text="${jobPostInfo.companyName}"></span>
+                        <button id="like-btn"><img id="likeImg" width="18px" height="18px"
+                                                   src="/static/images/empty_heart.png"> 관심기업
+                        </button>
+                    </div>
+                    <h1 th:text="${jobPostInfo.title}"></h1>
+                    <hr class="top-hr">
+                </div>
+                <div class="top-sub-wrapper-left-bottom flex-row">
+                    <div class="flex-col top-sub-wrapper-left-bottom-left">
+                        <p class="title">자격 요건</p>
+                        <div class="left-form flex-row">
+                            <div class="label">경력</div>
+                            <div class="value"
+                                 th:text="${jobPostInfo.jobHistory == 0 || jobPostInfo.jobHistory == ''  ? '경력 무관' : jobPostInfo.jobHistory + '년'}"></div>
+                        </div>
+                        <div class="left-form flex-row">
+                            <div class="label">학력</div>
+                            <div class="value"
+                                 th:text="${jobPostInfo.educationCode == '' ? '학력 무관' : jobPostInfo.educationName}"></div>
+                        </div>
+                    </div>
+                    <div class="flex-col top-sub-wrapper-left-bottom-right">
+                        <p class="title">근무 요건</p>
+                        <div class="left-form flex-row">
+                            <div class="label">근무 형태</div>
+                            <div class="value" th:text="${jobPostInfo.workTypeName}"></div>
+                        </div>
+                        <div class="left-form flex-row">
+                            <div class="label">연봉</div>
+                            <div class="value"
+                                 th:text="${#strings.isEmpty(jobPostInfo.jobSalary) || jobPostInfo.jobSalary == 0 ? '회사 내규에 따름' : #numbers.formatInteger(jobPostInfo.jobSalary,3,'COMMA') + '원'}"></div>
+                        </div>
+                        <div class="left-form flex-row">
+                            <div class="label">직급/직책</div>
+                            <div class="value" th:text="${jobPostInfo.jobRankName}"></div>
+                        </div>
+                        <div class="left-form flex-row">
+                            <div class="label">직무</div>
+                            <div class="value" th:text="${jobPostInfo.workName}"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="top-sub-wrapper-right flex-col">
+                <img src="/static/images/heart.png">
+                <div class="company-info flex-col">
+                    <p class="title">기업정보</p>
+                    <div class="right-form flex-row">
+                        <div class="label">대표번호</div>
+                        <div class="value">정규직 등</div>
+                    </div>
+                    <div class="right-form flex-row">
+                        <!--                         th:if="${jobPostInfo.companyWebsite != '' && jobPostInfo.companyWebsite != null}"-->
+                        <div class="label">홈페이지</div>
+                        <div class="value"><a th:href="${jobPostInfo.companyWebsite}"
+                                              th:text="${jobPostInfo.companyWebsite}"></a></div>
+                    </div>
+                    <div class="right-form flex-row">
+                        <div class="label">창시일</div>
+                        <div class="value" th:text="${jobPostInfo.companyBirth}"></div>
+                    </div>
+                    <div class="right-form flex-row">
+                        <div class="label">사원 수</div>
+                        <div class="value" th:text="${#numbers.formatInteger(jobPostInfo.companyEmployee,3,'COMMA')} + '명'"></div>
+                    </div>
+                </div>
+                <div class="company-detail-btn-container">
+                    <button id="company-detail-btn">기업 정보 >></button>
+                </div>
+            </div>
+        </div>
+        <div class="middle-wrapper flex-row">
+            <button id="apply-btn">
+                <img style="" width="15px" height="14px" src="/static/images/check.png">
+                &nbsp;즉시 지원
+            </button>
+            <button id="scrap-btn">
+                <img style="" width="18px" height="18px" src="/static/images/empty_star.png">
+                &nbsp;스크랩
+            </button>
+        </div>
+
+        <div class="bottom-wrapper flex-col">
+            <div class="content-form">
+                <span class="content-form-title">기술스택</span>
+                <div class="content-form-content">
+                    <div class="stack">
+                        <th:block th:each="skill :${jobPostInfo.skillList}">
+                            <span class="stack-item" th:text="${skill.name}"></span>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+            <div class="content-form">
+                <span class="content-form-title">모집 부문 및 상세내용</span>
+                <div class="content-form-content">
+                    <p th:text="${jobPostInfo.content}"></p>
+                </div>
+            </div>
+            <div class="content-form">
+                <span class="content-form-title">접수방법</span>
+                <div class="content-form-content">
+                    <p th:text="${jobPostInfo.method}"></p>
+                </div>
+            </div>
+            <div class="content-form">
+                <span class="content-form-title">전형절차</span>
+                <div class="process flex-row">
+                    <div class="process-item">서류 통과</div>
+                    <div class="dash">&nbsp;→&nbsp;</div>
+                    <th:block th:each="number : ${#numbers.sequence(1, jobPostInfo.process)}">
+                        <div th:if="${jobPostInfo.process > 0}" class="process-item" th:text="${number + '차 면접'}"></div>
+                        <div th:if="${jobPostInfo.process > 0}" class="dash">&nbsp;→&nbsp;</div>
+                    </th:block>
+                    <div style="background-color: #8B1FFF" class="process-item">최종 합격</div>
+                </div>
+            </div>
+            <div class="content-form">
+                <span class="content-form-title">복리후생</span>
+                <div class="content-form-content">
+                    <div class="benefit">
+                        <th:block th:each="benefit :${jobPostInfo.benefitList}">
+                            <span class="benefit-item" th:text="${benefit}"></span>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+            <div class="content-form">
+                <span class="content-form-title">유의사항</span>
+                <div class="content-form-content">
+                    <p th:text="${jobPostInfo.addNotice}"></p>
+                </div>
+            </div>
+            <div class="content-form">
+                <span class="content-form-title">담당자 정보</span>
+                <div class="content-form-content">
+                    <div class="manager-form flex-row">
+                        <div class="label">담당자</div>
+                        <div class="value" th:text="${jobPostInfo.managerName}"></div>
+                    </div>
+                    <div class="manager-form flex-row">
+                        <div class="label">담당자 번호</div>
+                        <div class="value" th:text="${jobPostInfo.managerPhone}"></div>
+                    </div>
+                    <div class="manager-form flex-row">
+                        <div class="label">담당자 이메일</div>
+                        <div class="value" th:text="${jobPostInfo.managerEmail}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
+</body>
+</html>
