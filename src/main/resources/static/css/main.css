@@ -1,0 +1,151 @@
+@charset "utf-8";
+#wrapper{
+    margin : 0 auto;
+    width: 1500px;
+}
+
+.grid-container{
+    display: grid;
+    width:100%;
+    grid-template-rows: 2fr 24px 32px auto 24px 32px auto 24px 32px auto 24px 32px auto 80px;
+    grid-template-columns: 2fr 6fr 2fr;
+
+}
+
+a{
+    text-decoration: none;
+}
+
+.grid-item-left{
+    grid-row-start: 1;
+    grid-row-end: 20;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    border-radius: 5px;
+
+}
+
+.grid-item-right{
+    grid-row-start: 1;
+    grid-row-end: 20;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    border-radius: 5px;
+
+}
+
+.grid-item{
+    border-radius: 5px;
+    font-size: 22px;
+    font-weight: 500;
+    position: relative;
+}
+
+.grid-item > img{
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+.imgText_main{
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    color: white;
+    font-size: 24px;
+}
+
+.grid-item-blank{
+    height: 32px;
+}
+
+#Previous{
+    position: absolute;
+    left: 5%;
+    top: 75%;
+}
+
+#Next{
+    position: absolute;
+    left: 10%;
+    top: 75%;
+}
+
+span, p{
+    font-size: 14px;
+
+}
+
+p{
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+.side_line{
+    font-size: 10px;
+    margin-top:-10px;
+}
+
+.imgText_left{
+    position: absolute;
+    left: 5%;
+    top: 18%;
+    color: white;
+    font-size: 24px;
+    line-height: normal;
+}
+
+.imgText_right{
+    position: absolute;
+    right: 28%;
+    top: 18%;
+    color: white;
+    font-size: 24px;
+    line-height: normal;
+}
+
+.grid_posting{
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 22px;
+}
+
+.grid_posting_item{
+    width: 384px;
+    height: auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.grid_posting_item > p {
+    margin-top: 10px;
+    font-weight: 550;
+    font-size: 16px;
+}
+
+.grid_posting_item > img {
+    margin-top: 20px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    border-radius: 5px;
+}
+
+.grid_posting_item:hover > img {
+    transform: scale(1.1);
+    border-radius: 5px;
+}
+
+.grid_posting_item_enddate{
+    position : absolute;
+    top: 12%;
+    left: 8%;
+    text-align: center;
+    width:80px;
+    height: 36px;
+    background-color: #ffffff;
+    opacity: 70%;
+    border-radius: 5px;
+}
+
+

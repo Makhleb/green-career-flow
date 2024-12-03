@@ -13,4 +13,6 @@ public interface BoardDao {
     public void increaseViewCnt(int communityNo);
 
     public void registBoard(BoardDto board);
+    public void updateBoard(BoardDto board);
+    public void deleteBoard(int communityNo);
 }

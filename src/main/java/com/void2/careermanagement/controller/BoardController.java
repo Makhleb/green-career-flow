@@ -2,7 +2,9 @@ package com.void2.careermanagement.controller;
 
 
 import com.void2.careermanagement.dto.BoardDto;
+import com.void2.careermanagement.dto.CommentDto;
 import com.void2.careermanagement.service.BoardService;
+import com.void2.careermanagement.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,9 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    @Autowired
+    private CommentService commentService;
+
     @RequestMapping("/boardmain")
     public String boardmain(Model model){
         List<BoardDto> list = boardService.getList();
@@ -33,10 +38,22 @@ public class BoardController {
         return "/board/board-registform";
     }
 
+    @RequestMapping("/updateform/{communityNo}")
+    public String updateform(@PathVariable("communityNo")int communityNo, Model model) {
+        BoardDto board = boardService.getBoard(communityNo);
+        model.addAttribute("board",board);
+        model.addAttribute("communityNo", communityNo);
+        return "/board/board-updateform";
+    }
+
     @RequestMapping("/detail/{communityNo}")
     public String detail(@PathVariable("communityNo")int communityNo, Model model){
         BoardDto board = boardService.getBoard(communityNo);
         boardService.increaseViewCnt(communityNo);
+        List<CommentDto> cList = commentService.getListComment(communityNo);
+        int commentCnt = cList.size();
+        model.addAttribute("commentCnt", commentCnt);
+        model.addAttribute("cList",cList);
         model.addAttribute("board", board);
         return "/board/board-detail";
     }
@@ -50,6 +67,19 @@ public class BoardController {
         return "redirect:/board/boardmain";
     }
 
+    @RequestMapping("/update")
+    public String update(BoardDto b){
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        BoardDto board = BoardDto.builder().communityNo(b.getCommunityNo()).title(b.getTitle()).content(b.getContent()).modifyDate(now).build();
+        boardService.updateBoard(board);
+        return "redirect:/board/detail/"+b.getCommunityNo();
+    }
+
+    @RequestMapping("/delete/{communityNo}")
+    public String delete(@PathVariable("communityNo")int communityNo){
+        boardService.deleteBoard(communityNo);
+        return "redirect:/board/boardmain";
+    }
 
 
 

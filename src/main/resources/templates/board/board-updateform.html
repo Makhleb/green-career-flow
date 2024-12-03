@@ -4,13 +4,48 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
         #all {
             margin-top: 20px;
+            padding : 0;
+            width: 100%; /* 부모 요소 너비 */
         }
 
         #head {
-            margin: 10px 0px;
+            margin: 10px 0;
         }
+
+        form {
+            width: 100%;
+        }
+
+        hr {
+            width: 100%; /* hr의 너비를 부모 요소에 맞춤 */
+            margin: 10px 0;
+            border: 0;
+            border-top: 1px solid #ccc; /* 구분선 스타일 */
+        }
+
+        #btn_container {
+            width: 100%;    
+            display: flex;
+            justify-content: right;
+        }
+
+        #btn {
+            width: 120px;
+            text-align: center;
+            font-size: 18px;
+            background-color: #b99bdb;
+            font-weight: bold;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+
         main input, main textarea {
             box-sizing: border-box;
             height: 3rem; /* 48px */
@@ -24,7 +59,7 @@
 
         main textarea{
             height: 500px;
-            padding: 8px;
+            padding: 8px;   
             resize : none;
         }
 
@@ -38,22 +73,8 @@
             border: 1px solid #6200EE;
             box-shadow: 0 0 4px rgba(98, 0, 238, 0.3);
         }
-        #btn_container{
-            width: 100%;
-            display: flex;
-            justify-content: right;
-        }
-        #btn {
-            width: 120px;
-            text-align: center;
-            font-size: 18px;
-            background-color: #b99bdb;
-            font-weight: bold;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 10px;
-        }
     </style>
+    <link rel="stylesheet" href="/static/css/common.css">
 </head>
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
@@ -62,14 +83,15 @@
         <div id="head">
             <h2>구직자 커뮤니티</h2>
             <br>
-            <hr>
+            <hr> <!-- hr 스타일 수정됨 -->
         </div>
-        <form th:action="@{/board/regist}" method="post">
+        <form th:action="@{/board/update}" method="post">
+            <input type="hidden" name="communityNo" th:value="${communityNo}">
             <input type="hidden" name="userId" th:value="${session.user.userId}">작성자 :[[${session.user.userId}]]<br>
-            <input type="text" id="text" name="title" placeholder="제목을 입력하세요"><br>
-            <textarea name="content" placeholder="내용을 입력하세요"></textarea><br>
+            <input type="text" id="text" name="title" th:value="${board.title}"><br>
+            <textarea name="content">[[${board.content}]]</textarea><br>
             <div id="btn_container">
-                <input id="btn" type="submit" value="글 게시하기">
+                <input type="submit" id="btn" value="글 수정하기">
             </div>
         </form>
     </div>
