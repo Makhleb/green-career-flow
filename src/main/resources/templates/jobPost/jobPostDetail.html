@@ -292,10 +292,9 @@
                 <div class="top-sub-wrapper-left-top flex-col">
                     <div class="flex-row" style="margin-top: 10px">
                         <span th:text="${jobPostInfo.companyName}"></span>
-                        <button id="like-btn" th:onclick="'actLike(' + ${jobPostInfo.companyId} + ')'"><img id="likeImg"
-                                                                                                            width="18px"
-                                                                                                            height="18px"
-                                                                                                            src="/static/images/empty_heart.png">
+                        <button id="like-btn" onclick="actLike(this)" th:data-company-id="${jobPostInfo.companyId}">
+                            <img id="likeImg" width="18px" height="18px"
+                                 th:src="${likeYn eq 'Y'} ? '/static/images/heart.png' : '/static/images/empty_heart.png'">
                             관심기업
                         </button>
                     </div>
@@ -373,8 +372,9 @@
                 <img style="" width="15px" height="14px" src="/static/images/check.png">
                 &nbsp;즉시 지원
             </button>
-            <button id="scrap-btn" th:onclick="'actScrap(' + ${jobPostInfo.jobPostNo} + ')'">
-                <img id="scrapImg" style="" width="18px" height="18px" src="/static/images/empty_star.png">
+            <button id="scrap-btn" onclick="actScrap(this)" th:data-job-post-no="${jobPostInfo.jobPostNo}">
+                <img id="scrapImg" style="" width="18px" height="18px"
+                     th:src="${scrapYn eq 'Y'}? '/static/images/star.png' : '/static/images/empty_star.png'">
                 &nbsp;스크랩
             </button>
         </div>
@@ -452,20 +452,25 @@
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 <script>
-    const likeImagesSrc = ["/static/images/empty_heart.jpg", "/static/images/heart.jpg"];
+    const likeImageSrc = ["/static/images/empty_heart.png", "/static/images/heart.png"];
     const likeImage = $('#likeImg');
-    let likeImageIndex = likeImagesSrc.findIndex(likeImage.src);
+    let likeImageIndex = likeImageSrc.indexOf(likeImage.attr('src'));
 
-    const scrapImagesSrc = ["/static/images/empty_start.jpg", "/static/images/start.jpg"];
+    const scrapImageSrc = ["/static/images/empty_star.png", "/static/images/star.png"];
     const scrapImage = $('#scrapImg');
-    let scrapImageIndex = scrapImagesSrc.findIndex(scrapImage.src);
+    console.log(scrapImage.attr('src'));
+    let scrapImageIndex = scrapImageSrc.indexOf(scrapImage.attr('src'));
 
-    function actLike(companyId) {
-        axios.post("/api/like/" + companyId)
+
+    function actLike(ele) {
+        axios.post("/api/like/" + ele.getAttribute("data-company-id"))
             .then(res => {
-                console.log(res);
-                if (res.data == 1) {
-                    likeImage.src = likeImagesSrc[likeImageIndex + 1 % 2];
+                const data = res.data;
+                if (data == -1) {
+                    alert("로그인 후 사용해주세요.");
+                    location.href = '/user/account/login';
+                } else if (data == 1) {
+                    likeImage.attr('src', likeImageSrc[(likeImageIndex += 1) % 2]);
                 }
             })
             .catch(error => {
@@ -473,11 +478,15 @@
             });
     }
 
-    function actScrap(jobPostNo) {
-        axios.post("/api/scrap/" + jobPostNo)
+    function actScrap(ele) {
+        axios.post("/api/scrap/" + ele.getAttribute("data-job-post-no"))
             .then(res => {
-                if (res.data == 1) {
-                    scrapImage.src = scrapImage[scrapImageIndex + 1 % 2];
+                const data = res.data;
+                if (data == -1) {
+                    alert("로그인 후 사용해주세요.");
+                    location.href = '/user/account/login';
+                } else if (data == 1) {
+                    scrapImage.attr('src', scrapImageSrc[(scrapImageIndex += 1) % 2]);
                 }
             })
             .catch(error => {

@@ -7,5 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface LikeDao {
-    int insertOrDelete(String id, String likeId, String gubn);
+    int insert(String inputColumnName, String inputId, String receiveColumnName, String likeId, String gubn);
+    int delete(String inputColumnName, String inputId, String receiveColumnName, String likeId, String gubn);
+
+    int checkLike(String inputColumnName, String inputId, String receiveColumnName, String likeId, String gubn);
 }

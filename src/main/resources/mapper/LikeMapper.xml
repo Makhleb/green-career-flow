@@ -3,18 +3,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.void2.careermanagement.dao.LikeDao">
-    <update id="insertOrDelete">
-        INSERT INTO tbl_like (column1, column2, ,like_type)
-        SELECT #{param1}, #{param2}
-        WHERE NOT EXISTS (
-            SELECT 1 FROM tbl_like
-            WHERE column1 = #{param1} AND column2 = #{param2}
-        );
-
-        DELETE FROM tbl_like
-        WHERE EXISTS (
-            SELECT 1 FROM tbl_like
-            WHERE column1 = #{param1} AND column2 = #{param2}
-        );
-    </update>
+    <insert id="insert">
+        INSERT INTO tbl_like (${inputColumnName}, ${receiveColumnName}, like_date, like_type)
+        VALUES (#{inputId}, #{likeId}, NOW(), #{gubn})
+    </insert>
+    <delete id="delete">
+        DELETE
+        FROM tbl_like
+        WHERE ${inputColumnName} = #{inputId}
+          AND ${receiveColumnName} = #{likeId}
+          AND like_type = #{gubn}
+    </delete>
+    <select id="checkLike">
+        SELECT COUNT(*)
+        FROM tbl_like
+        WHERE ${inputColumnName} = #{inputId}
+        AND ${receiveColumnName} = #{likeId}
+        AND like_type = #{gubn}
+    </select>
 </mapper>

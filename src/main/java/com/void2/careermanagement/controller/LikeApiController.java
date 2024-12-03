@@ -23,18 +23,21 @@ public class LikeApiController {
     }
 
     /**
-     * @param id : 구직자 id 또는 기업 id
+     * @param likeId : 구직자 id 또는 기업 id
      */
     @PostMapping("/{likeId}")
     public int insertLike(@PathVariable String likeId, HttpSession session) {
-        Object user = session.getAttribute("User");
-        String gubn = session.getAttribute("userType").toString();
+        if(session.getAttribute("user") == null) {
+            return -1;
+        }
+        Object user = session.getAttribute("user");
+        String userType = session.getAttribute("userType").toString();
         String id = "";
-        if (gubn.equals("U")) {
+        if (userType.equals("U")) {
             id = ((UserDto) user).getUserId();
-        } else if (gubn.equals("C")) {
+        } else if (userType.equals("C")) {
             id = ((CompanyDto) user).getCompanyId();
         }
-        return likeService.insertOrDelete(id, likeId, gubn);
+        return likeService.insertOrDelete(id, likeId, userType);
     }
 }
