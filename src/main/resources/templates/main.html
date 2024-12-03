@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
     <link rel="stylesheet" th:href="@{/static/css/main.css}"/>
     <title>Main</title>
 </head>
@@ -69,7 +70,7 @@
                     <p>
                         [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
                         <i class="bi bi-star-fill" style="color:#F2AE2E"></i>&nbsp;&nbsp;
-                        [[${company.rating}]]
+                        <span th:text="${#numbers.formatDecimal(company.rating, 1, 1)}"></span>
                     </p>
                     <span>[[${company.companyAddress}]]
                         <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
@@ -94,8 +95,6 @@
                     <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
                     <p>
                         [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
-                        <i class="bi bi-star-fill" style="color:#F2AE2E"></i>&nbsp;&nbsp;
-                        [[${company.rating}]]
                     </p>
                     <span>[[${company.companyAddress}]]
                         <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
