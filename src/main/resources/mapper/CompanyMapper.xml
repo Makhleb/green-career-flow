@@ -45,5 +45,20 @@
         ORDER BY end_date asc LIMIT 6
         ]]>
     </select>
-
+    <select id="getLikeList" resultType="com.void2.careermanagement.response.CompanyResponseDto">
+        <![CDATA[
+        SELECT j.company_id, c.company_name, c.company_address, j.title, j.start_date, c.company_image, j.job_history,
+               CASE
+                   WHEN j.end_date IS NULL THEN '상시'
+                   ELSE CONCAT('D-', DATEDIFF(j.end_date, NOW()))
+                   END AS end_date
+        FROM tbl_job_post j
+                 LEFT JOIN tbl_company c ON j.company_id = c.company_id
+                 LEFT JOIN tbl_company_score s ON j.company_id = s.company_id
+                 LEFT JOIN (SELECT company_id, like_type FROM tbl_like WHERE like_type = 'U' AND user_id = #{id}) l ON j.company_id = l.company_id
+        WHERE j.start_date <= NOW() AND (j.end_Date IS NULL OR j.end_date >= NOW()) AND l.like_type = 'U'
+        GROUP BY j.job_post_no, j.company_id, c.company_name, c.company_address, j.title, j.start_date, j.end_date, c.company_image
+        ORDER BY end_date asc LIMIT 6;
+        ]]>
+    </select>
 </mapper>

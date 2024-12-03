@@ -30,4 +30,6 @@ public class CompanyService {
     public List<CompanyResponseDto> getFastDeadLineList() {
         return companyDao.getFastEndDateList();
     };
+
+    public List<CompanyResponseDto> getLikeCompanyList(String id) {return companyDao.getLikeList(id);}
 }
