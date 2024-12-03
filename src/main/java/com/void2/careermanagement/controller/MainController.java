@@ -18,6 +18,7 @@ import java.util.List;
 @Controller
 public class MainController {
     private final CompanyService companyService;
+
     @Autowired
     public MainController(CompanyService companyService) {
         this.companyService = companyService;
@@ -25,7 +26,12 @@ public class MainController {
 
     @RequestMapping("/")
     public String root(Model model, HttpSession session) {
-        String userType = (String) session.getAttribute("userType");
+        String userType = "";
+
+        if (session.getAttribute("user") != null) {
+            userType = (String) session.getAttribute("userType");
+        }
+
         System.out.println(userType);
         if (userType.equals("C")) {
             return "/company/company-main";

@@ -190,7 +190,7 @@
     </div>
 
     <div id="comment_container">
-        <form method="post">
+<!--        <form method="post">-->
             <p>[[${commentCnt}]]개의 댓글</p>
             <table id="commentTable">
                 <tbody>
@@ -236,7 +236,7 @@
             <div id="postBtn_container">
                 <button onclick="writeComment()">등록</button>
             </div>
-        </form>
+<!--        </form>-->
     </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
@@ -254,6 +254,7 @@
             commentContent: commentContent
         })
             .then(function (response) {
+                location.reload();
                 console.log(response);
             })
             .catch(function (error) {
@@ -269,6 +270,10 @@
         })
             .then(function (response) {
                 console.log(response);
+                if(response.data == 1) {
+                    location.reload();
+                    alert("수정 완료");
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -279,6 +284,10 @@
         axios.delete('/api/comment/' + commentNo)
             .then(function (response) {
                 console.log(response);
+                if(response.data == 1) {
+                    location.reload();
+                    alert("삭제 완료");
+                }
             })
             .catch(function (error) {
                 console.log(error);
