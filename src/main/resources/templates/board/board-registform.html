@@ -11,7 +11,7 @@
         #head {
             margin: 10px 0px;
         }
-        input, textarea {
+        main input, main textarea {
             box-sizing: border-box;
             height: 3rem; /* 48px */
             border-radius: 0.5rem; /* 8px */
@@ -22,17 +22,18 @@
             width: 100%;
         }
 
-        textarea{
+        main textarea{
             height: 500px;
+            padding: 8px;
             resize : none;
         }
 
-        input, textarea {
+        main input, main textarea {
             border: 1px solid #CECECE;
             transition: all 0.3s ease;
         }
 
-        input:focus, textarea:focus, .minus-stack:hover, .add-stack:hover, .add-benefit:hover {
+        main input:focus, main textarea:focus {
             outline: none;
             border: 1px solid #6200EE;
             box-shadow: 0 0 4px rgba(98, 0, 238, 0.3);

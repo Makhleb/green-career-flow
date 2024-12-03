@@ -28,7 +28,9 @@
             margin-top: 10px;
             border-top: 2px solid #8B1FFF;
         }
-
+        a{
+            text-decoration: none;
+        }
         th, td {
             padding: 10px;
         }
@@ -54,11 +56,12 @@
         <div id="content">
             <div id="title">
                 <h3>[[${board.title}]]</h3>
-                <th:block th:if="${session.user.userId == board.userId}">
-                    <a th:href="@{/board/updateform/{communityNo}(communityNo=${board.communityNo})}">
-                        <button>수정</button>
-                    </a>
-                </th:block>
+                <div id="button">
+                    <th:block th:if="${session.user.userId == board.userId}">
+                        <button th:onclick="'if(confirm(\'정말 삭제하시겠습니까?\')) location.href=\'/board/delete/\' + ' + ${board.communityNo}">삭제</button>
+                        <button th:onclick="'location.href=\'/board/updateform/\' + '+${board.communityNo}">수정</button>
+                    </th:block>
+                </div>
             </div>
         </div>
         <table>
@@ -83,7 +86,6 @@
         </table>
     </div>
 </main>
-
-</body>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
+</body>
 </html>
