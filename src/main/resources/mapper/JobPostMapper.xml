@@ -88,6 +88,7 @@
         A.job_rank_code,
         A.work_code,
         A.work_type_code,
+        A.process,
         <!-- gubnList에서 각 항목의 NAME을 선택 -->
         <foreach collection="groupCodeList" item="groupCode" index="index" separator=",">
             ${groupCode}.NAME AS ${groupCode}_name

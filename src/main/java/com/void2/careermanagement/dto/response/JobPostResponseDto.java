@@ -38,6 +38,7 @@ public class JobPostResponseDto {
     private String jobRankCode;
     private String workCode;
     private String workTypeCode;
+    private int process;
     private List<String> benefitList;
     private List<GubnDto> skillList;
 }
