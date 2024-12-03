@@ -153,9 +153,10 @@ input:focus {
 }
 
 .modal {
-    position: absolute;
-    display:none;
+    position: fixed;
+    display: none;
     justify-content: center;
+    align-items: center;
     top: 0;
     left: 0;
     width: 100%;
