@@ -1,6 +1,7 @@
 let duplicateCompany = true;
 let base64img = null;
 
+// todo 기업 회원가입 유효성 검사 필요
 /**
  * 회사 id 중복확인
  * @returns {boolean}
