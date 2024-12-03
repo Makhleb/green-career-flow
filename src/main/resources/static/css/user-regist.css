@@ -37,6 +37,10 @@
     margin: 0;
 }
 
+.input-contents.view-div{
+    display : flex;
+}
+
 #input-container{
     width: 30%;
     min-width: 540px;
@@ -59,7 +63,7 @@
     width: 100%;
 }
 
-.duplicate-btn {
+.sub-btn {
     width: 100%;
     padding: 10px;
     font-size: 12px;
@@ -77,8 +81,8 @@
     align-items: center;
 }
 
-.input-container{
-    display: flex;
+.input-contents{
+    display: none;
     flex-direction: column;
     margin-top: 10px;
 }
@@ -141,18 +145,18 @@
     font-size: 14px;
 }
 
-input {
+input,textarea {
     margin-top: 3px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
 }
-input:focus {
+input:focus, textarea:focus {
     outline: none;
     border-color: #8B1FFF;
 }
 
-#registBtn {
+.registBtn {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -163,4 +167,45 @@ input:focus {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.add-margin{
+    margin-top: 15px;
+}
+
+textarea{
+    resize: none;
+    box-sizing: border-box;
+    width: 100%;
+    height: 280px;
+}
+.image-attach{
+    margin-top: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    position: relative;
+}
+
+.preview{
+    border-radius: 10px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.img-btn{
+    width: 20px;
+    height: auto;
+    cursor: pointer;
+}
+.img-btn.close{
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }

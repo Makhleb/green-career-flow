@@ -3,85 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <title>구직자 정보수정</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/static/css/user-update.css">
 </head>
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
 <main>
-<div class="title-container">
-    <div class="content-title">회원 정보 수정</div>
-</div>
+    <div class="title-container">
+        <div class="content-title">회원 정보 수정</div>
+    </div>
 
-<div id="input-container">
-    <div class="main-tab">개인회원 정보 수정</div>
-    <hr class="purple-line">
+    <div id="input-container">
+        <div class="main-tab">개인회원 정보 수정</div>
+        <hr class="purple-line">
 
-    <div class="input-contents">
-        <div class="input-explain"><span class="red-point">* </span>아이디</div>
-        <input type="text" id="userId" maxlength="20" readonly="readonly">
-        <div class="input-explain"><span class="red-point">* </span>패스워드</div>
-        <div class="password-container">
-            <input type="text" id="userPw" data-name="비밀번호" placeholder="비밀번호를 입력하세요" maxlength="20" readonly="readonly">
-            <button class="passwordEditBtn" onclick="modalToggle()">비밀번호 수정</button>
-        </div>
-
-
-        <div class="input-explain"><span class="red-point">* </span>이름</div>
-        <input type="text" id="userName" data-name="이름" placeholder="이름을 입력하세요" maxlength="20">
-        <div class="birth-and-gender-container">
-            <div class="birth-container">
-                <div class="input-explain"><span class="red-point">* </span>생년월일</div>
-                <input type="text" id="userBirth" data-name="생년월일" placeholder="생년월일을 입력하세요" maxlength="8"
-                       style="width: 100%">
+        <div class="input-contents">
+            <div class="input-explain"><span class="red-point">* </span>아이디</div>
+            <input type="text" id="userId" maxlength="20" readonly="readonly">
+            <div class="input-explain"><span class="red-point">* </span>패스워드</div>
+            <div class="password-container">
+                <input type="text" id="userPw" data-name="비밀번호" placeholder="비밀번호를 입력하세요" maxlength="20"
+                       readonly="readonly">
+                <button class="passwordEditBtn" onclick="modalToggle()">비밀번호 수정</button>
             </div>
-            <div class="gender-container">
-                <div class="input-explain"><span class="red-point">* </span>성별</div>
-                <div class="gender-radio">
-                    <input type="radio" id="gender-male" class="gender-radio" name="optionGender" value="M"/>
-                    <label class="gender-option radius-zero-right" for="gender-male" style="color: #E2E2E2;">남자</label>
 
-                    <input type="radio" id="gender-female" class="gender-radio" name="optionGender" value="F"/>
-                    <label class="gender-option radius-zero-left" for="gender-female" style="color: #E2E2E2;">여자</label>
+
+            <div class="input-explain"><span class="red-point">* </span>이름</div>
+            <input type="text" id="userName" data-name="이름" placeholder="이름을 입력하세요" maxlength="20">
+            <div class="birth-and-gender-container">
+                <div class="birth-container">
+                    <div class="input-explain"><span class="red-point">* </span>생년월일</div>
+                    <input type="text" id="userBirth" data-name="생년월일" placeholder="생년월일을 입력하세요" maxlength="8"
+                           style="width: 100%">
+                </div>
+                <div class="gender-container">
+                    <div class="input-explain"><span class="red-point">* </span>성별</div>
+                    <div class="gender-radio">
+                        <input type="radio" id="gender-male" class="gender-radio" name="optionGender" value="M"/>
+                        <label class="gender-option radius-zero-right" for="gender-male"
+                               style="color: #E2E2E2;">남자</label>
+
+                        <input type="radio" id="gender-female" class="gender-radio" name="optionGender" value="F"/>
+                        <label class="gender-option radius-zero-left" for="gender-female"
+                               style="color: #E2E2E2;">여자</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-explain"><span class="red-point">* </span>이메일</div>
+            <input type="text" id="userEmail" data-name="이메일" placeholder="이메일을 입력하세요" maxlength="100">
+
+            <div class="input-explain"><span class="red-point">* </span>휴대폰 번호</div>
+            <input type="text" id="userPhone" data-name="휴대폰번호" placeholder="휴대폰번호를 입력하세요" maxlength="20">
+
+            <button class="updateBtn" onclick="update()">회원 정보수정</button>
+            <button class="deleteBtn" onclick="deleteUser()">회원 삭제</button>
+        </div>
+    </div>
+    <div class="modal" onclick="modalToggle()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <img src="/static/images/modal_close_btn.svg" class="modal-img" onclick="modalToggle()" alt="닫기 이미지">
+            <div class="title-container">
+                <div class="content-title">패스워드 수정</div>
+            </div>
+
+            <div id="modal-input">
+                <div class="main-tab">개인회원 정보 수정</div>
+                <hr class="purple-line">
+
+                <div class="input-contents">
+                    <div class="input-explain"><span class="red-point">* </span>수정할 패스워드</div>
+                    <input type="text" id="modal-userPw" data-name="비밀번호" placeholder="비밀번호를 재입력하세요" maxlength="20">
+
+                    <div class="input-explain"><span class="red-point">* </span>수정할 패스워드 확인</div>
+                    <input type="text" id="modal-userPwCheck" data-name="비밀번호 확인" placeholder="비밀번호를 재입력하세요"
+                           maxlength="20">
+
+                    <button class="updateBtn" onclick="pwEdit()">패스워드 수정</button>
                 </div>
             </div>
         </div>
-
-        <div class="input-explain"><span class="red-point">* </span>이메일</div>
-        <input type="text" id="userEmail" data-name="이메일" placeholder="이메일을 입력하세요" maxlength="100">
-
-        <div class="input-explain"><span class="red-point">* </span>휴대폰 번호</div>
-        <input type="text" id="userPhone" data-name="휴대폰번호" placeholder="휴대폰번호를 입력하세요" maxlength="20">
-
-        <button class="updateBtn" onclick="update()">회원 정보수정</button>
-        <button class="deleteBtn" onclick="deleteUser()">회원 삭제</button>
     </div>
-</div>
-<div class="modal" onclick="modalToggle()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <img src="/static/images/modal_close_btn.svg" class="modal-img" onclick="modalToggle()" alt="닫기 이미지">
-        <div class="title-container">
-            <div class="content-title">패스워드 수정</div>
-        </div>
-
-        <div id="modal-input">
-            <div class="main-tab">개인회원 정보 수정</div>
-            <hr class="purple-line">
-
-            <div class="input-contents">
-                <div class="input-explain"><span class="red-point">* </span>수정할 패스워드</div>
-                <input type="text" id="modal-userPw" data-name="비밀번호" placeholder="비밀번호를 재입력하세요" maxlength="20">
-
-                <div class="input-explain"><span class="red-point">* </span>수정할 패스워드 확인</div>
-                <input type="text" id="modal-userPwCheck" data-name="비밀번호 확인" placeholder="비밀번호를 재입력하세요" maxlength="20">
-
-                <button class="updateBtn" onclick="pwEdit()">패스워드 수정</button>
-            </div>
-        </div>
-    </div>
-</div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 <script th:inline="javascript">
