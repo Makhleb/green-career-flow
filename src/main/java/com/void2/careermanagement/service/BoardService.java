@@ -13,8 +13,13 @@ public class BoardService {
     @Autowired
     BoardDao boardDao;
 
-    public List<BoardDto> getList() {
-        List<BoardDto> list = boardDao.getList();
+    public int getListCnt() {
+        int ListCnt = boardDao.getListCnt();
+        return ListCnt;
+    }
+
+    public List<BoardDto> getList(int startNum) {
+        List<BoardDto> list = boardDao.getList(startNum);
         return list;
     }
 

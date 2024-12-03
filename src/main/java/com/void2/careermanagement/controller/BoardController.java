@@ -5,6 +5,7 @@ import com.void2.careermanagement.dto.BoardDto;
 import com.void2.careermanagement.dto.CommentDto;
 import com.void2.careermanagement.service.BoardService;
 import com.void2.careermanagement.service.CommentService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +29,10 @@ public class BoardController {
 
     @RequestMapping("/boardmain")
     public String boardmain(Model model){
-        List<BoardDto> list = boardService.getList();
+        int listCnt = boardService.getListCnt();
+        List<BoardDto> list = boardService.getList(0);
         model.addAttribute("list", list);
+        model.addAttribute("listCnt", listCnt);
         return "/board/board-main";
     }
 
@@ -47,7 +50,8 @@ public class BoardController {
     }
 
     @RequestMapping("/detail/{communityNo}")
-    public String detail(@PathVariable("communityNo")int communityNo, Model model){
+    public String detail(@PathVariable("communityNo")int communityNo, Model model, HttpSession session){
+        if(session.getAttribute("user")==null)return "redirect:/user/account/login";
         BoardDto board = boardService.getBoard(communityNo);
         boardService.increaseViewCnt(communityNo);
         List<CommentDto> cList = commentService.getListComment(communityNo);
