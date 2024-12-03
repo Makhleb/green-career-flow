@@ -24,8 +24,8 @@ public class CompanyDto {
     private String companyContact;
     private String companyWebsite;
     private String companyEmail;
-    private Date companyBirth;
+    private LocalDate companyBirth;
     private int companyEmployee;
-    private LocalDate companyCreateDate;
-    private LocalDate companyModifyDate;
+    private LocalDateTime companyCreateDate;
+    private LocalDateTime companyModifyDate;
 }

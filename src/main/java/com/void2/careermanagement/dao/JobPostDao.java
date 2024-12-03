@@ -1,6 +1,8 @@
 package com.void2.careermanagement.dao;
 
+import com.void2.careermanagement.dto.GubnDto;
 import com.void2.careermanagement.dto.request.JopPostRequestDto;
+import com.void2.careermanagement.dto.response.JobPostResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +23,10 @@ public interface JobPostDao {
     void insertJobPostBenefit(@Param("jobPostNo") int jobPostNo, @Param("benefitList") List<String> benefitList);
 
     void insertJobPostSkill(@Param("jobPostNo") int jobPostNo, @Param("skillList") List<String> skillList);
+
+    JobPostResponseDto getJobDetail(@Param("jobPostNo") int jobPostNo, @Param("groupCodeList") List<String> groupCodeList);
+
+    List<String> selectBenefitList(int jobPostNo);
+
+    List<GubnDto> selectSkillList(int jobPostNo);
 }

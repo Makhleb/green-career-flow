@@ -1,11 +1,16 @@
 package com.void2.careermanagement.controller;
 
+import com.void2.careermanagement.dao.JobPostDao;
+import com.void2.careermanagement.dto.response.JobPostResponseDto;
 import com.void2.careermanagement.service.GubnService;
+import com.void2.careermanagement.service.JobPostService;
 import com.void2.careermanagement.type.GroupCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,13 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/job-post")
+@Slf4j
 public class JopPostController {
 
     private final GubnService gubnService;
+    private final JobPostService jobPostService;
 
     @Autowired
-    public JopPostController(GubnService groupService) {
+    public JopPostController(GubnService groupService, JobPostService jobPostService) {
         this.gubnService = groupService;
+        this.jobPostService = jobPostService;
     }
 
     @GetMapping("/register")
@@ -33,5 +41,10 @@ public class JopPostController {
         model.addAttribute("jobRankList", gubnService.getGubnList(GroupCode.JOB_RANK.name()));
 
         return "jobPost/jobPostRegister";
+    }
+    @GetMapping("/detail/{jobPostNo}")
+    public String jobPost(@PathVariable int jobPostNo, Model model) {
+        model.addAttribute("jobPostInfo", jobPostService.getJobDetail(jobPostNo));
+        return "jobPost/jobPostDetail";
     }
 }

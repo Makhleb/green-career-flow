@@ -18,6 +18,7 @@ import java.util.List;
 @Controller
 public class MainController {
     private final CompanyService companyService;
+
     @Autowired
     public MainController(CompanyService companyService) {
         this.companyService = companyService;
@@ -31,6 +32,7 @@ public class MainController {
             String userType = (String) session.getAttribute("userType");
             if(userType.equals("U")){
                 String isEmpty = "Empty";
+
                 UserDto sessionUser = (UserDto) session.getAttribute("user");
                 List<CompanyResponseDto> lList = companyService.getLikeCompanyList(sessionUser.getUserId());
                 if (!lList.isEmpty()) {
