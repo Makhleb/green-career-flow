@@ -60,14 +60,14 @@
             <div class="grid-item">
                 관심 기업 공고
                 <span style="float:right">
-                    <a href="" style="color:darkgray">더보기<i class="bi bi-plus"></i></a>
+                    <a href="#" style="color:darkgray">더보기<i class="bi bi-plus"></i></a>
                 </span>
             </div>
             <div class="grid-item">
                 <div class="grid_posting">
                     <th:block th:if="${isEmpty == 'notEmpty'}">
                         <div class="grid_posting_item" th:each="company : ${lList}">
-                            <img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}">
+                            <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}"><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
                             <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
                             <p>
                                 [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
@@ -96,7 +96,7 @@
         <div class="grid-item">
             <div class="grid_posting">
                 <div class="grid_posting_item" th:each="company : ${cList}">
-                    <img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}">
+                    <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}"><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
                     <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
                     <p>
                         [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
@@ -115,13 +115,13 @@
         <div class="grid-item">
             채용 임박 공고
             <span style="float:right">
-                    <a href="" style="color:darkgray">더보기<i class="bi bi-plus"></i></a>
-                </span>
+                <a href="" style="color:darkgray">더보기<i class="bi bi-plus"></i></a>
+            </span>
         </div>
         <div class="grid-item">
             <div class="grid_posting">
                 <div class="grid_posting_item" th:each="company : ${eList}">
-                    <img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}">
+                    <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}"><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
                     <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
                     <p>
                         [[${company.companyName}]]&nbsp;&nbsp;&nbsp;

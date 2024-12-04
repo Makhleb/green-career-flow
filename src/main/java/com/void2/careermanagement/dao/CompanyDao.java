@@ -3,6 +3,7 @@ package com.void2.careermanagement.dao;
 
 import com.void2.careermanagement.dto.CompanyDto;
 import com.void2.careermanagement.response.CompanyResponseDto;
+import com.void2.careermanagement.response.UserResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public interface CompanyDao {
     public List<CompanyResponseDto> getHighRatingList();
     public List<CompanyResponseDto> getFastEndDateList();
     public List<CompanyResponseDto> getLikeList(String id);
+
 }

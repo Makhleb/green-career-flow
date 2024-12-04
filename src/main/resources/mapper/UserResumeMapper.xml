@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.void2.careermanagement.dao.UserResumeDao">
+    <select id="getHighLikeUserList" resultType="com.void2.careermanagement.response.UserResponseDto">
+        <![CDATA[
+        SELECT u.user_name,
+        TIMESTAMPDIFF(YEAR, u.user_birth, CURDATE())-(RIGHT(CURDATE(), 5) < RIGHT(u.user_birth, 5)) AS user_age,
+        IFNULL(r.job_history, 0) AS job_history,
+        GROUP_CONCAT(DISTINCT r.skill_code ORDER BY r.skill_code ASC) AS skill_codes,
+        like_count
+        FROM tbl_user u JOIN
+        (SELECT user_id, COUNT(like_type) AS like_count
+        FROM tbl_like
+        WHERE like_type = 'C'
+        GROUP BY user_id) AS l
+        JOIN
+        (SELECT r.user_id, s.skill_code, r.title, r.job_history
+        FROM tbl_resume r, tbl_resume_skill s
+        WHERE r.resume_no = s.resume_no) AS r
+        WHERE u.user_id = l.user_id
+        AND u.user_id = r.user_id
+        GROUP BY r.user_id
+        LIMIT 8;
+        ]]>
+    </select>
+</mapper>
