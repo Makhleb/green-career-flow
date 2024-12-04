@@ -39,8 +39,10 @@ public class JobPostController {
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
-
+    public String register(Model model, HttpSession session) {
+        if(session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("skillGubnList", gubnService.getGubnList(GroupCode.SKILL.name()));
         model.addAttribute("workTypeList", gubnService.getGubnList(GroupCode.WORK_TYPE.name()));
         model.addAttribute("workList", gubnService.getGubnList(GroupCode.WORK.name()));

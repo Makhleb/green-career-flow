@@ -26,14 +26,19 @@ public class UserAccountApiController {
     }
 
     @PostMapping("/login")
-    public boolean userLogin(@RequestBody UserLoginDto user, HttpSession session) {
+    public String userLogin(@RequestBody UserLoginDto user, HttpSession session) {
         UserDto sessionUser = userAccountDao.loginUserSelect(user.getUserId(), user.getUserPw());
+
         if (sessionUser != null) {
             session.setAttribute("user", sessionUser);
             session.setAttribute("userType","U");
-            return true;
+            String prevPage = session.getAttribute("prevPage") == null ? "/" : (String) session.getAttribute("prevPage");
+            if (!prevPage.equals("/")) {
+                session.removeAttribute("prevPage"); // 세션에서 제거
+            }
+            return prevPage;
         } else {
-            return false;
+            return "false";
         }
     }
 

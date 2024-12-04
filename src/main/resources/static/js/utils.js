@@ -41,3 +41,20 @@ function modalToggle() {
         document.body.style.overflow = 'auto';
     }
 }
+
+/**
+ * 로그인 안하고 페이지 썼을 때 세션에 prevPage 넣기 위함
+ */
+function savePrevPageToSession(msg) {
+    const prevPage = location.pathname; // 현재 페이지 URL
+    axios.post('/api/session/savePrevPage', {prevPage: prevPage})
+        .then(response => {
+            console.log('요청 성공:', response.data);
+            // msg 있을 때 alert 띄워줌
+            if (!!msg) alert(msg);
+            location.href = '/user/account/login';
+        })
+        .catch(error => {
+            console.error('요청 실패:', error);
+        });
+}
