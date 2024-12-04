@@ -646,7 +646,7 @@
                 data.forEach(resume => {
                     // HTML 문자열을 템플릿 리터럴로 작성
                     resumeItem += `
-                    <div class="resume-item" data-resume-id="1">
+                    <div class="resume-item" data-resume-no="${resume.resumeNo}">
                         <span class="date">${resume.createDate}</span>
                         <span class="title">${resume.title}</span>
                     </div>
@@ -673,7 +673,8 @@
             this.classList.add("selected");
 
             // 선택된 이력서 번호 또는 제목 저장
-            selectedResume = this.querySelector(".title").textContent;
+            selectedResume = this.getAttribute("data-resume-no");
+            console.log(selectedResume);
             console.log("선택된 이력서:", selectedResume);
         });
     });
@@ -683,7 +684,13 @@
         if (selectedResume) {
             alert("선택된 이력서로 지원합니다: " + selectedResume);
             // 추가 로직: 서버에 선택된 이력서를 전달
-            axios.post('/api/apply', { resume: selectedResume });
+            axios.post('/api/apply', { resume: selectedResume })
+                .then(res => {
+
+                })
+                .catch(error => {
+
+                });
         } else {
             alert("먼저 이력서를 선택해주세요.");
         }
