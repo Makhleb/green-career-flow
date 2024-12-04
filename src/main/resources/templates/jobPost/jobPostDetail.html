@@ -560,6 +560,7 @@
     </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
+<script src="/static/js/utils.js"></script>
 <script>
     const likeImageSrc = ["/static/images/empty_heart.png", "/static/images/heart.png"];
     const likeImage = $('#likeImg');
@@ -569,13 +570,14 @@
     const scrapImage = $('#scrapImg');
     let scrapImageIndex = scrapImageSrc.indexOf(scrapImage.attr('src'));
 
+    const notLoginMsg = "로그인 후 사용해주세요.";
+
     function actLike(ele) {
         axios.post("/api/like/" + ele.getAttribute("data-company-id"))
             .then(res => {
                 const data = res.data;
                 if (data == -1) {
-                    alert("로그인 후 사용해주세요.");
-                    location.href = '/user/account/login';
+                    savePrevPageToSession(notLoginMsg);
                 } else if (data == 1) {
                     likeImage.attr('src', likeImageSrc[(likeImageIndex += 1) % 2]);
                 }
@@ -590,8 +592,7 @@
             .then(res => {
                 const data = res.data;
                 if (data == -1) {
-                    alert("로그인 후 사용해주세요.");
-                    location.href = '/user/account/login';
+                    savePrevPageToSession(notLoginMsg);
                 } else if (data == 1) {
                     scrapImage.attr('src', scrapImageSrc[(scrapImageIndex += 1) % 2]);
                 }
@@ -604,13 +605,13 @@
     // 모달 열기
     function openResumeModal() {
         if(!sessionCheck) {
-            alert("로그인 후 사용해주세요.");
-            location.href = "/user/account/login";
+            savePrevPageToSession(notLoginMsg);
+
         } else if(!resumeCheck) {
             alert("등록된 유효한 이력서가 없습니다.\n이력서 등록 후 이용해주세요.(☞ﾟヮﾟ)☞");
-            return;
+        } else {
+            document.getElementById("resumeModal").style.display = "flex";
         }
-        document.getElementById("resumeModal").style.display = "flex";
     }
 
     // 모달 닫기
