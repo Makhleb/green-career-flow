@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.void2.careermanagement.dao.MyPageDao">
+    <select id="MyPageResumeListById" resultType="com.void2.careermanagement.dto.response.ResumeResponseDto">
+        SELECT resume_no
+            , title
+            , user_id
+            , create_date
+            , modify_date
+        FROM tbl_resume
+        WHERE user_id = #{userId}
+        ORDER BY resume_no DESC
+        LIMIT 3;
+    </select>
+    <select id="MyPageScrapListById" resultType="com.void2.careermanagement.dto.response.MyPageScrapDto">
+        SELECT j.user_id, j.job_post_no, jp.title, jp.end_date, c.company_id, c.company_name
+        FROM tbl_jpl j
+        inner JOIN tbl_job_post jp
+        ON j.job_post_no = jp.job_post_no
+        INNER JOIN tbl_company c
+        ON jp.company_id = c.company_id
+        WHERE user_id= #{userId}
+        ORDER BY j.scrap_date DESC
+        LIMIT 3;
+    </select>
+</mapper>

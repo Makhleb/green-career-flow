@@ -133,6 +133,8 @@ footer {
 }
 /* /footer-css */
 
+/*aside-css*/
+
 aside{
     width: 200px;
     margin-right: 30px;
@@ -158,3 +160,4 @@ aside a {
     color: gray;
     text-decoration: none;
 }
+/*aside-css*/

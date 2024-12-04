@@ -60,7 +60,7 @@
         #resume_title a, #scrap_title a{
             text-decoration: none;
         }
-        #resume_box{
+        #resume_box, #scrap_box{
             display: flex;
             flex-direction: column;
         }
@@ -75,13 +75,29 @@
             text-align: center;
             align-content: center;
         }
-        #resume_item_content{
+        #resume_item_content, #scrap_item_content{
             align-content: center;
         }
-        #resume_item_content p{
+        #resume_item_content p, #scrap_item_content p{
             font-size: 13px;
             color: gray;
         }
+        .content_title{
+            margin-bottom: 5px;
+        }
+        #scrap_box{
+            border-bottom: 1px solid #8B1FFF;
+        }
+        .scrap_items{
+            display: flex;
+            margin: 10px 0;
+        }
+        #scrap_item_icon{
+            width: 50px;
+            margin-right: 20px;
+            text-align: end;
+        }
+
     </style>
 </head>
 <body>
@@ -101,9 +117,9 @@
             <h4>나의 알림 <i class="bi bi-bell"></i> (0)</h4>
             <hr>
             <div id="noti_box">
-                <div class="noti_item">제안서<br><i class="bi bi-chat-left-text"></i><br>(0)</div>
-                <div class="noti_item">커뮤니티<br><i class="bi bi-emoji-smile"></i><br>(0)</div>
-                <div class="noti_item">관심 기업<br><i class="bi bi-suit-heart-fill"></i><br>(0)</div>
+                <div id="noti_item1" class="noti_item">제안서<br><i class="bi bi-chat-left-text"></i><br>(0)</div>
+                <div id="noti_item2" class="noti_item">커뮤니티<br><i class="bi bi-emoji-smile"></i><br>(0)</div>
+                <div id="noti_item3" class="noti_item">관심 기업<br><i class="bi bi-suit-heart-fill"></i><br>(0)</div>
             </div>
         </div>
 
@@ -114,14 +130,18 @@
             </div>
             <hr>
             <div id="resume_box">
-                <div class="resume_item">
+                <div class="resume_item" th:each="dto : ${resumeList}">
                     <div id="resume_item_icon">
                         <i class="bi bi-pencil-square" style="font-size: 40px;"></i>
                     </div>
                     <div id="resume_item_content">
-                        <div class="content_title"><strong>이력서 제목</strong></div>
-                        <p>기업이름 / 채용기간</p>
-                        <p>작성일</p>
+                        <div class="content_title"><strong>[[${dto.title}]]</strong></div>
+                        <th:block th:if="${dto.modifyDate == null}">
+                            <p>[[${dto.createDate}]]</p>
+                        </th:block>
+                        <th:block th:if="${dto.modifyDate != null}">
+                            <p>[[${dto.modifyDate}]]</p>
+                        </th:block>
                     </div>
                 </div>
             </div>
@@ -134,12 +154,10 @@
             </div>
             <hr>
             <div id="scrap_box">
-                <div class="resume_item">
-                    <div id="scrap_item_icon">
-                        <i class="bi bi-star-fill" style="color:#8B1FFF"></i>
-                    </div>
+                <div class="scrap_items">
+                    <div id="scrap_item_icon"><i class="bi bi-star-fill" style="color:#8B1FFF"></i></div>
                     <div id="scrap_item_content">
-                        <strong>채용공고</strong>
+                        <div class="content_title"><strong>채용공고</strong></div>
                         <p>기업이름 / 공고 마감일</p>
                         <p>작성일</p>
                     </div>
@@ -150,4 +168,19 @@
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
+<script>
+    const proposal = document.getElementById("noti_item1");
+    const community = document.getElementById("noti_item2");
+    const like_company = document.getElementById("noti_item3");
+
+    proposal.addEventListener("click", (e)=>{
+       window.location.href = '/mypage/proposal';
+    });
+
+    community.addEventListener("click", (e)=>{
+        window.location.href = '/board/boardmain';
+    });
+
+
+</script>
 </html>
