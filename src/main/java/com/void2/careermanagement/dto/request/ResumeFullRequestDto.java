@@ -5,16 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResumeFullRequestDto {
     private ResumeRequestDto resume;
-    private ActivityDto activity;
+    private List<ActivityDto> activity;
     private EducationDto education;
-    private IntroduceDto introduce;
-    private LicenseDto license;
+    private List<IntroduceDto> introduce;
+    private List<LicenseDto> license;
     private MilitaryDto military;
-    private PotfolioDto potfolio;
-    private ResumeSkillDto resumeSkill;
+    private List<PotfolioDto> potfolio;
+    private List<ResumeSkillDto> resumeSkill;
 }

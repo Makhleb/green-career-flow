@@ -7,6 +7,8 @@ import com.void2.careermanagement.dto.request.ResumeRequestDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import com.void2.careermanagement.service.ResumeService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class ResumeApiController {
     @GetMapping
     public List<ResumeResponseDto> getResume(HttpSession session) {
         Object user = session.getAttribute("user");
-        if(user == null) return null;
+        if (user == null) return null;
 
         UserDto sessionUser = (UserDto) user;
         return resumeService.getValidResumeListByUserId(sessionUser.getUserId());
@@ -40,7 +42,12 @@ public class ResumeApiController {
     }
 
     @PostMapping("/create/full")
-    public int createTotalResume(@RequestBody ResumeFullRequestDto ResumeFullRequestDto) {
-        return 0;
+    public ResponseEntity<String> createTotalResume(@RequestBody ResumeFullRequestDto resumeFullRequestDto) {
+        try {
+            resumeService.insertFullResume(resumeFullRequestDto);
+            return ResponseEntity.ok("Resume data saved successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving resume data.");
+        }
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.void2.careermanagement.dao.ActivityDao">
+    <insert id="insertActivity">
+        INSERT INTO tbl_activity
+        (resume_no,
+        `order`,
+        start_date,
+        end_date,
+        activity_center_name,
+        activity_content,
+        activity_type)
+        VALUES (#{A.resumeNo},
+        #{A.order},
+        #{A.startDate},
+        #{A.endDate},
+        #{A.activityCenterName},
+        #{A.activityContent},
+        #{A.activityType})
+    </insert>
+</mapper>
