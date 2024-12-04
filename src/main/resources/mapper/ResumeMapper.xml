@@ -28,4 +28,39 @@
           AND is_not_empty(zonecode)
           AND (SELECT COUNT(user_id) FROM tbl_introduce WHERE user_id = #{user_id}) > 0
     </select>
+    <insert id="insertResume">
+        INSERT INTO tbl_resume
+        (resume_no,
+         title,
+         address,
+         address_detail,
+         zonecode,
+         user_id,
+         image,
+         wish_area,
+         wish_salary,
+         wish_time,
+         work_code,
+         portfolio_link,
+         offer_yn,
+         create_date,
+         modify_date,
+         job_history)
+        VALUES (NULL,
+                #{R.title},
+                #{R.address},
+                #{R.addressDetail},
+                #{R.zonecode},
+                #{R.userId},
+                '',
+                #{R.wishArea},
+                #{R.wishSalary},
+                #{R.wishTime},
+                #{R.workCode},
+                #{R.portfolioLink},
+                #{R.offerYn},
+                NOW(),
+                NULL,
+                #{R.jobHistory})
+    </insert>
 </mapper>
