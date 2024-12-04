@@ -2,7 +2,6 @@ package com.void2.careermanagement.service;
 
 import com.void2.careermanagement.dao.ResumeDao;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,12 @@ public class ResumeService {
         this.resumeDao = resumeDao;
     }
 
-    public List<ResumeResponseDto> getListByUserId(String userId) {
-        return resumeDao.getListById(userId);
+    /**
+     * 유효한 이력서 가져오는 함수
+     * @param userId
+     * @return
+     */
+    public List<ResumeResponseDto> getValidResumeListByUserId(String userId) {
+        return resumeDao.getValidResumeListByUserId(userId);
     }
 }

@@ -362,6 +362,7 @@
             color: white;
             border: 2px solid #6200ee;
         }
+
         /* Apply Button */
         .apply-btn {
             background: #8B1FFF;
@@ -479,19 +480,9 @@
                 <button class="close-btn" onclick="closeResumeModal()">×</button>
                 <h2>이력서 선택</h2>
                 <hr class="divider">
+<!--                여기 추가할 거임 이력서-->
                 <div class="resume-list">
-<!--                    <div class="resume-item" data-resume-id="1">-->
-<!--                        <span class="date">2023 / 12 / 01</span>-->
-<!--                        <span class="title">이력서 제목 1</span>-->
-<!--                    </div>-->
-<!--                    <div class="resume-item" data-resume-id="2">-->
-<!--                        <span class="date">2023 / 11 / 25</span>-->
-<!--                        <span class="title">이력서 제목 2</span>-->
-<!--                    </div>-->
-<!--                    <div class="resume-item" data-resume-id="3">-->
-<!--                        <span class="date">2023 / 10 / 15</span>-->
-<!--                        <span class="title">이력서 제목 3</span>-->
-<!--                    </div>-->
+
                 </div>
                 <button class="apply-btn">지원하기</button>
             </div>
@@ -609,8 +600,16 @@
                 console.log(error);
             });
     }
+
     // 모달 열기
     function openResumeModal() {
+        if(!sessionCheck) {
+            alert("로그인 후 사용해주세요.");
+            location.href = "/user/account/login";
+        } else if(!resumeCheck) {
+            alert("등록된 유효한 이력서가 없습니다.\n이력서 등록 후 이용해주세요.(☞ﾟヮﾟ)☞");
+            return;
+        }
         document.getElementById("resumeModal").style.display = "flex";
     }
 
@@ -618,6 +617,47 @@
     function closeResumeModal() {
         document.getElementById("resumeModal").style.display = "none";
     }
+
+    // 로그인 하고 들어온지 체크
+    let sessionCheck = null;
+    // 등록된 유효한 이력서 있는지 체크
+    let resumeCheck = null;
+    $(function () {
+        axios.get("/api/resume")
+            .then(res => {
+                console.log(res);
+                const data = res.data;
+                // 세션 user 비어있을 때
+                if (data === '') {
+                    sessionCheck = false;
+                    return;
+                }
+                sessionCheck = true;
+                // 등록된 유효한 이력서 없을 때
+                if(data.length === 0) {
+                    resumeCheck = false;
+                    return;
+                }
+                resumeCheck = true;
+                const resumeList = $('.resume-list');
+
+                let resumeItem = '';
+                data.forEach(resume => {
+                    // HTML 문자열을 템플릿 리터럴로 작성
+                    resumeItem += `
+                    <div class="resume-item" data-resume-id="1">
+                        <span class="date">${resume.createDate}</span>
+                        <span class="title">${resume.title}</span>
+                    </div>
+                    `;
+                })
+                // append를 사용하여 추가
+                resumeList.append(resumeItem);
+            }).catch(error => {
+            console.log(error);
+        })
+
+    })
 
     // 선택된 이력서 번호를 저장할 변수
     let selectedResume = null;

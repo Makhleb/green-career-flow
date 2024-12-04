@@ -4,12 +4,10 @@ import com.void2.careermanagement.dto.UserDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import com.void2.careermanagement.service.ResumeService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,8 +28,7 @@ public class ResumeApiController {
         if(user == null) return null;
 
         UserDto sessionUser = (UserDto) user;
-        List<ResumeResponseDto> resumeList = resumeService.getListByUserId(sessionUser.getUserId());
-        return resumeList;
+        return resumeService.getValidResumeListByUserId(sessionUser.getUserId());
     }
 
 }

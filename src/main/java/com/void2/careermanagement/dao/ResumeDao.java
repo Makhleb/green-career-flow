@@ -11,5 +11,5 @@ import java.util.List;
 @Mapper
 public interface ResumeDao {
 
-    List<ResumeResponseDto> getListById(String userId);
+    List<ResumeResponseDto> getValidResumeListByUserId(String userId);
 }
