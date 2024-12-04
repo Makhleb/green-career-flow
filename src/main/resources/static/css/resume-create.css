@@ -1,0 +1,373 @@
+html {
+    font-size: 18px; /* 기본 글꼴 크기를 18px로 설정 (150% 확대 기준) */
+}
+
+* {
+    font-family: "Noto Sans KR", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 모든 요소에 박스 모델 적용 */
+}
+
+.form.margin {
+    margin-top: 4rem;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    min-width: 1000px; /* 150% 확대 기준으로 적절히 넓게 설정 */
+    /*height: 100vh;*/
+    margin: 0 auto;
+    align-items: center;
+}
+
+.container-title {
+    font-size: 2rem; /* 24px */
+}
+
+.left-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem; /* 16px */
+}
+
+.left-form p {
+    font-size: 1rem; /* 14px */
+    font-weight: 400;
+    margin-left: 0.5rem;
+}
+
+input::placeholder {
+    font-weight: 500;
+}
+
+input, select, textarea {
+    box-sizing: border-box;
+    height: 3rem; /* 48px */
+    border-radius: 0.5rem; /* 8px */
+    margin: 0.5rem; /* 8px */
+    padding-left: 0.5rem; /* 8px */
+    font-weight: 500;
+    font-size: 1rem; /* 16px */
+}
+
+input, select, textarea {
+    border: 1px solid #CECECE;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus, .minus-stack:hover, .add-stack:hover, .add-benefit:hover {
+    outline: none;
+    border: 1px solid #8B1FFF;
+    box-shadow: 0 0 4px rgba(98, 0, 238, 0.3);
+}
+
+.stack-wrapper {
+    display: flex; /* 수평 정렬 */
+    flex-wrap: wrap; /* 요소가 화면에 넘칠 경우 줄바꿈 */
+    margin-top: 1rem; /* 상단 여백 */
+    width: 50rem;
+    /*gap: 3px;*/
+}
+
+.minus-stack {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: white;
+    background-color: #8B1FFF;
+    border: 1px solid #CECECE;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin: 3px;
+    width: auto;
+}
+
+.add-stack {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #f0f0f0;
+    border: 1px solid #CECECE;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin: 3px;
+    width: auto;
+}
+
+textarea {
+    resize: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    width: 50rem; /* 800px */
+    height: 6rem; /* 96px */
+    font-weight: 500;
+}
+
+#title {
+    width: 100%;
+    height: 3.5rem; /* 56px */
+    font-size: 1.5rem; /* 24px */
+}
+
+#userName {
+    width: 18rem;
+}
+
+#userGender {
+    width: 8rem;
+}
+
+#userBirth {
+    width: 10rem;
+}
+
+#userEmail {
+    width: 22rem;
+}
+
+#userPhone {
+    width: 15rem;
+}
+
+#workTypeCode, #jobRankCode, #jobHistory, #educationCode, #jobSalary, #process {
+    width: 12rem; /* 192px */
+}
+
+.benefit-wrapper {
+    display: flex;
+    gap: 0.5rem; /* 8px */
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+}
+
+.add-benefit {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: white;
+    background-color: #8B1FFF;
+    border: 1px solid #CECECE;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin: 3px;
+    width: auto;
+}
+
+.submit-button {
+    float: right;
+    padding: 0.7rem 1.5rem; /* 11px 24px */
+    font-size: 1.2rem; /* 19.2px */
+    color: white;
+    background-color: #8B1FFF;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin-top: 1rem; /* 16px */
+}
+
+#startDate, #endDate {
+    width: 13rem; /* 320px */
+}
+
+.redPoint {
+    color: #D9310B;
+}
+
+.benefit-add-wrapper {
+    display: flex; /* 수평 정렬 */
+    flex-wrap: wrap; /* 요소가 화면에 넘칠 경우 줄바꿈 */
+    margin-top: 1rem; /* 상단 여백 */
+    width: 50rem;
+    /*gap: 3px;*/
+}
+
+.minus-benefit {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: white;
+    background-color: #8B1FFF;
+    border: 1px solid #CECECE;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin: 3px;
+    width: auto;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.grid-form {
+    display: grid;
+    grid-template-columns: 3.5fr 1.5fr;
+}
+
+.attach-container {
+    margin: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    position: relative;
+}
+
+.preview {
+    margin: 0.5rem;
+    border-radius: 10px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.img-btn {
+    width: 20px;
+    height: auto;
+    cursor: pointer;
+}
+
+/*반대로 사용하고 싶으면 none을 라벨에 넣으세요*/
+.img-btn.close {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.sub-btn {
+    margin: 0.5rem;
+    padding: 10px;
+    font-size: 12px;
+    background-color: #B067FF;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#companyAddressDetail {
+    width: 38rem;
+}
+
+#companyAddress {
+    width: 22rem;
+}
+
+#companyZonecode {
+    width: 6rem;
+}
+
+.sub-btn.moreWidth {
+    width: 8rem;
+}
+
+.flexCenter {
+    align-items: center;
+    justify-content: space-around;
+}
+
+.bottom-radio{
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+#wish_area, #wish_salary {
+    width: 8rem;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: row;
+}
+
+.tab {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2E2E2E;
+    background-color: #D9D9D9;
+    border: none;
+    outline: none;
+}
+
+.active {
+    background-color: #F3F3F3;
+    color: #2E2E2E;
+}
+
+.noneBoard {
+    display: none;
+}
+
+.noneBoard.active {
+    display: block;
+}
+
+.noneBoard input {
+    margin: 1rem 0.5rem;
+    width: calc(100% - 1rem);
+}
+
+#portfolioAttach {
+    width: calc(100% - 8rem);
+}
+
+.board {
+    background-color: #F3F3F3;
+    color: #2E2E2E;
+}
+
+.board input, textarea {
+    width: calc(100% - 1rem);
+}
+
+.board textarea {
+    height: 10rem;
+}
+.plus-btn-container{
+    padding-bottom: 1rem;
+    padding-right: 0.5rem;
+    justify-content: flex-end;
+}
+.plus-btn{
+    align-items: center;
+    cursor:pointer;
+}
+
+input[type='radio']{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    margin: 0.5rem;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: #fff;
+    position: relative;
+    cursor: pointer;
+    transition: 0.2s ease;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type='radio']:checked {
+    border-color: #8B1FFF;
+    background-color: #8B1FFF;
+    box-shadow: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

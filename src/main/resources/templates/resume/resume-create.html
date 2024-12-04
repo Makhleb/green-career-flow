@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>이력서 등록</title>
+
+</head>
+<body>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<link rel="stylesheet" href="/static/css/resume-create.css">
+<main>
+    <div class="container">
+        <div class="form-container">
+            <p class="container-title">이력서 등록</p>
+            <div class="form">
+                <p><span class="redPoint">* </span>제목</p>
+                <input id="title" placeholder="제목을 입력해주세요">
+            </div>
+
+            <div class="form margin">
+                <div class="grid-form">
+                    <div class="form">
+                        <p><span class="redPoint">* </span>기본 정보</p>
+                        <div class="flex-row">
+                            <input id="userName" placeholder="이름">
+                            <input id="userGender" placeholder="이름">
+                            <input type="date" id="userBirth" placeholder="이름">
+                        </div>
+                        <div class="flex-row">
+                            <input id="userEmail" placeholder="이메일">
+                            <input id="userPhone" placeholder="전화번호">
+                        </div>
+                        <div class="flex-row">
+                            <div class="flex-row">
+                                <input type="text" id="companyAddress" class="fifty-top-margin" data-name="주소"
+                                       placeholder="회사 주소를 입력하세요" readonly>
+                                <input type="text" id="companyZonecode" data-name="우편 번호" placeholder="우편번호" readonly>
+                                <button class="sub-btn moreWidth" onclick="addressFind()">주소 찾기</button>
+                            </div>
+                        </div>
+                        <input type="text" id="companyAddressDetail" class="fifty-top-margin" data-name="상세주소"
+                               placeholder="상세주소를 입력하세요"
+                               maxlength="50">
+                    </div>
+                    <div class="attach-container">
+                        <img class="img-btn close" src="/static/images/modal_close_btn.svg" onclick="imgDelete()">
+                        <label for="imgAttachment">
+                            <img class="img-btn" src="/static/images/black_plus_btn.svg" width="30" height="auto"
+                                 alt="플러스 이미지">
+                        </label>
+                        <img class="preview" src="#" style="display:none">
+                        <input type="file" id="imgAttachment" accept="image/*" onchange="imgPreview(event)"
+                               style="display:none;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form margin">
+                <p>희망 사항</p>
+                <div class="flex-row flexCenter">
+                    <p>희망근무시간</p>
+                    <div class="flex-row flexCenter">
+                        <select id="wishTimeStart">
+                            <option value="" selected>선택</option>
+                            <th:block th:each="wishTime : ${#numbers.sequence(0,23)}">
+                                <option th:value="${wishTime}" th:text="${wishTime}"></option>
+                            </th:block>
+                        </select>
+                        <p>~</p>
+                        <select id="wishTimeEnd">
+                            <option value="" selected>선택</option>
+                            <th:block th:each="wishTime : ${#numbers.sequence(0,23)}">
+                                <option th:value="${wishTime}" th:text="${wishTime}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="flex-row">
+                        <select id="workCode">
+                            <option value="" selected>직무</option>
+                            <!--                            todo 컨트롤러에서 workList model attr 추가바람-->
+                            <th:block th:each="work :${workList}">
+                                <option th:value="${work.code}" th:text="${work.name}"></option>
+                            </th:block>
+                            <!--                    <option>백엔드</option>-->
+                            <!--                    <option>프론트엔드</option>-->
+                        </select>
+                        <input id="wish_area" placeholder="희망근무지역">
+                        <input id="wish_salary" placeholder="희망 연봉">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form margin">
+                <p>기본 정보</p>
+                <div>
+                    <div class="tabs">
+                        <button class="tab active" data-tab="link">링크</button>
+                        <button class="tab" data-tab="attach">첨부파일</button>
+                    </div>
+                </div>
+                <div class="noneBoard active" id="link">
+                    <input id="portfolioLink">
+                </div>
+                <div class="noneBoard" id="attach">
+                    <input id="portfolioAttach">
+                    <button class="sub-btn" style="height: 3rem">찾아보기...</button>
+                </div>
+            </div>
+            <div class="form margin">
+                <p>자기 소개서</p>
+                <div class="board">
+                    <input id="introTitle">
+                    <textarea id="introText"></textarea>
+                    <div class="plus-btn-container flex-row" data-name="introduce">
+                        <div class="plus-btn flex-row" onclick="testtest()">
+                            <img src="/static/images/black_plus_btn.svg" alt="플러스버튼">
+                            <div>추가하기</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form margin">
+                <p>보유 기술 스택</p>
+                <div class="flex-row stack-wrapper board">
+                    <th:block th:each="skill :${skillGubnList}">
+                        <button onclick="popSkill($(this))" class="add-stack" th:value="${skill.code}"
+                                th:text="'+ ' + ${skill.name}">
+                        </button>
+                    </th:block>
+                    <!--                <div class="stack-item">JAVA</div>-->
+                    <!--                <div class="stack-item">ReactJS</div>-->
+                    <!--                <div class="stack-item">Python</div>-->
+                    <!--                <button class="add-stack">+JAVA</button>-->
+                </div>
+            </div>
+            <div class="form margin">
+                <p>최종 학력</p>
+                <div class="flex-row">
+                    <select id="educode" placeholder="학교 구분">
+                        <option value="" selected>구분</option>
+                        <!--todo 컨트롤러에서 education_code model attr 추가바람-->
+                        <!--                        <th:block th:each="work :${}">-->
+                        <!--                            <option th:value="${}" th:text="${}"></option>-->
+                        <!--                        </th:block>-->
+                    </select>
+                    <input type="date" id="enterDate" placeholder="입학년월">
+                    <input type="date" id="graduateDate" placeholder="졸업년월">
+                </div>
+                <div class="flex-row">
+                    <input id="schoolName" placeholder="학교명">
+                    <input id="specialty" placeholder="전공">
+                </div>
+            </div>
+            <div class="form margin">
+                <p>병력 사항</p>
+                <div class="flex-row">
+                    <select id="militaryCode" placeholder="복무 유형">
+                        <option value="" selected>구분</option>
+                        <!--todo 컨트롤러에서 education_code model attr 추가바람-->
+                        <!--                        <th:block th:each="work :${}">-->
+                        <!--                            <option th:value="${}" th:text="${}"></option>-->
+                        <!--                        </th:block>-->
+                    </select>
+                    <input type="date" id="enlistDate" placeholder="입대년월">
+                    <input type="date" id="releaseDate" placeholder="전역년월">
+                </div>
+            </div>
+            <div class="form margin">
+                <p>자격증</p>
+                <div class="board">
+                    <div class="flex-row">
+                        <input id="licenseName" placeholder="자격증명">
+                        <input id="licenseCenterName" placeholder="발행처">
+                        <input id="passDate" placeholder="합격년월">
+                    </div>
+                    <div class="plus-btn-container flex-row" data-name="license">
+                        <div class="plus-btn flex-row" onclick="testtest()">
+                            <img src="/static/images/black_plus_btn.svg" alt="플러스버튼">
+                            <div>추가하기</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form margin">
+                <p>직무 관련 경력</p>
+                <div class="board">
+                    <div class="flex-row">
+                        <input id="careerCenterName" placeholder="활동기관명">
+                        <input id="careerStart" placeholder="시작년월">
+                        <input id="careerEnd" placeholder="종료년월">
+                    </div>
+                    <textarea id="careerContents"></textarea>
+                    <div class="plus-btn-container flex-row" data-name="license">
+                        <div class="plus-btn flex-row" onclick="testtest()">
+                            <img src="/static/images/black_plus_btn.svg" alt="플러스버튼">
+                            <div>추가하기</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form margin">
+                <p>직무 관련 활동</p>
+                <div class="board">
+                    <div class="flex-row">
+                        <input id="actCenterName" placeholder="활동기관명">
+                        <input id="actStart" placeholder="시작년월">
+                        <input id="actEnd" placeholder="종료년월">
+                    </div>
+                    <textarea id="actContents"></textarea>
+                    <div class="plus-btn-container flex-row" data-name="license">
+                        <div class="plus-btn flex-row" onclick="testtest()">
+                            <img src="/static/images/black_plus_btn.svg" alt="플러스버튼">
+                            <div>추가하기</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form margin">
+                <p>사회 경험 활동</p>
+                <div class="board">
+                    <div class="flex-row">
+                        <input id="socialCenterName" placeholder="활동기관명">
+                        <input id="socialStart" placeholder="시작년월">
+                        <input id="socialEnd" placeholder="종료년월">
+                    </div>
+                    <textarea id="socialContents"></textarea>
+                    <div class="plus-btn-container flex-row" data-name="license">
+                        <div class="plus-btn flex-row" onclick="testtest()">
+                            <img src="/static/images/black_plus_btn.svg" alt="플러스버튼">
+                            <div>추가하기</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form margin">
+                <div class="board flex-row bottom-radio">
+                    <div>포지션 제안 받고 더 좋은 커리어 기회를 열어둘까요?</div>
+
+                    <div class="flex-row" style="align-items: center">
+                        <input type="radio" id="proposalOn" name="options" value="yes">
+                        <label for="proposalOn" style="padding-right: 2rem">네</label>
+
+                        <input type="radio" id="proposalOff" name="options" value="no">
+                        <label for="proposalOff">아니요</label>
+                    </div>
+
+                </div>
+            </div>
+            <button class="submit-button">이력서 생성</button>
+        </div>
+    </div>
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
+</body>
+<script>
+
+    $(document).ready(function () {
+        $('.tab').click(function () {
+            let tab_data = $(this).attr('data-tab');
+
+            $('.tab').removeClass('active');
+            $(this).addClass('active')
+
+            $('.noneBoard').removeClass('active');
+            if (tab_data === "link") {
+                $('#link').addClass('active');
+            } else if (tab_data === "attach") {
+                $('#attach').addClass('active');
+            }
+        })
+    })
+
+    function popSkill(ele) {
+        const skillClass = ['add-stack', 'minus-stack'];
+        // console.log(ele);
+        const eleClass = ele.attr('class');
+
+        const addCheck = eleClass === skillClass[0]; // add-stack true
+
+        ele.removeClass(eleClass);
+        ele.addClass(addCheck ? skillClass[1] : skillClass[0]);
+
+        ele.text(addCheck ? ele.text().replace('+', '-') : ele.text().replace('-', '+'));
+    }
+
+</script>
+</html>

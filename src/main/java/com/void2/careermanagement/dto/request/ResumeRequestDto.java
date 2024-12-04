@@ -12,7 +12,7 @@ public class ResumeRequestDto {
     private String addressDetail;
     private String zonecode;
     private String userId;
-    private String image;
+    private byte[] image;
     private String wishArea;
     private int wishSalary;
     private String wishTime;
