@@ -1,8 +1,8 @@
 let base64img = null;
-
+// todo 사진 확장자 탐지용 함수 loadImage 추가후 사용바람.
+//현재 코드로는 png로 입출력시 깨짐현상 발생할 수 있음
 //세션 체크 후 정보 입력
 window.onload = function sessionCheck() {
-    console.log(userSession);
     if (userSession == null) {
         alert("로그인된 세션이 없습니다. 메인으로 이동합니다.");
         location.href = "/";
@@ -21,10 +21,12 @@ window.onload = function sessionCheck() {
         $('#companyEmail').val(userSession.companyEmail);
         $('#companyContact').val(userSession.companyContact);
         $("#companyInfo").val(userSession.companyInfo);
-        $('.preview').attr('src', `data:image/jpeg;base64,${base64img}`);
+        $('.preview').attr('src', loadImage(userSession.companyImage) + base64img);
         $('#companyEmployee').val(userSession.companyEmployee);
     }
 }
+
+
 
 /**
  * 비밀번호 일치확인 함수

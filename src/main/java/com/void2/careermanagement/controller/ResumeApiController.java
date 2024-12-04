@@ -2,6 +2,7 @@ package com.void2.careermanagement.controller;
 
 import com.void2.careermanagement.dao.ResumeDao;
 import com.void2.careermanagement.dto.UserDto;
+import com.void2.careermanagement.dto.request.ResumeFullRequestDto;
 import com.void2.careermanagement.dto.request.ResumeRequestDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import com.void2.careermanagement.service.ResumeService;
@@ -38,4 +39,8 @@ public class ResumeApiController {
         return resumeDao.insertResume(resumeRequestDto);
     }
 
+    @PostMapping("/create/full")
+    public int createTotalResume(@RequestBody ResumeFullRequestDto ResumeFullRequestDto) {
+        return 0;
+    }
 }
