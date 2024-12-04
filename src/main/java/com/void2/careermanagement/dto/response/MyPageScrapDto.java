@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created on 2024-12-04 by 최윤서
@@ -15,11 +15,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class MyPageScrapDto {
-        private String userId;         // 사용자 ID
-        private int jobPostNo;         // 공고 번호
-        private String title;          // 공고 제목
-        private LocalDate endDate;     // 공고 마감일
-        private String companyId;         // 회사 ID
-        private String companyName;    // 회사 이름
-
+        private String userId;  // user_id
+        private int jobPostNo;  // job_post_no
+        private String title;   // title
+        private LocalDateTime endDate;  // end_date
+        private String companyId;  // company_id
+        private String companyName;  // company_name
+        private LocalDateTime companyCreateDate;  // company_create_date
+        private LocalDateTime companyModifyDate;  // company_modify_date
     }

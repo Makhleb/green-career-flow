@@ -28,6 +28,11 @@ public class MyPageController {
         String userId = user.getUserId(); // UserDto 객체의 userId 필드 접근
         List<ResumeResponseDto> resumeList = myPageService.MyPageResumeListById(userId);
         List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListById(userId);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        int resumeSize = resumeList.size();
+        int scrapSize = scrapList.size();
+        model.addAttribute("resumeSize", resumeSize);
+        model.addAttribute("scrapSize", scrapSize);
         model.addAttribute("resumeList", resumeList);
         model.addAttribute("scrapList", scrapList);
         return "/mypage/user-mypage";
