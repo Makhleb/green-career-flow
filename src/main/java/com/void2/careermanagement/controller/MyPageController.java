@@ -1,6 +1,8 @@
 package com.void2.careermanagement.controller;
 
+import com.void2.careermanagement.dao.ApplyDao;
 import com.void2.careermanagement.dto.UserDto;
+import com.void2.careermanagement.dto.response.ApplyResponseDto;
 import com.void2.careermanagement.dto.response.MyPageScrapDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import com.void2.careermanagement.service.MyPageService;
@@ -8,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -21,6 +24,8 @@ public class MyPageController {
 
     @Autowired
     private MyPageService myPageService;
+    @Autowired
+    private ApplyDao applyDao;
 
     @RequestMapping("/profile")
     public String profile(HttpSession session, Model model) {
@@ -41,6 +46,17 @@ public class MyPageController {
     @RequestMapping("/proposal")
     public String proposal() {
         return "/mypage/user-proposal";
+    }
+
+    @GetMapping("/apply")
+    public String apply(HttpSession session, Model model) {
+        if(session.getAttribute("user") == null) {
+            UserDto user = (UserDto) session.getAttribute("user");
+            String userId = user.getUserId();
+
+            List<ApplyResponseDto> applyList = applyDao.getApplyListByUserId(userId);
+        }
+        return "/mypage/user-apply";
     }
 
 }
