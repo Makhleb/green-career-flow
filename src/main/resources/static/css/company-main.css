@@ -8,7 +8,7 @@
 .grid-container{
     display: grid;
     width:100%;
-    grid-template-rows: 2fr 24px 32px auto 24px 32px auto 24px 32px auto 80px;
+    grid-template-rows: 2fr 24px 32px auto 24px 32px auto 80px ;
     grid-template-columns: 2fr 6fr 2fr;
 }
 
@@ -74,6 +74,8 @@ a{
     font-size: 16px;
 }
 
+.flex-container {display: flex; align-items: center;}
+
 .grid-resume-item-rank, .grid-resume-item-rank2, .grid-resume-item-rank3{
     width:90px;
     height: 26px;
@@ -101,5 +103,17 @@ p{
 
 .side_line{
     font-size: 10px;
-    margin-top:-10px;
+    margin-top:-4px;
+}
+
+.skill_codes{padding-left: 130px;}
+.skill_name{
+    display: inline-block;
+    border: #8B1FFF solid 1px;
+    width:120px;
+    height: 26px;
+    margin: 10px;
+    border-radius: 20px;
+    text-align: center;
+    align-items: center;
 }

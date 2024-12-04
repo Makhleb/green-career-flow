@@ -20,7 +20,7 @@
               WHERE r.resume_no = s.resume_no) AS r
         WHERE u.user_id = l.user_id
           AND u.user_id = r.user_id
-        GROUP BY r.user_id
+        GROUP BY r.user_id, u.user_name, user_age, job_history, like_count
         ORDER BY like_count DESC
             LIMIT 8;
         ]]>

@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
   <link rel="stylesheet" th:href="@{/static/css/company-main.css}"/>
     <title>기업 메인페이지</title>
 </head>
@@ -20,25 +21,30 @@
           <div class="grid-item">
               <div class="grid-resume-container_left">
                   <div class="grid-resume-item" th:each="user, userStat : ${uList}" th:if="${userStat.index >=0 && userStat.index < 4}">
-                          <th:block th:if="${userStat.index == 0}">
-                              <div class="grid-resume-item-rank">Top [[${userStat.count}]]</div>
-                          </th:block>
-                          <th:block th:if="${userStat.index > 0 && userStat.index < 4}">
-                              <div class="grid-resume-item-rank2">Top [[${userStat.count}]]</div>
-                          </th:block>
-                          [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                          <th:block th:if="${user.jobHistory > 0}">
-                              [[${user.jobHistory}]]년 이상
-                          </th:block>
-                          <th:block th:if="${user.jobHistory == 0}">
-                              신입
-                          </th:block><br/>
-                          기술스택
-                          [[${user.skillCodes}]]
+                        <div class="flex-container">
+                            <th:block th:if="${userStat.index == 0}">
+                                  <div class="grid-resume-item-rank">Top [[${userStat.count}]]</div>
+                              </th:block>
+                              <th:block th:if="${userStat.index > 0 && userStat.index < 4}">
+                                  <div class="grid-resume-item-rank2">Top [[${userStat.count}]]</div>
+                              </th:block>
+                              [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                              <th:block th:if="${user.jobHistory > 0}">
+                                  [[${user.jobHistory}]]년 이상
+                              </th:block>
+                              <th:block th:if="${user.jobHistory == 0}">
+                                  신입
+                              </th:block><br/>
+                        </div>
+                      <span class="skill_codes">기술스택</span>
+                      <th:block th:each="skill : ${#strings.arraySplit(user.skillCodes,',')}">
+                          <span class="skill_name">[[${skill}]]</span>
+                      </th:block>
                   </div>
               </div>
               <div class="grid-resume-container_right">
                   <div class="grid-resume-item" th:each="user, userStat : ${uList}" th:if="${userStat.index >= 4 && userStat.index < 8}">
+                      <div class="flex-container">
                       <div class="grid-resume-item-rank3">Top [[${userStat.count}]]</div>
                       [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                       <th:block th:if="${user.jobHistory > 0}">
@@ -47,10 +53,24 @@
                       <th:block th:if="${user.jobHistory == 0}">
                           신입
                       </th:block><br/>
-                      기술스택
-                      [[${user.skillCodes}]]
+                      </div>
+
+                      <span class="skill_codes">기술스택</span>
+                      <th:block th:each="skill : ${#strings.arraySplit(user.skillCodes,',')}">
+                        <span class="skill_name">[[${skill}]]</span>
+                      </th:block>
                   </div>
               </div>
+          </div>
+          <div class="grid-item-blank" ></div>
+          <div class="grid-item">
+              최신 입사 지원 내역
+              <span style="float:right">
+                <a href="" style="color:darkgray">더보기<i class="bi bi-plus"></i></a>
+            </span>
+          </div>
+          <div class="grid-item">
+
           </div>
           <div class="grid-item-right"></div>
       </div>
