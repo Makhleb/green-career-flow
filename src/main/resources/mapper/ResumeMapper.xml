@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.void2.careermanagement.dao.ResumeDao">
+    <select id="getValidResumeListByUserId">
+        SELECT resume_no
+             , title
+             , address
+             , address_detail
+             , zonecode
+             , user_id
+             , image
+             , wish_area
+             , wish_salary
+             , wish_time
+             , work_code
+             , portfolio_link
+             , offer_yn
+             , create_date
+             , modify_date
+             , job_history
+        FROM tbl_resume
+        WHERE user_id = #{user_id}
+          AND is_not_empty(title)
+          AND is_not_empty(image)
+          AND is_not_empty(address)
+          AND is_not_empty(zonecode)
+          AND (SELECT COUNT(user_id) FROM tbl_introduce WHERE user_id = #{user_id}) > 0
+    </select>
+</mapper>
