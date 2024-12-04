@@ -84,13 +84,13 @@ function companyRegist() {
         companyZonecode: $("#companyZonecode").val(),
         companyAddress: $("#companyAddress").val(),
         companyAddressDetail: $("#companyAddressDetail").val(),
-        companyWebsite: $("#companyWeb").val(),
+        companyWebsite: $("#companyWebsite").val(),
         companyEmail: $("#companyEmail").val(),
-        companyContact: $("#companyPhone").val(),
+        companyContact: $("#companyContact").val(),
         companyBirth: $("#companyBirth").val(),
-        companyInfo: $("#company-introduce").val(),
+        companyInfo: $("#companyInfo").val(),
         companyImage: base64img.split(',')[1],
-        companyEmployee: $('#companyEmplyoee').val()
+        companyEmployee: $('#companyEmployee').val()
     })
         .then(function (response) {
             if (response.data) {

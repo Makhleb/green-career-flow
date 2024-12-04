@@ -19,15 +19,6 @@
             box-sizing: border-box; /* 모든 요소에 박스 모델 적용 */
         }
 
-        /*main {*/
-        /*    !*width: 100vw;*!*/
-        /*    !*height: 150vh;*!*/
-        /*    min-height: 1400px;*/
-        /*    max-height: 1400px;*/
-        /*    height: 1400px;*/
-        /*    !*margin: 0 0 100px 0;*!*/
-        /*}*/
-
         .flex-row {
             display: flex;
             flex-direction: row;
@@ -282,12 +273,109 @@
             margin: 3px;
             width: auto;
         }
+
         .manager-form {
             width: 20px;
             min-width: 450px;
         }
 
+        /* Modal Background */
+        .modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+        }
 
+        /* Modal Background */
+        .modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            max-height: 80%; /* 화면 높이의 80%로 제한 */
+            overflow-y: auto; /* 스크롤 활성화 */
+            display: flex;
+            flex-direction: column; /* 버튼을 하단에 배치하기 위해 column 레이아웃 사용 */
+            position: relative;
+        }
+
+        /* Resume List: 스크롤 가능한 영역 */
+        .resume-list {
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1; /* 남는 공간을 차지하게 설정 */
+            overflow-y: auto; /* 리스트 스크롤 활성화 */
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        /* 기본 이력서 항목 스타일 */
+        .resume-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .resume-item:hover {
+            background: #dcdcdc;
+        }
+
+        /* 선택된 항목 스타일 */
+        .resume-item.selected {
+            background: #8B1FFF;
+            color: white;
+            border: 2px solid #6200ee;
+        }
+
+        /* Apply Button */
+        .apply-btn {
+            background: #8B1FFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            position: sticky;
+            bottom: 0;
+            margin-top: 10px;
+        }
     </style>
     <link rel="stylesheet" href="/static/css/common.css">
 </head>
@@ -300,8 +388,10 @@
                 <div class="top-sub-wrapper-left-top flex-col">
                     <div class="flex-row" style="margin-top: 10px">
                         <span th:text="${jobPostInfo.companyName}"></span>
-                        <button id="like-btn"><img id="likeImg" width="18px" height="18px"
-                                                   src="/static/images/empty_heart.png"> 관심기업
+                        <button id="like-btn" onclick="actLike(this)" th:data-company-id="${jobPostInfo.companyId}">
+                            <img id="likeImg" width="18px" height="18px"
+                                 th:src="${likeYn eq 'Y'} ? '/static/images/heart.png' : '/static/images/empty_heart.png'">
+                            관심기업
                         </button>
                     </div>
                     <h1 th:text="${jobPostInfo.title}"></h1>
@@ -364,7 +454,8 @@
                     </div>
                     <div class="right-form flex-row">
                         <div class="label">사원 수</div>
-                        <div class="value" th:text="${#numbers.formatInteger(jobPostInfo.companyEmployee,3,'COMMA')} + '명'"></div>
+                        <div class="value"
+                             th:text="${#numbers.formatInteger(jobPostInfo.companyEmployee,3,'COMMA')} + '명'"></div>
                     </div>
                 </div>
                 <div class="company-detail-btn-container">
@@ -373,14 +464,28 @@
             </div>
         </div>
         <div class="middle-wrapper flex-row">
-            <button id="apply-btn">
+            <button id="apply-btn" onclick="openResumeModal()">
                 <img style="" width="15px" height="14px" src="/static/images/check.png">
                 &nbsp;즉시 지원
             </button>
-            <button id="scrap-btn">
-                <img style="" width="18px" height="18px" src="/static/images/empty_star.png">
+            <button id="scrap-btn" onclick="actScrap(this)" th:data-job-post-no="${jobPostInfo.jobPostNo}">
+                <img id="scrapImg" style="" width="18px" height="18px"
+                     th:src="${scrapYn eq 'Y'}? '/static/images/star.png' : '/static/images/empty_star.png'">
                 &nbsp;스크랩
             </button>
+        </div>
+        <!-- 이력서 선택 모달 -->
+        <div id="resumeModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeResumeModal()">×</button>
+                <h2>이력서 선택</h2>
+                <hr class="divider">
+<!--                여기 추가할 거임 이력서-->
+                <div class="resume-list">
+
+                </div>
+                <button class="apply-btn">지원하기</button>
+            </div>
         </div>
 
         <div class="bottom-wrapper flex-col">
@@ -455,5 +560,135 @@
     </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
+<script src="/static/js/utils.js"></script>
+<script>
+    const likeImageSrc = ["/static/images/empty_heart.png", "/static/images/heart.png"];
+    const likeImage = $('#likeImg');
+    let likeImageIndex = likeImageSrc.indexOf(likeImage.attr('src'));
+
+    const scrapImageSrc = ["/static/images/empty_star.png", "/static/images/star.png"];
+    const scrapImage = $('#scrapImg');
+    let scrapImageIndex = scrapImageSrc.indexOf(scrapImage.attr('src'));
+
+    const notLoginMsg = "로그인 후 사용해주세요.";
+
+    function actLike(ele) {
+        axios.post("/api/like/" + ele.getAttribute("data-company-id"))
+            .then(res => {
+                const data = res.data;
+                if (data == -1) {
+                    savePrevPageToSession(notLoginMsg);
+                } else if (data == 1) {
+                    likeImage.attr('src', likeImageSrc[(likeImageIndex += 1) % 2]);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    function actScrap(ele) {
+        axios.post("/api/scrap/" + ele.getAttribute("data-job-post-no"))
+            .then(res => {
+                const data = res.data;
+                if (data == -1) {
+                    savePrevPageToSession(notLoginMsg);
+                } else if (data == 1) {
+                    scrapImage.attr('src', scrapImageSrc[(scrapImageIndex += 1) % 2]);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+    // 모달 열기
+    function openResumeModal() {
+        if(!sessionCheck) {
+            savePrevPageToSession(notLoginMsg);
+
+        } else if(!resumeCheck) {
+            alert("등록된 유효한 이력서가 없습니다.\n이력서 등록 후 이용해주세요.(☞ﾟヮﾟ)☞");
+        } else {
+            document.getElementById("resumeModal").style.display = "flex";
+        }
+    }
+
+    // 모달 닫기
+    function closeResumeModal() {
+        document.getElementById("resumeModal").style.display = "none";
+    }
+
+    // 로그인 하고 들어온지 체크
+    let sessionCheck = null;
+    // 등록된 유효한 이력서 있는지 체크
+    let resumeCheck = null;
+    $(function () {
+        axios.get("/api/resume")
+            .then(res => {
+                console.log(res);
+                const data = res.data;
+                // 세션 user 비어있을 때
+                if (data === '') {
+                    sessionCheck = false;
+                    return;
+                }
+                sessionCheck = true;
+                // 등록된 유효한 이력서 없을 때
+                if(data.length === 0) {
+                    resumeCheck = false;
+                    return;
+                }
+                resumeCheck = true;
+                const resumeList = $('.resume-list');
+
+                let resumeItem = '';
+                data.forEach(resume => {
+                    // HTML 문자열을 템플릿 리터럴로 작성
+                    resumeItem += `
+                    <div class="resume-item" data-resume-id="1">
+                        <span class="date">${resume.createDate}</span>
+                        <span class="title">${resume.title}</span>
+                    </div>
+                    `;
+                })
+                // append를 사용하여 추가
+                resumeList.append(resumeItem);
+            }).catch(error => {
+            console.log(error);
+        })
+
+    })
+
+    // 선택된 이력서 번호를 저장할 변수
+    let selectedResume = null;
+
+    // 이력서 항목 클릭 이벤트
+    document.querySelectorAll(".resume-item").forEach(item => {
+        item.addEventListener("click", function () {
+            // 모든 항목에서 선택 상태 제거
+            document.querySelectorAll(".resume-item").forEach(el => el.classList.remove("selected"));
+
+            // 현재 클릭한 항목을 선택 상태로 설정
+            this.classList.add("selected");
+
+            // 선택된 이력서 번호 또는 제목 저장
+            selectedResume = this.querySelector(".title").textContent;
+            console.log("선택된 이력서:", selectedResume);
+        });
+    });
+
+    // 지원하기 버튼 클릭 이벤트
+    document.querySelector(".apply-btn").addEventListener("click", function () {
+        if (selectedResume) {
+            alert("선택된 이력서로 지원합니다: " + selectedResume);
+            // 추가 로직: 서버에 선택된 이력서를 전달
+            // axios.post('/api/apply', { resume: selectedResume });
+        } else {
+            alert("먼저 이력서를 선택해주세요.");
+        }
+    });
+</script>
+
 </body>
 </html>

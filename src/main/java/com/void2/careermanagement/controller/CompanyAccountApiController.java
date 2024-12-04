@@ -19,15 +19,19 @@ public class CompanyAccountApiController {
     }
 
     @PostMapping("/login")
-    public boolean userLogin(@RequestBody CompanyDto companyDto, HttpSession session) {
+    public String userLogin(@RequestBody CompanyDto companyDto, HttpSession session) {
         System.out.println(companyDto);
         CompanyDto sessionCompany = companyAccountDao.loginCompanySelect(companyDto);
         if (sessionCompany != null) {
             session.setAttribute("user", sessionCompany);
             session.setAttribute("userType", "C");
-            return true;
+            String prevPage = session.getAttribute("prevPage") == null ? "/" : (String) session.getAttribute("prevPage");
+            if (!prevPage.equals("/")) {
+                session.removeAttribute("prevPage"); // 세션에서 제거
+            }
+            return prevPage;
         } else {
-            return false;
+            return "false";
         }
     }
 

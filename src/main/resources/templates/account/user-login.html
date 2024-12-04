@@ -75,8 +75,8 @@
             userPw: userPw
         })
             .then(function (response) {
-                if (response.data) {
-                    location.href = '/';
+                if (response.data !== 'false') {
+                    location.href = response.data;
                 } else {
                     alert("아이디 밎 비밀번호를 다시 확인해주세요");
                 }
@@ -92,8 +92,8 @@
             companyPw: userPw
         })
             .then(function (response) {
-                if (response.data) {
-                    location.href = '/';
+                if (response.data !== 'false') {
+                    location.href = response.data;
                 } else {
                     alert("아이디 밎 비밀번호를 다시 확인해주세요");
                 }
