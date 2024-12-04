@@ -6,10 +6,7 @@ import com.void2.careermanagement.dto.request.ResumeRequestDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import com.void2.careermanagement.service.ResumeService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,7 +34,7 @@ public class ResumeApiController {
     }
 
     @PostMapping("/create")
-    public int createResume(ResumeRequestDto resumeRequestDto) {
+    public int createResume(@RequestBody ResumeRequestDto resumeRequestDto) {
         return resumeDao.insertResume(resumeRequestDto);
     }
 
