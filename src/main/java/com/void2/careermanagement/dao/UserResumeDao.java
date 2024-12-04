@@ -1,6 +1,6 @@
 package com.void2.careermanagement.dao;
 
-import com.void2.careermanagement.response.UserResponseDto;
+import com.void2.careermanagement.dto.response.UserResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

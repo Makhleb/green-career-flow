@@ -30,5 +30,16 @@
         LIMIT 3;
         ]]>
     </select>
+    <select id="getSkillListByResumeNo">
+        SELECT
+        A.resume_no, A.skill_code AS code, B.name AS name
+        FROM tbl_resume_skill A
+        LEFT JOIN
+        (SELECT CODE, NAME
+        FROM tbl_gubn
+        WHERE group_code = 'SKILL') B
+        ON A.skill_code = B.code
+        WHERE A.resume_no = #{resumeNo}
+    </select>
 </mapper>
 

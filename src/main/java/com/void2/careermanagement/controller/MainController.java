@@ -1,5 +1,6 @@
 package com.void2.careermanagement.controller;
 
+import com.void2.careermanagement.dto.CompanyDto;
 import com.void2.careermanagement.dto.UserDto;
 import com.void2.careermanagement.dto.response.CompanyResponseDto;
 import com.void2.careermanagement.dto.response.UserResponseDto;
@@ -54,14 +55,22 @@ public class MainController {
                 getFastDeadLineList(model);
             }
             //기업
-            else {
+            else if(userType.equals("C")) {
+                CompanyDto sessionUser = (CompanyDto) session.getAttribute("user");
+
                 getHighRatingCompanyList(model);
 
-                //기업으로부터 좋아요를 많이 받은 구직자
-                List<UserResponseDto> uList = userResumeService.getUserReumeList();
+//                완성 시키세용
+//                // 기업으로부터 좋아요를 많이 받은 구직자
+//                List<UserResponseDto> uList = userResumeService.getUserReumeList();
+//
+//                for(UserResponseDto u : uList) System.out.println(u);
+//                model.addAttribute("uList", uList);
 
-                for(UserResponseDto u : uList) System.out.println(u);
-                model.addAttribute("uList", uList);
+                // 최근에 지원한 지원자
+                List<UserResponseDto> ss = userResumeService.getUserResumeListByApplyId(sessionUser.getCompanyId());
+                System.out.println(ss);
+
                 return "/company/company-main";
             }
         }

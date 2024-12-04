@@ -38,11 +38,6 @@ public class JobPostService {
             if (!benefits.isEmpty()) jobPostDao.insertJobPostBenefit(maxNo, benefits);
             if (!skillList.isEmpty()) jobPostDao.insertJobPostSkill(maxNo, skillList);
 
-            List<asdda> aa = dao.sdkl();
-            for (int i = 0; i < aa.size(); i++) {
-                int resumeNo = aa.get(i).getResumeNo;
-                aa.get(i).setSkillList(dao.getSkillList());
-            }
             return 1;
         } catch (Exception e) {
             e.printStackTrace();
