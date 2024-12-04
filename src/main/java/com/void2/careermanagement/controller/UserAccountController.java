@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserAccountController {
 
     @GetMapping("/login")
-    public String userLogin() {
+    public String userLogin(){
         return "account/user-login";
     }
+
     @GetMapping("/regist")
     public String userRegist() {
         return "account/user-regist";
     }
+
     @GetMapping("/update")
     public String userUpdate() {
         return "account/user-update";

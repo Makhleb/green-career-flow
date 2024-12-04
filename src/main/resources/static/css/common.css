@@ -132,3 +132,29 @@ footer {
     font-family: 'Noto Sans KR', sans-serif;
 }
 /* /footer-css */
+
+aside{
+    width: 200px;
+    margin-right: 30px;
+    /*border: 1px solid black;*/
+}
+aside hr{
+    background-color: #8B1FFF;
+    height: 1px;
+    border: 0;
+}
+aside p, aside h3{
+    margin: 10px 10px 10px 20px;
+}
+aside ul{
+    list-style-type: none;
+    padding-left: 35px;
+    margin: 10px 10px 10px 0;
+}
+aside li{
+    margin: 10px 10px 10px 0;
+}
+aside a {
+    color: gray;
+    text-decoration: none;
+}
