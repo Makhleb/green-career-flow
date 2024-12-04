@@ -17,25 +17,41 @@
           </div>
           <div class="grid-item-blank" ></div>
           <div class="grid-item">관심등록 인기 회원 Top 8</div>
-            <div class="grid-resume-container">
-                <div class="grid-resume-item" th:each="user, userStat : ${uList}">
-                    <th:block th:if="${userStat.count == 1}">
-                        <div class="grid-resume-item-rank">Top [[${userStat.count}]]</div>
-                    </th:block>
-                    <th:block th:if="${userStat.count >1 && userStat.count <4}">
-                        <div class="grid-resume-item-rank2">Top [[${userStat.count}]]</div>
-                    </th:block>
-                    [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                    <th:block th:if="${user.jobHistory > 0}">
-                        [[${user.jobHistory}]]년 이상
-                    </th:block>
-                    <th:block th:if="${user.jobHistory == 0}">
-                        신입
-                    </th:block><br/>
-                    기술스택
-                    [[${user.skillCodes}]]
-                </div>
-            </div>
+          <div class="grid-item">
+              <div class="grid-resume-container_left">
+                  <div class="grid-resume-item" th:each="user, userStat : ${uList}" th:if="${userStat.index >=0 && userStat.index < 4}">
+                          <th:block th:if="${userStat.index == 0}">
+                              <div class="grid-resume-item-rank">Top [[${userStat.count}]]</div>
+                          </th:block>
+                          <th:block th:if="${userStat.index > 0 && userStat.index < 4}">
+                              <div class="grid-resume-item-rank2">Top [[${userStat.count}]]</div>
+                          </th:block>
+                          [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                          <th:block th:if="${user.jobHistory > 0}">
+                              [[${user.jobHistory}]]년 이상
+                          </th:block>
+                          <th:block th:if="${user.jobHistory == 0}">
+                              신입
+                          </th:block><br/>
+                          기술스택
+                          [[${user.skillCodes}]]
+                  </div>
+              </div>
+              <div class="grid-resume-container_right">
+                  <div class="grid-resume-item" th:each="user, userStat : ${uList}" th:if="${userStat.index >= 4 && userStat.index < 8}">
+                      <div class="grid-resume-item-rank3">Top [[${userStat.count}]]</div>
+                      [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                      <th:block th:if="${user.jobHistory > 0}">
+                          [[${user.jobHistory}]]년 이상
+                      </th:block>
+                      <th:block th:if="${user.jobHistory == 0}">
+                          신입
+                      </th:block><br/>
+                      기술스택
+                      [[${user.skillCodes}]]
+                  </div>
+              </div>
+          </div>
           <div class="grid-item-right"></div>
       </div>
     </div>

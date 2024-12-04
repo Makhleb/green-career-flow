@@ -55,14 +55,17 @@ a{
     border-radius: 5px;
 }
 
-.grid-resume-container{
+.grid-resume-container_left, .grid-resume-container_right{
     display: grid;
-    width:50%;
+    width:49%;
     gap: 10px;
     grid-template-rows: 1fr auto auto auto;
     grid-template-columns: 1fr;
-
 }
+
+.grid-resume-container_left{float: left;}
+.grid-resume-container_right{float: right;}
+
 .grid-resume-item{
     margin-top: 10px;
     padding : 10px 15px;
