@@ -13,5 +13,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/apply")
 public class ApplyApiController {
 
-
 }

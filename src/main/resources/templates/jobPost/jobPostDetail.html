@@ -683,7 +683,7 @@
         if (selectedResume) {
             alert("선택된 이력서로 지원합니다: " + selectedResume);
             // 추가 로직: 서버에 선택된 이력서를 전달
-            // axios.post('/api/apply', { resume: selectedResume });
+            axios.post('/api/apply', { resume: selectedResume });
         } else {
             alert("먼저 이력서를 선택해주세요.");
         }
