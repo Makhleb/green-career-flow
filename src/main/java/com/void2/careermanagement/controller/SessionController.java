@@ -13,13 +13,15 @@ import java.util.Map;
  * 세션용 컨트롤러
  */
 @RestController
-@RequestMapping("api/session")
+@RequestMapping("/api/session")
 public class SessionController {
     @PostMapping("/savePrevPage")
-    public void savePrevPage(@RequestBody Map<String, String> data, HttpSession session) {
+    public String savePrevPage(@RequestBody Map<String, String> data, HttpSession session) {
         String prevPage = data.get("prevPage");
+        System.out.println(prevPage);
         if (prevPage != null && !prevPage.isEmpty()) {
             session.setAttribute("prevPage", prevPage); // 세션에 저장
         }
+        return "세션 저장 완료!!";
     }
 }

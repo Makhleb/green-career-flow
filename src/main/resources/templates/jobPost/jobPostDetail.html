@@ -606,11 +606,12 @@
     function openResumeModal() {
         if(!sessionCheck) {
             savePrevPageToSession(notLoginMsg);
+
         } else if(!resumeCheck) {
             alert("등록된 유효한 이력서가 없습니다.\n이력서 등록 후 이용해주세요.(☞ﾟヮﾟ)☞");
-            return;
+        } else {
+            document.getElementById("resumeModal").style.display = "flex";
         }
-        document.getElementById("resumeModal").style.display = "flex";
     }
 
     // 모달 닫기

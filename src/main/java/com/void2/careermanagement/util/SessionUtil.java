@@ -15,21 +15,22 @@ public class SessionUtil {
     /**
      * 로그인 여부 확인
      *
-     * @param session       HttpSession 객체
-     * @param request       HttpServletRequest 객체
-     * @param response      HttpServletResponse 객체
+     * @param session  HttpSession 객체
+     * @param request  HttpServletRequest 객체
+     * @param response HttpServletResponse 객체
      */
-    public static void sessionUserCheckRedirectLogin(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public static boolean sessionUserCheckRedirectLogin(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 로그인 여부 확인
         Object user = session.getAttribute("user");
         if (user == null) {
-            // 로그인 이전 URL 저장
-            String referer = request.getHeader("Referer");
-            if (referer != null) {
-                session.setAttribute("prevPage", referer);
-            }
+            // 현재 URL 저장
+            String currentUrl = request.getRequestURI() + (request.getQueryString() != null ? "?" + request.getQueryString() : "");
+            session.setAttribute("prevPage", currentUrl);
+
             // 로그인 페이지로 리디렉션
-            response.sendRedirect("/loginPage");
+            response.sendRedirect("/user/account/login");
+            return true; // 리다이렉션 발생 시 true 반환
         }
+        return false; // 로그인된 경우 false 반환
     }
 }
