@@ -4,7 +4,8 @@
 
 <mapper namespace="com.void2.careermanagement.dao.JobPostDao">
     <select id="maxJopPostNo">
-        SELECT MAX(job_post_no) + 1 FROM tbl_job_post
+        SELECT MAX(job_post_no) + 1
+        FROM tbl_job_post
     </select>
     <insert id="insertJobPost" parameterType="com.void2.careermanagement.dto.request.JopPostRequestDto">
         INSERT INTO tbl_job_post
@@ -51,7 +52,7 @@
         INSERT INTO tbl_benefit
         VALUES
         <foreach collection="benefitList" item="benefit" separator=",">
-             (#{jobPostNo}, #{benefit})
+            (#{jobPostNo}, #{benefit})
         </foreach>
     </insert>
     <insert id="insertJobPostSkill">
@@ -89,6 +90,8 @@
         A.work_code,
         A.work_type_code,
         A.process,
+        A.start_date,
+        A.end_date,
         <!-- gubnList에서 각 항목의 NAME을 선택 -->
         <foreach collection="groupCodeList" item="groupCode" index="index" separator=",">
             ${groupCode}.NAME AS ${groupCode}_name
@@ -114,9 +117,41 @@
         WHERE job_post_no = #{jobPostNo}
     </select>
     <select id="selectSkillList">
-        SELECT code, name
-        FROM tbl_gubn
-        WHERE group_code = 'SKILL'
-        AND code IN(SELECT code FROM tbl_job_post_skill WHERE job_post_no = #{jobPostNo})
+        SELECT A.skill_code AS code, B.name
+        FROM tbl_job_post_skill A
+                 LEFT JOIN (SELECT * FROM tbl_gubn WHERE group_code = 'skill') B ON A.skill_code = B.code
+        WHERE job_post_no = ${jobPostNo}
     </select>
+    <update id="updateJobPost">
+        UPDATE tbl_job_post
+        SET
+            title          = #{jobPost.title},
+            work_code      = #{jobPost.workCode},
+            job_history    = #{jobPost.jobHistory},
+            job_salary     = #{jobPost.jobSalary},
+            education_code = #{jobPost.educationCode},
+            job_rank_code  = #{jobPost.jobRankCode},
+            work_type_code = #{jobPost.workTypeCode},
+            start_date     = #{jobPost.startDate},
+            end_date       = #{jobPost.endDate},
+            content        = #{jobPost.content},
+            work_condition = #{jobPost.workCondition},
+            process        = #{jobPost.process},
+            method         = #{jobPost.method},
+            add_notice     = #{jobPost.addNotice},
+            manager_name   = #{jobPost.managerName},
+            manager_phone  = #{jobPost.managerPhone},
+            manager_email  = #{jobPost.managerEmail}
+        WHERE job_post_no = #{jobPost.jobPostNo};
+    </update>
+    <delete id="deleteBenefits">
+        DELETE
+        FROM tbl_benefit
+        WHERE job_post_no = #{jobPostNo}
+    </delete>
+    <delete id="deleteSkillList">
+        DELETE
+        FROM tbl_job_post_skill
+        WHERE job_post_no = #{jobPostNo}
+    </delete>
 </mapper>
