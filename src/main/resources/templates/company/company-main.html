@@ -19,14 +19,14 @@
           <div class="grid-item-blank" ></div>
           <div class="grid-item">관심등록 인기 회원 Top 8</div>
           <div class="grid-item">
-              <div class="grid-resume-container_left">
-                  <div class="grid-resume-item" th:each="user, userStat : ${uList}" th:if="${userStat.index >=0 && userStat.index < 4}">
+              <div class="grid-like-container_left">
+                  <div class="grid-like-item" th:each="user, userStat : ${uList}" th:if="${userStat.index >=0 && userStat.index < 4}">
                         <div class="flex-container">
                             <th:block th:if="${userStat.index == 0}">
-                                  <div class="grid-resume-item-rank">Top [[${userStat.count}]]</div>
+                                  <div class="grid-like-item-rank">Top [[${userStat.count}]]</div>
                               </th:block>
                               <th:block th:if="${userStat.index > 0 && userStat.index < 4}">
-                                  <div class="grid-resume-item-rank2">Top [[${userStat.count}]]</div>
+                                  <div class="grid-like-item-rank2">Top [[${userStat.count}]]</div>
                               </th:block>
                               [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                               <th:block th:if="${user.jobHistory > 0}">
@@ -37,15 +37,15 @@
                               </th:block><br/>
                         </div>
                       <span class="skill_codes">기술스택</span>
-                      <th:block th:each="skill : ${#strings.arraySplit(user.skillCodes,',')}">
-                          <span class="skill_name">[[${skill}]]</span>
+                      <th:block th:each="skill : ${user.skillList}">
+                          <span class="skill_name">[[${skill.name}]]</span>
                       </th:block>
                   </div>
               </div>
-              <div class="grid-resume-container_right">
-                  <div class="grid-resume-item" th:each="user, userStat : ${uList}" th:if="${userStat.index >= 4 && userStat.index < 8}">
+              <div class="grid-like-container_right">
+                  <div class="grid-like-item" th:each="user, userStat : ${uList}" th:if="${userStat.index >= 4 && userStat.index < 8}">
                       <div class="flex-container">
-                      <div class="grid-resume-item-rank3">Top [[${userStat.count}]]</div>
+                      <div class="grid-like-item-rank3">Top [[${userStat.count}]]</div>
                       [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                       <th:block th:if="${user.jobHistory > 0}">
                           [[${user.jobHistory}]]년 이상
@@ -56,8 +56,8 @@
                       </div>
 
                       <span class="skill_codes">기술스택</span>
-                      <th:block th:each="skill : ${#strings.arraySplit(user.skillCodes,',')}">
-                        <span class="skill_name">[[${skill}]]</span>
+                      <th:block th:each="skill : ${user.skillList}">
+                          <span class="skill_name">[[${skill.name}]]</span>
                       </th:block>
                   </div>
               </div>
@@ -70,7 +70,21 @@
             </span>
           </div>
           <div class="grid-item">
-
+              <th:block th:each="applicant : ${aList}">
+                  <div class="grid-resume">
+                      <p>[[${applicant.jobPostTitle}]]</p>
+                      [[${applicant.userName}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${applicant.resumeTitle}]]<br/>
+                      [[${applicant.userGender}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span> [[${applicant.userAge}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                      <span th:if="${applicant.jobHistory > 0}"> 경력 [[${applicant.jobHistory}]]년 이상</span>
+                      <span th:if="${applicant.jobHistory == 0}"> 신입</span>
+                      <span class="right">
+                          <span class="skill_codes">기술스택</span>
+                          <th:block th:each="skill : ${applicant.skillList}">
+                              <span class="skill_name">[[${skill.name}]]</span>
+                          </th:block>
+                      </span>
+                  </div>
+              </th:block>
           </div>
           <div class="grid-item-right"></div>
       </div>

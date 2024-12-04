@@ -2,6 +2,7 @@ package com.void2.careermanagement.controller;
 
 import com.void2.careermanagement.dto.CompanyDto;
 import com.void2.careermanagement.dto.UserDto;
+import com.void2.careermanagement.dto.response.ApplicantResponseDto;
 import com.void2.careermanagement.dto.response.CompanyResponseDto;
 import com.void2.careermanagement.dto.response.UserResponseDto;
 import com.void2.careermanagement.service.CompanyService;
@@ -29,9 +30,6 @@ public class MainController {
         this.companyService = companyService;
         this.userResumeService = userResumeService;
     }
-
-
-
     @RequestMapping("/")
     public String root(Model model, HttpSession session) {
         if (session.getAttribute("user") == null) {
@@ -56,20 +54,25 @@ public class MainController {
             }
             //기업
             else if(userType.equals("C")) {
+                String isEmpty = "Empty";
                 CompanyDto sessionUser = (CompanyDto) session.getAttribute("user");
 
                 getHighRatingCompanyList(model);
 
-//                완성 시키세용
-//                // 기업으로부터 좋아요를 많이 받은 구직자
-//                List<UserResponseDto> uList = userResumeService.getUserReumeList();
-//
-//                for(UserResponseDto u : uList) System.out.println(u);
-//                model.addAttribute("uList", uList);
+                //기업으로부터 좋아요를 많이 받은 구직자 리스트
+                List<ApplicantResponseDto> uList = userResumeService.getHighLikeApplicantList();
+                model.addAttribute("uList", uList);
+                //for(ApplicantResponseDto u : uList) System.out.println(u);
 
-                // 최근에 지원한 지원자
-                List<UserResponseDto> ss = userResumeService.getUserResumeListByApplyId(sessionUser.getCompanyId());
-                System.out.println(ss);
+                //최근 입사지원내역 리스트
+                List<UserResponseDto> aList = userResumeService.getUserResumeListByApplyId(sessionUser.getCompanyId());
+                if (!aList.isEmpty()) {
+                    for (UserResponseDto a : aList) System.out.println(a);
+                    isEmpty = "notEmpty";
+                    model.addAttribute("aList", aList);
+
+                }
+                model.addAttribute("isEmpty", isEmpty);
 
                 return "/company/company-main";
             }

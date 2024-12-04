@@ -131,7 +131,7 @@ p{
     border-radius: 5px;
 }
 
-.grid_posting_item:hover > img {
+.grid_posting_item>a:hover > img {
     transform: scale(1.1);
     border-radius: 5px;
 }
