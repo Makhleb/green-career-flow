@@ -2,8 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.void2.careermanagement.dao.BoardDao">
+<mapper namespace="com.void2.careermanagement.dao.ApplyDao2">
     <select id="getApplyListByCompanyId">
+        <![CDATA[
         SELECT
         hstr.job_post_no,
         jp.title,
@@ -15,13 +16,7 @@
         us.user_gender,
         TIMESTAMPDIFF(YEAR, us.user_birth, CURDATE())-(RIGHT(CURDATE(), 5) < RIGHT(us.user_birth, 5)) AS user_age
         FROM
-        -- 지원이력
-        (SELECT job_post_no, resume_no, aplc_hstr_date
-        -- CASE pass_yn
-        -- WHEN 'Y' THEN '합격'
-        -- WHEN 'N' THEN '불합격'
-        -- ELSE '미확인' END AS pass_yn
-        , pass_yn
+        (SELECT job_post_no, resume_no, aplc_hstr_date, pass_yn
         FROM tbl_aplc_hstr
         WHERE job_post_no
         IN (SELECT job_post_no
@@ -33,6 +28,7 @@
         WHERE jp.company_id = 'company03'
         ORDER BY hstr.aplc_hstr_date DESC
         LIMIT 3;
+        ]]>
     </select>
 </mapper>
 
