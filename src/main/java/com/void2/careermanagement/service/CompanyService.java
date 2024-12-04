@@ -2,10 +2,7 @@ package com.void2.careermanagement.service;
 
 
 import com.void2.careermanagement.dao.CompanyDao;
-import com.void2.careermanagement.dao.GubnDao;
-import com.void2.careermanagement.dto.CompanyDto;
-import com.void2.careermanagement.dto.GubnDto;
-import com.void2.careermanagement.response.CompanyResponseDto;
+import com.void2.careermanagement.dto.response.CompanyResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

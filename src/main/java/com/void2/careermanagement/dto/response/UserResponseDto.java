@@ -1,6 +1,9 @@
-package com.void2.careermanagement.response;
+package com.void2.careermanagement.dto.response;
 
+import com.void2.careermanagement.dto.GubnDto;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * Created on 2024-12-03 by 안제연
@@ -14,5 +17,6 @@ public class UserResponseDto {
     private int jobHistory;
     private String skillCode;
     private int likeCount;
-    private String skillCodes;
+//    private String skillCodes;
+    private List<GubnDto> skillList;
 }

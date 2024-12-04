@@ -1,8 +1,8 @@
 package com.void2.careermanagement.controller;
 
 import com.void2.careermanagement.dto.UserDto;
-import com.void2.careermanagement.response.CompanyResponseDto;
-import com.void2.careermanagement.response.UserResponseDto;
+import com.void2.careermanagement.dto.response.CompanyResponseDto;
+import com.void2.careermanagement.dto.response.UserResponseDto;
 import com.void2.careermanagement.service.CompanyService;
 import com.void2.careermanagement.service.UserResumeService;
 import jakarta.servlet.http.HttpSession;

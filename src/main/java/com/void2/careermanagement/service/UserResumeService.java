@@ -1,11 +1,10 @@
 package com.void2.careermanagement.service;
 
 import com.void2.careermanagement.dao.UserResumeDao;
-import com.void2.careermanagement.response.UserResponseDto;
+import com.void2.careermanagement.dto.response.UserResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
