@@ -8,7 +8,7 @@
 .grid-container{
     display: grid;
     width:100%;
-    grid-template-rows: 2fr 24px 32px auto 24px 32px auto 80px ;
+    grid-template-rows: 2fr 24px 32px auto 24px 32px auto 24px 32px auto 80px ;
     grid-template-columns: 2fr 6fr 2fr;
 }
 
@@ -133,5 +133,50 @@ p{
 
 .right{
     float: right;
-    margin: 10px;
+    transform: translateY(-10px);
+}
+
+.grid_posting{
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 22px;
+}
+
+.grid_posting_item{
+    width: 384px;
+    height: auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.grid_posting_item > p {
+    margin-top: 10px;
+    font-weight: 550;
+    font-size: 16px;
+}
+
+.grid_posting_item > a > img {
+    margin-top: 20px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    border-radius: 5px;
+}
+
+.grid_posting_item>a:hover > img {
+    transform: scale(1.1);
+    border-radius: 5px;
+}
+
+.grid_posting_item_enddate{
+    position : absolute;
+    top: 12%;
+    left: 8%;
+    text-align: center;
+    width:80px;
+    height: 36px;
+    background-color: #ffffff;
+    opacity: 70%;
+    border-radius: 5px;
 }
