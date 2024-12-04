@@ -5,20 +5,23 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <style>
-        main{
+        main {
             display: flex;
         }
+
         hr {
             background-color: #8B1FFF;
             height: 1px;
             border: 0;
         }
+
         #title {
             display: flex;
             margin: 20px 20px 20px 0;
             align-items: center;
             gap: 10px;
         }
+
         #regist_btn {
             width: 80px;
             height: 30px;
@@ -30,52 +33,112 @@
             padding: 5px 10px; /* 버튼 내부 여백 */
             border-radius: 20px; /* 둥근 모서리 */
         }
-        .container{
+
+        .container {
             width: 620px;
             margin: 20px 0;
         }
-        .container h4{
+
+        .container h4 {
             margin: 10px;
         }
-        .title{
+
+        .title {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .title a{
+
+        .title a {
             text-decoration: none;
         }
-        .box{
+
+        .box {
             border-bottom: 1px solid #8B1FFF;
         }
-        #proposal_item_icon, #like_item_icon{
-            width: 100px; height: 65px;
+
+        #proposal_item_icon, #like_item_icon {
+            width: 100px;
+            height: 65px;
             align-content: center;
             text-align: center;
         }
-        #proposal_title a{
+
+        #proposal_title a {
             text-decoration: none;
         }
-        .item_content{
-            align-items: center;
-            align-content: center;
+
+        .item_content {
+            height: 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /*align-items: center;*/
+            /*align-content: center;*/
+
         }
-        .item_content{
+
+        .item_content {
             font-size: 13px;
             color: gray;
         }
-        .content_title{
-            margin-bottom: 5px;
+
+        .content_title {
+            display: flex;
+            flex-direction: row;
+            /*margin-bottom: 5px;*/
         }
-        #proposal_items, #like_items{
+
+        #proposal_items, .like_items {
             display: flex;
             margin: 10px 0;
         }
-        .content{
+
+        .like_items {
+            border: 1px #8B1FFF solid;
+            border-radius: 12px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            min-height: 46px;
+            height: auto;
+        }
+
+        .content {
             width: 500px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .item_icon {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            width: 10%;
+        }
+        .stack-items {
+            width: 80%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            /*width: 100%; !* 부모 컨테이너의 너비에 맞춤 *!*/
+        }
+
+        .date {
+            width: 10%;
+        }
+
+        .stack-item {
+            border: 1px solid #8B1FFF;
+            border-radius: 50px;
+            margin: 0 2px 0 2px;
+            padding: 0 6px 0 6px;
+            box-sizing: border-box; /* 보더 포함 크기 계산 */
+        }
+
+        .age {
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -113,7 +176,7 @@
             </div>
             <hr>
             <div class="box">
-                <div class="box_item" >
+                <div class="box_item">
                     <div id="proposal_items">
                         <div class="item_icon">
                             <i class="bi bi-envelope"></i>
@@ -137,23 +200,146 @@
             </div>
             <hr>
             <div class="box">
-                <div class="box_item" >
-                    <div id="like_items">
+                <div class="box_item">
+                    <div class="like_items">
                         <div class="item_icon">
                             <i class="bi bi-suit-heart-fill"></i>
+
                         </div>
                         <div class="item_content">
-                            <div class="content_title"><strong>관심 구직자 이름</strong></div>
+                            <div class="content_title">
+                                <strong>관심 구직자 이름(아이디)</strong>
+                                <p class="age">|&nbsp;99세&nbsp;</p>
+                                <p class="job-history">|&nbsp;경력 10년</p>
+                            </div>
                             <div class="content">
-                                <p>기업이름</p>
-                                <p>YYYY/MM/DD</p>
+                                <p>기술스택</p>
+                                <div class="stack-items">
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                </div>
+                                <p class="date">YYYY/MM/DD</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="like_items">
+                        <div class="item_icon">
+                            <i class="bi bi-suit-heart-fill"></i>
+
+                        </div>
+                        <div class="item_content">
+                            <div class="content_title">
+                                <strong>관심 구직자 이름(아이디)</strong>
+                                <p class="age">|&nbsp;99세&nbsp;</p>
+                                <p class="job-history">|&nbsp;경력 10년</p>
+                            </div>
+                            <div class="content">
+                                <p>기술스택</p>
+                                <div class="stack-items">
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                </div>
+                                <p class="date">YYYY/MM/DD</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="like_items">
+                        <div class="item_icon">
+                            <i class="bi bi-suit-heart-fill"></i>
+
+                        </div>
+                        <div class="item_content">
+                            <div class="content_title">
+                                <strong>관심 구직자 이름(아이디)</strong>
+                                <p class="age">|&nbsp;99세&nbsp;</p>
+                                <p class="job-history">|&nbsp;경력 10년</p>
+                            </div>
+                            <div class="content">
+                                <p>기술스택</p>
+                                <div class="stack-items">
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                </div>
+                                <p class="date">YYYY/MM/DD</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="like_items">
+                        <div class="item_icon">
+                            <i class="bi bi-suit-heart-fill"></i>
+
+                        </div>
+                        <div class="item_content">
+                            <div class="content_title">
+                                <strong>관심 구직자 이름(아이디)</strong>
+                                <p class="age">|&nbsp;99세&nbsp;</p>
+                                <p class="job-history">|&nbsp;경력 10년</p>
+                            </div>
+                            <div class="content">
+                                <p>기술스택</p>
+                                <div class="stack-items">
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                </div>
+                                <p class="date">YYYY/MM/DD</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="like_items">
+                        <div class="item_icon">
+                            <i class="bi bi-suit-heart-fill"></i>
+
+                        </div>
+                        <div class="item_content">
+                            <div class="content_title">
+                                <strong>관심 구직자 이름(아이디)</strong>
+                                <p class="age">|&nbsp;99세&nbsp;</p>
+                                <p class="job-history">|&nbsp;경력 10년</p>
+                            </div>
+                            <div class="content">
+                                <p>기술스택</p>
+                                <div class="stack-items">
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                    <div class="stack-item">JAVA</div>
+                                    <div class="stack-item">SQL</div>
+                                </div>
+                                <p class="date">YYYY/MM/DD</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+    </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
