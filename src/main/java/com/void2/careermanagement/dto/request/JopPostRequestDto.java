@@ -10,12 +10,12 @@ import java.util.List;
  */
 @Data
 public class JopPostRequestDto {
-    private long jobPostNo;
+    private int jobPostNo;
     private String companyId;
     private String title;
     private String workCode;
-    private long jobHistory;
-    private long jobSalary;
+    private int jobHistory;
+    private int jobSalary;
     private String educationCode;
     private String jobRankCode;
     private String workTypeCode;
@@ -23,7 +23,7 @@ public class JopPostRequestDto {
     private LocalDateTime endDate;
     private String content;
     private String workCondition;
-    private long process;
+    private int process;
     private String method;
     private String addNotice;
     private String managerName;

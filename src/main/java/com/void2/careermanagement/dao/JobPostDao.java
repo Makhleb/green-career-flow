@@ -29,4 +29,10 @@ public interface JobPostDao {
     List<String> selectBenefitList(int jobPostNo);
 
     List<GubnDto> selectSkillList(int jobPostNo);
+
+    void updateJobPost(@Param("jobPost") JopPostRequestDto jopPostRequestDto);
+
+    void deleteBenefits(@Param("jobPostNo") int jobPostNo);
+
+    void deleteSkillList(@Param("jobPostNo") int jobPostNo);
 }

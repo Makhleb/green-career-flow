@@ -7,7 +7,6 @@ import com.void2.careermanagement.type.GroupCode;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ public class JobPostService {
      */
     public int jobPostInsert(JopPostRequestDto jopPostRequestDto) {
         try {
-            jopPostRequestDto.setCompanyId("company01");
+//            jopPostRequestDto.setCompanyId("company01");
             jobPostDao.insertJobPost(jopPostRequestDto);
             int maxNo = jobPostDao.maxJopPostNo();
 
@@ -45,7 +44,33 @@ public class JobPostService {
             return 0;
         }
     }
+    /**
+     * 채용공고 수정
+     *
+     * @param jopPostRequestDto
+     * @return 성공 시 1 실패 0
+     */
+    public int jobPostUpdate(JopPostRequestDto jopPostRequestDto) {
+        try {
+            int jobPostNo = jopPostRequestDto.getJobPostNo();
+//            jopPostRequestDto.setCompanyId("company01");
+            jobPostDao.updateJobPost(jopPostRequestDto);
 
+            List<String> benefits = jopPostRequestDto.getBenefitList(); //복리후생
+            List<String> skillList = jopPostRequestDto.getSkillList(); // 스킬리스트
+
+            jobPostDao.deleteBenefits(jobPostNo);
+            jobPostDao.deleteSkillList(jobPostNo);
+
+            if (!benefits.isEmpty()) jobPostDao.insertJobPostBenefit(jobPostNo, benefits);
+            if (!skillList.isEmpty()) jobPostDao.insertJobPostSkill(jobPostNo, skillList);
+
+            return 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
     public JobPostResponseDto getJobDetail(int jobPostNo) {
 
         List<GroupCode> gubnList = new ArrayList<>();

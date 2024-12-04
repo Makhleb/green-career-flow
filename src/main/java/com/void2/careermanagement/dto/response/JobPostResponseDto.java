@@ -45,4 +45,6 @@ public class JobPostResponseDto {
     private int process;
     private List<String> benefitList;
     private List<GubnDto> skillList;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 }
