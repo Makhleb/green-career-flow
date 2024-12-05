@@ -194,23 +194,29 @@
             </div>
             <hr>
             <div id="scrap_box">
-                <div class="scrap_items" th:each="dto, State: ${scrapList}" th:if="${State.index < 3}">
-                    <div id="scrap_item_icon"><i class="bi bi-star-fill" style="color:#8B1FFF"></i></div>
-                    <div id="scrap_item_content">
-                        <div class="scrap_content_title">
-                            <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${dto.jobPostNo})}"><strong>[[${dto.title}]]</strong></a>
-                            <span>[[${#temporals.format(dto.scrapDate,'yyyy-MM-dd')}]]</span>
-                        </div>
+                <th:block th:if="${#lists.size(scrapList) > 0}">
+                    <div class="scrap_items" th:each="dto, State: ${scrapList}" th:if="${State.index < 3}">
+                        <div id="scrap_item_icon"><i class="bi bi-star-fill" style="color:#8B1FFF"></i></div>
+                        <div id="scrap_item_content">
+                            <div class="scrap_content_title">
+                                <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${dto.jobPostNo})}"><strong>[[${dto.title}]]</strong></a>
+                                <span>[[${#temporals.format(dto.scrapDate,'yyyy-MM-dd')}]]</span>
+                            </div>
 
-                        <th:block th:if="${dto.endDate != null}">
-                            <p th:text="${dto.companyName} + ' / 마감일 : ' + ${#temporals.format(dto.endDate, 'yyyy-MM-dd')}"></p>
-                        </th:block>
-                        <th:block th:if="${dto.endDate == null}">
-                            <p th:text="${dto.companyName} + ' / 상시채용'"></p>
-                        </th:block>
-                        <p style="margin-bottom: 10px"></p>
+                            <th:block th:if="${dto.endDate != null}">
+                                <p th:text="${dto.companyName} + ' / 마감일 : ' + ${#temporals.format(dto.endDate, 'yyyy-MM-dd')}"></p>
+                            </th:block>
+                            <th:block th:if="${dto.endDate == null}">
+                                <p th:text="${dto.companyName} + ' / 상시채용'"></p>
+                            </th:block>
+                            <p style="margin-bottom: 10px"></p>
+                        </div>
                     </div>
-                </div>
+                </th:block>
+                <th:block th:if="${#lists.size(scrapList) ==0 }">
+                    <p style="margin:5px;"></p>
+                    <p style="padding-left:10px; color: gray">스크랩된 기업 공고가 없습니다.</p>
+                </th:block>
             </div>
         </div>
     </div>
