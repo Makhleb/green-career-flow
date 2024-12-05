@@ -158,7 +158,7 @@
                 <div th:each="jobPost : ${jobPostList}" class="items">
                     <div class="item_content">
                         <div class="content_title">
-                            <p th:text="${jobPost.title}"></p>
+                            <a th:text="${jobPost.title}" th:href="'/job-post/detail/' + ${jobPost.jobPostNo}"></a>
                             <p>&nbsp;|&nbsp;</p>
                             <div class="content-form">
                                 <p class="value"
@@ -221,7 +221,7 @@
                     console.log(error);
                 })
         }
-        
+
     }
 
 </script>
