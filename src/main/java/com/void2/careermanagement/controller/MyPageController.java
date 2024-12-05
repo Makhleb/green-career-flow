@@ -75,6 +75,10 @@ public class MyPageController {
             List<ProposalResponseDto> proposalList = myPageService.MyPageProposalListByCompanyIdTop3(companyId);
             model.addAttribute("proposalSize", myPageDao.getCountProposalByCompanyId(companyId));
             model.addAttribute("plist", proposalList);
+
+            List<JobPostResponseDto> jobPostList = myPageService.MyPageJobPostListByCompanyIdTop3(companyId);
+            model.addAttribute("jobPostSize", myPageDao.getCountJobPostByCompanyId(companyId));
+            model.addAttribute("jobPostList", jobPostList);
             returnUrl = "/mypage/company-mypage";
         }
         return returnUrl;

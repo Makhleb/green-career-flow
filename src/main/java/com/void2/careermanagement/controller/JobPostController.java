@@ -93,20 +93,32 @@ public class JobPostController {
         model.addAttribute("jobPostInfo", jobDto);
 
         Object user = session.getAttribute("user");
+
+        String returnPage = "";
         if (user == null) {
             model.addAttribute("likeYn", "N");
             model.addAttribute("scrapYn", "N");
             model.addAttribute("applyYn", "N");
-        } else {
-            String userId = ((UserDto) user).getUserId();
-            int likeResult = likeDao.checkLike("user_id", userId, "company_id", jobDto.getCompanyId(), "U");
-            int scrapResult = scrapDao.checkScrap(userId, jobPostNo);
-            int applyResult = applyDao.checkApply(userId, jobPostNo);
-            model.addAttribute("likeYn", likeResult > 0 ? "Y" : "N");
-            model.addAttribute("scrapYn", scrapResult > 0 ? "Y" : "N");
-            model.addAttribute("applyYn", applyResult > 0 ? "Y" : "N");
-        }
+            returnPage = "jobPost/jobPostDetail";
+        } else if (session.getAttribute("user") != null) {
 
-        return "jobPost/jobPostDetail";
+            String userType = session.getAttribute("userType").toString();
+            if (userType.equals("U")) { // 구직자
+                String userId = ((UserDto) user).getUserId();
+
+                int likeResult = likeDao.checkLike("user_id", userId, "company_id", jobDto.getCompanyId(), "U");
+                int scrapResult = scrapDao.checkScrap(userId, jobPostNo);
+                int applyResult = applyDao.checkApply(userId, jobPostNo);
+
+                model.addAttribute("likeYn", likeResult > 0 ? "Y" : "N");
+                model.addAttribute("scrapYn", scrapResult > 0 ? "Y" : "N");
+                model.addAttribute("applyYn", applyResult > 0 ? "Y" : "N");
+
+                returnPage = "jobPost/jobPostDetail";
+            } else if (userType.equals("C")) { // 기업
+                returnPage = "jobPost/jobPostDetailCompany";
+            }
+        }
+        return returnPage;
     }
 }
