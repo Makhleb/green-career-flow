@@ -4,6 +4,7 @@ import com.void2.careermanagement.dao.ApplyDao;
 import com.void2.careermanagement.dao.UserResumeDao;
 import com.void2.careermanagement.dto.request.ApplyRequestDto;
 import com.void2.careermanagement.dto.response.ApplyResponseDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class ApplyService {
     private final ApplyDao applyDao;
     private final UserResumeDao userResumeDao;
 
+    @Autowired
     public ApplyService(ApplyDao applyDao, UserResumeDao userResumeDao) {
         this.applyDao = applyDao;
         this.userResumeDao = userResumeDao;

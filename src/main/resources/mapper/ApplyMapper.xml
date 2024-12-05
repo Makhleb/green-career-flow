@@ -75,6 +75,5 @@
         SET pass_yn = #{passYn}
         WHERE job_post_no = #{jobPostNo}
         AND resume_no = #{resumeNo}
-
     </update>
 </mapper>

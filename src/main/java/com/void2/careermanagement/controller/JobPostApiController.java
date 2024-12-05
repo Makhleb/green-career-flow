@@ -1,6 +1,6 @@
 package com.void2.careermanagement.controller;
 
-import com.void2.careermanagement.dto.request.JopPostRequestDto;
+import com.void2.careermanagement.dto.request.JobPostRequestDto;
 import com.void2.careermanagement.service.JobPostService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +17,12 @@ public class JobPostApiController {
     }
 
     @PostMapping
-    public int insert(@RequestBody JopPostRequestDto jopPostRequestDto) {
+    public int insert(@RequestBody JobPostRequestDto jopPostRequestDto) {
 //        System.out.println(jopPostRequestDto);
         return jobPostService.jobPostInsert(jopPostRequestDto);
     }
     @PutMapping
-    public int update(@RequestBody JopPostRequestDto jopPostRequestDto) {
+    public int update(@RequestBody JobPostRequestDto jopPostRequestDto) {
         return jobPostService.jobPostUpdate(jopPostRequestDto);
     }
     @DeleteMapping("/{jopPostNo}")
