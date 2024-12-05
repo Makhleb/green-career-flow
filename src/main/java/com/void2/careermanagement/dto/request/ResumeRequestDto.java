@@ -18,7 +18,7 @@ public class ResumeRequestDto {
     private String wishTime;
     private String workCode;
     private String portfolioLink;
-    private String offerYn;
+    private char offerYn;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private int jobHistory;

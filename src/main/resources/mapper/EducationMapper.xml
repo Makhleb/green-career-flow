@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.void2.careermanagement.dao.EducationDao">
+    <insert id="insertEducation" parameterType="EducationDto">
+        INSERT INTO tbl_education
+        (resume_no, education_code, school_name, specialty, enter_date, graduate_date)
+        VALUES
+        (#{E.resumeNo}, #{E.educationCode}, #{E.schoolName}, #{E.specialty}, #{E.enterDate}, #{E.graduateDate})
+    </insert>
+</mapper>
+
