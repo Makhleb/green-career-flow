@@ -4,6 +4,7 @@ import com.void2.careermanagement.dto.response.MyPageScrapDto;
 import com.void2.careermanagement.dto.response.ProposalResponseDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface MyPageDao {
     int getCountProposalByCompanyId(String userId);
 
     //스크랩한 공고 삭제 -by 안제연
-    public void deleteScrapCompany(int jobPostNo);
+    public void deleteScrapCompany(@RequestParam("jobPostNo") int jobPostNo, @RequestParam("userId") String userId);
 
     List<MyPageScrapDto> MyPageScrapListById(String userId);
 }
