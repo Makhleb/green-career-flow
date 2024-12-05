@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        main {
+            display: flex;
+        }
+
+        hr {
+            background-color: #8B1FFF;
+            height: 1px;
+            border: 0;
+        }
+
+        #title {
+            display: flex;
+            margin: 20px 20px 20px 0;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #regist_btn {
+            width: 80px;
+            height: 30px;
+            line-height: 15px;
+            font-size: 15px;
+            background-color: #B067FF; /* 보라색 배경 */
+            color: white;
+            border: none;
+            padding: 5px 10px; /* 버튼 내부 여백 */
+            border-radius: 20px; /* 둥근 모서리 */
+        }
+        #interest_container {
+            width: 620px;
+            margin: 20px 0;
+        }
+
+        #interest_container h4{
+            margin: 10px;
+        }
+
+        .interest_grid{
+            margin-top: 30px;
+            display: grid;
+            grid-template-rows: 1fr repeat( auto-fill, auto);
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .interest_grid_item{
+        }
+
+        .interest_grid_item > p{
+            padding-top: 5px;
+            font-size: 14px;
+        }
+        .interest_grid_item >p> span{
+            float: right;
+            padding-right:20px;
+        }
+        .interest_grid_item > a > img{
+            width:100%;
+            border-radius: 5px;
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <title>구직자 관심 기업</title>
+</head>
+<body>
+    <div th:replace="~{layout/fragments/header :: header}"></div>
+    <main>
+        <div th:replace="~{layout/fragments/aside :: aside}"></div>
+        <div id="main_content">
+            <div id="title">
+                <h2>마이 페이지</h2>
+                <h3>[[${session.user.userName}]]님</h3>
+                <div id="regist_btn_container">
+                    <button id="regist_btn">정보수정</button>
+                </div>
+            </div>
+            <div id="interest_container">
+                <h4>관심기업([[${uiList.size()}]])</h4>
+                <hr>
+                <div class="interest_grid">
+                    <div class="interest_grid_item" th:each="company, state : ${uiList}">
+                        <a href=""><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
+                        <p style="font-weight: 500; font-size: 16px;">[[${company.companyName}]] <span><i class="bi bi-suit-heart-fill likeIcon" style="color:#8B1FFF" th:id="'likeIcon' + ${state.count}"></i></span></p>
+                        <p>[[${company.companyAddress}]] [[${company.companyAddressDetail}]]</p>
+                        <p>[[${company.companyEmail}]]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <div th:replace="~{layout/fragments/footer :: footer}"></div>
+<script>
+    document.querySelectorAll('.likeIcon').forEach(function(icon){
+        icon.addEventListener('click', function(event){
+            confirm('선택된 관심기업을 삭제하시겠습니까?');
+        })
+    })
+</script>
+</body>
+</html>
