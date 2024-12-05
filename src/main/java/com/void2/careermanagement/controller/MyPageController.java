@@ -14,7 +14,6 @@ import com.void2.careermanagement.util.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,31 +32,11 @@ public class MyPageController {
 
     private final MyPageService myPageService;
     private final ApplyDao applyDao;
-    private final JobPostService jobPostService;
-    private final ApplyService applyService;
 
-    @Autowired
-    public MyPageController(MyPageService myPageService, ApplyDao applyDao, JobPostService jobPostService, ApplyService applyService) {
+    public MyPageController(MyPageService myPageService, ApplyDao applyDao) {
         this.myPageService = myPageService;
         this.applyDao = applyDao;
-        this.jobPostService = jobPostService;
-        this.applyService = applyService;
     }
-
-//    @RequestMapping("/profile")
-//    public String profile(HttpSession session, Model model) {
-//        UserDto user = (UserDto) session.getAttribute("user");
-//        String userId = user.getUserId(); // UserDto 객체의 userId 필드 접근
-//        List<ResumeResponseDto> resumeList = myPageService.MyPageResumeListById(userId);
-//        List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListById(userId);
-//        int resumeSize = resumeList.size();
-//        int scrapSize = scrapList.size();
-//        model.addAttribute("resumeSize", resumeSize);
-//        model.addAttribute("scrapSize", scrapSize);
-//        model.addAttribute("resumeList", resumeList);
-//        model.addAttribute("scrapList", scrapList);
-//        return "/mypage/user-mypage";
-//    }
 
     @GetMapping("/profile")
     public String profile(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -70,10 +49,6 @@ public class MyPageController {
             String userId = user.getUserId(); // UserDto 객체의 userId 필드 접근
             List<ResumeResponseDto> resumeList = myPageService.MyPageResumeListById(userId);
             List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListById(userId);
-            int resumeSize = resumeList.size();
-            int scrapSize = scrapList.size();
-            model.addAttribute("resumeSize", resumeSize);
-            model.addAttribute("scrapSize", scrapSize);
             model.addAttribute("resumeList", resumeList);
             model.addAttribute("scrapList", scrapList);
             returnUrl = "/mypage/user-mypage";
@@ -85,10 +60,7 @@ public class MyPageController {
         return returnUrl;
     }
 
-    @RequestMapping("/proposal")
-    public String proposal() {
-        return "/mypage/user-proposal";
-    }
+
 
     @GetMapping("/apply")
     public String apply(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {

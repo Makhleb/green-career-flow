@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.void2.careermanagement.dao.LicenseDao">
+    <insert id="insertLicense" parameterType="LicenseDto">
+        INSERT INTO tbl_license
+        (resume_no, license_name, license_center_name, pass_date)
+        VALUES
+        <foreach collection="list" item="L" separator=",">
+            (#{L.resumeNo}, #{L.licenseName}, #{L.licenseCenterName}, #{L.passDate})
+        </foreach>
+    </insert>
+</mapper>

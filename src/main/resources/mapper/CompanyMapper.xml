@@ -47,7 +47,7 @@
     </select>
     <select id="getLikeList" resultType="com.void2.careermanagement.dto.response.CompanyResponseDto">
         <![CDATA[
-        SELECT j.company_id, c.company_name, c.company_address, j.title, j.start_date, c.company_image, j.job_history,
+        SELECT j.company_id, c.company_name, c.company_address, j.title, j.start_date, c.company_image, j.job_history, j.job_post_no,
                CASE
                    WHEN j.end_date IS NULL THEN '상시'
                    ELSE CONCAT('D-', DATEDIFF(j.end_date, NOW()))

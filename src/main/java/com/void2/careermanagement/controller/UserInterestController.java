@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -26,13 +27,23 @@ public class UserInterestController {
     }
     @GetMapping("/user-interest-company")
     public String userInterestCompany(Model model, HttpSession session) {
+        String isEmpty = "Empty";
         System.out.println("user-interest-company...");
         UserDto sessionUser = (UserDto)session.getAttribute("user");
         List<UserInterestCompanyDto> uiList = userInterestCompanyService.getUserInterestCompanyList(sessionUser.getUserId());
-        for(UserInterestCompanyDto ui : uiList) {
-            System.out.println(ui);
+        if(!uiList.isEmpty()) {
+            //for(UserInterestCompanyDto ui : uiList) System.out.println(ui);
+            isEmpty="notEmpty";
         }
+        model.addAttribute("isEmpty", isEmpty);
         model.addAttribute("uiList", uiList);
         return "/mypage/user-interest-company";
+    }
+
+    @GetMapping("/delete-interest-company")
+    public String deleteInterestCompany(@RequestParam("companyId") String companyId, Model model, HttpSession session) {
+        System.out.println(companyId);
+        userInterestCompanyService.removeUserInterestCompany(companyId);
+        return "redirect:/mypage/user-interest-company";
     }
 }

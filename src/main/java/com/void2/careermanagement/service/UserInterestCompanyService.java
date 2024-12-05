@@ -20,4 +20,8 @@ public class UserInterestCompanyService {
     }
     //관심기업 조회
     public List<UserInterestCompanyDto> getUserInterestCompanyList(String id) {return userInterestCompanyDao.getInterestList(id);}
+
+    //관심기업 삭제
+    public void removeUserInterestCompany(String id) { userInterestCompanyDao.deleteInterestCompany(id);}
+
 }
