@@ -3,8 +3,6 @@ package com.void2.careermanagement.controller;
 import com.void2.careermanagement.dao.ApplyDao;
 import com.void2.careermanagement.dao.LikeDao;
 import com.void2.careermanagement.dao.MyPageDao;
-import com.void2.careermanagement.dto.CompanyDto;
-import com.void2.careermanagement.dto.UserDto;
 import com.void2.careermanagement.dto.response.*;
 import com.void2.careermanagement.service.ApplyService;
 import com.void2.careermanagement.service.JobPostService;
@@ -33,9 +31,9 @@ public class MyPageController {
     private final MyPageService myPageService;
     private final ApplyDao applyDao;
     private final LikeDao likeDao;
-    private JobPostService jobPostService;
-    private ApplyService applyService;
-    private MyPageDao myPageDao;
+    private final JobPostService jobPostService;
+    private final ApplyService applyService;
+    private final MyPageDao myPageDao;
 
     @Autowired
     public MyPageController(MyPageService myPageService, ApplyDao applyDao, JobPostService jobPostService, ApplyService applyService, MyPageDao myPageDao, LikeDao likeDao) {
@@ -45,12 +43,6 @@ public class MyPageController {
         this.applyService = applyService;
         this.myPageDao = myPageDao;
         this.likeDao = likeDao;
-    }
-
-
-    public MyPageController(MyPageService myPageService, ApplyDao applyDao) {
-        this.myPageService = myPageService;
-        this.applyDao = applyDao;
     }
 
     @GetMapping("/profile")

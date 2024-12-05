@@ -2,6 +2,7 @@ package com.void2.careermanagement.service;
 
 import com.void2.careermanagement.dao.LikeDao;
 import com.void2.careermanagement.type.TblLike;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class LikeService {
     private final LikeDao likeDao;
 
+    @Autowired
     public LikeService(LikeDao likeDao) {
         this.likeDao = likeDao;
     }
