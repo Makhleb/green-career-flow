@@ -14,7 +14,7 @@
         ORDER BY resume_no DESC
         LIMIT 3;
     </select>
-    <select id="MyPageScrapListById" resultType="com.void2.careermanagement.dto.response.MyPageScrapDto">
+    <select id="MyPageScrapListByIdTop3" resultType="com.void2.careermanagement.dto.response.MyPageScrapDto">
         SELECT j.user_id, j.job_post_no, jp.title, jp.end_date
                 , c.company_id, c.company_name, j.scrap_date
         FROM tbl_jpl j
@@ -23,10 +23,10 @@
             INNER JOIN tbl_company c
             ON jp.company_id = c.company_id
         WHERE user_id= #{userId}
-        ORDER BY j.scrap_date DESC;
+        ORDER BY j.scrap_date DESC
+        LIMIT 3;
     </select>
-
-    <select id="MyPageProposalListByCompanyId" resultType="com.void2.careermanagement.dto.response.ProposalResponseDto">
+    <select id="MyPageProposalListByCompanyIdTop3" resultType="com.void2.careermanagement.dto.response.ProposalResponseDto">
         SELECT p.title, p.DATE, u.user_name, p.proposal_no, p.read_date
         from tbl_proposal p
         JOIN tbl_user u
@@ -35,11 +35,30 @@
         ORDER BY proposal_no DESC
         LIMIT 3;
     </select>
-
-
+    <select id="getCountScrapByUserId">
+        SELECT COUNT(*)
+        FROM tbl_jpl
+        WHERE user_id= #{userId}
+    </select>
+    <select id="getCountProposalByCompanyId">
+        SELECT COUNT(*)
+        from tbl_proposal
+        WHERE company_id = #{companyId}
+    </select>
     <delete id="deleteScrapCompany">
         delete FROM tbl_jpl
         WHERE job_post_no = #{jobPostNo}
     </delete>
+    <select id="MyPageScrapListById" resultType="com.void2.careermanagement.dto.response.MyPageScrapDto">
+        SELECT j.user_id, j.job_post_no, jp.title, jp.end_date
+        , c.company_id, c.company_name, j.scrap_date
+        FROM tbl_jpl j
+        inner JOIN tbl_job_post jp
+        ON j.job_post_no = jp.job_post_no
+        INNER JOIN tbl_company c
+        ON jp.company_id = c.company_id
+        WHERE user_id= #{userId}
+        ORDER BY j.scrap_date DESC
+    </select>
 
 </mapper>

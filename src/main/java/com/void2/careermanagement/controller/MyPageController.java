@@ -1,6 +1,7 @@
 package com.void2.careermanagement.controller;
 
 import com.void2.careermanagement.dao.ApplyDao;
+import com.void2.careermanagement.dao.MyPageDao;
 import com.void2.careermanagement.dto.CompanyDto;
 import com.void2.careermanagement.dto.UserDto;
 import com.void2.careermanagement.dto.response.ApplyResponseDto;
@@ -36,13 +37,15 @@ public class MyPageController {
     private final ApplyDao applyDao;
     private JobPostService jobPostService;
     private ApplyService applyService;
+    private MyPageDao myPageDao;
 
     @Autowired
-    public MyPageController(MyPageService myPageService, ApplyDao applyDao, JobPostService jobPostService, ApplyService applyService) {
+    public MyPageController(MyPageService myPageService, ApplyDao applyDao, JobPostService jobPostService, ApplyService applyService, MyPageDao myPageDao) {
         this.myPageService = myPageService;
         this.applyDao = applyDao;
         this.jobPostService = jobPostService;
         this.applyService = applyService;
+        this.myPageDao = myPageDao;
     }
 
 
@@ -61,14 +64,16 @@ public class MyPageController {
             UserDto user = (UserDto) sessionUser;
             String userId = user.getUserId(); // UserDto 객체의 userId 필드 접근
             List<ResumeResponseDto> resumeList = myPageService.MyPageResumeListById(userId);
-            List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListById(userId);
+            List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListByIdTop3(userId);
             model.addAttribute("resumeList", resumeList);
             model.addAttribute("scrapList", scrapList);
+            model.addAttribute("scrapSize", myPageDao.getCountScrapByUserId(userId));
             returnUrl = "/mypage/user-mypage";
         } else if (userType.equals("C")) {
             CompanyDto user = (CompanyDto) sessionUser;
             String companyId = user.getCompanyId();
-            List<ProposalResponseDto> proposalList = myPageService.MyPageProposalListByCompanyId(companyId);
+            List<ProposalResponseDto> proposalList = myPageService.MyPageProposalListByCompanyIdTop3(companyId);
+            model.addAttribute("proposalSize", myPageDao.getCountProposalByCompanyId(companyId));
             model.addAttribute("plist", proposalList);
             returnUrl = "/mypage/company-mypage";
         }

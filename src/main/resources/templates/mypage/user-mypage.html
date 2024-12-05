@@ -189,20 +189,18 @@
 
         <div id="scrap_container">
             <div id="scrap_title">
-                <h4 th:text="'나의 스크랩 (' + ${#lists.size(scrapList)}+')'"></h4>
+                <h4 th:text="'나의 스크랩 (' + ${scrapSize}+')'"></h4>
                 <a href="/mypage/user-scrap-company"> 더보기 + </a>
             </div>
             <hr>
             <div id="scrap_box">
-                <th:block th:if="${#lists.size(scrapList) > 0}">
-                    <div class="scrap_items" th:each="dto, State: ${scrapList}" th:if="${State.index < 3}">
-                        <div id="scrap_item_icon"><i class="bi bi-star-fill" style="color:#8B1FFF"></i></div>
-                        <div id="scrap_item_content">
-                            <div class="scrap_content_title">
-                                <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${dto.jobPostNo})}"><strong>[[${dto.title}]]</strong></a>
-                                <span>[[${#temporals.format(dto.scrapDate,'yyyy-MM-dd')}]]</span>
-                            </div>
-
+                <div class="scrap_items" th:each="dto, State: ${scrapList}">
+                    <div id="scrap_item_icon"><i class="bi bi-star-fill" style="color:#8B1FFF"></i></div>
+                    <div id="scrap_item_content">
+                        <div class="scrap_content_title">
+                            <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${dto.jobPostNo})}"><strong>[[${dto.title}]]</strong></a>
+                            <span>[[${#temporals.format(dto.scrapDate,'yyyy-MM-dd')}]]</span>
+                        </div>
                             <th:block th:if="${dto.endDate != null}">
                                 <p th:text="${dto.companyName} + ' / 마감일 : ' + ${#temporals.format(dto.endDate, 'yyyy-MM-dd')}"></p>
                             </th:block>
