@@ -80,6 +80,9 @@
                             </span>
                         </div>
                     </th:block>
+                    <th:block th:if="${isEmpty != 'notEmpty'}">
+                        <span style="padding:10px; color: gray; text-align: left">관심 기업 공고가 없습니다.</span>
+                    </th:block>
                 </div>
             </div>
         </th:block>
