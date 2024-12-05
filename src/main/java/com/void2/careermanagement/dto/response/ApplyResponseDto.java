@@ -1,8 +1,10 @@
 package com.void2.careermanagement.dto.response;
 
+import com.void2.careermanagement.dto.GubnDto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created on 2024-12-04 by 황승현
@@ -19,4 +21,9 @@ public class ApplyResponseDto {
     private LocalDateTime jobPostStartDate;
     private LocalDateTime jobPostEndDate;
     private String jobPostTitle;
+    private String userId;
+    private String userName;
+    private int jobHistory;
+    private int userAge;
+    private List<GubnDto> skillList;
 }

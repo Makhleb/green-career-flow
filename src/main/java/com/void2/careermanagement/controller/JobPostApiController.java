@@ -17,12 +17,16 @@ public class JobPostApiController {
     }
 
     @PostMapping
-    public @ResponseBody int insert(@RequestBody JopPostRequestDto jopPostRequestDto) {
+    public int insert(@RequestBody JopPostRequestDto jopPostRequestDto) {
 //        System.out.println(jopPostRequestDto);
         return jobPostService.jobPostInsert(jopPostRequestDto);
     }
     @PutMapping
-    public @ResponseBody int update(@RequestBody JopPostRequestDto jopPostRequestDto) {
+    public int update(@RequestBody JopPostRequestDto jopPostRequestDto) {
         return jobPostService.jobPostUpdate(jopPostRequestDto);
+    }
+    @DeleteMapping("/{jopPostNo}")
+    public int delete(@PathVariable("jopPostNo") int jopPostNo) {
+        return jobPostService.jobPostDelete(jopPostNo);
     }
 }

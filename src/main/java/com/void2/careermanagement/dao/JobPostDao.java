@@ -35,4 +35,8 @@ public interface JobPostDao {
     void deleteBenefits(@Param("jobPostNo") int jobPostNo);
 
     void deleteSkillList(@Param("jobPostNo") int jobPostNo);
+
+    List<JobPostResponseDto> getJobPostListByCompanyId(@Param("companyId") String companyId, @Param("groupCodeList") List<String> groupCodeList);
+
+    int deleteJobPost(int jopPostNo);
 }
