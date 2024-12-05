@@ -7,6 +7,9 @@
         INSERT INTO tbl_potfolio
         (resume_no, potfolio_filename)
         VALUES
-        (#{P.resumeNo}, #{P.potfolioFilename})
+        <foreach collection="list" item="P" separator=",">
+            (#{P.resumeNo}, #{P.potfolioFilename})
+        </foreach>
+
     </insert>
 </mapper>

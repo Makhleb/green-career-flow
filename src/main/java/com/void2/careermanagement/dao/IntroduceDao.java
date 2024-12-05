@@ -4,7 +4,9 @@ import com.void2.careermanagement.dto.IntroduceDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface IntroduceDao {
-    int insertIntroduce(@Param("I")IntroduceDto introduceDto);
+    void insertIntroduce(@Param("list") List<IntroduceDto> introduceDtoList);
 }

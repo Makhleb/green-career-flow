@@ -7,6 +7,8 @@
         INSERT INTO tbl_license
         (resume_no, license_name, license_center_name, pass_date)
         VALUES
-        (#{L.resumeNo}, #{L.licenseName}, #{L.licenseCenterName}, #{L.passDate})
+        <foreach collection="list" item="L" separator=",">
+            (#{L.resumeNo}, #{L.licenseName}, #{L.licenseCenterName}, #{L.passDate})
+        </foreach>
     </insert>
 </mapper>

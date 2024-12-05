@@ -12,12 +12,15 @@
         activity_center_name,
         activity_content,
         activity_type)
-        VALUES (#{A.resumeNo},
-        #{A.order},
-        #{A.startDate},
-        #{A.endDate},
-        #{A.activityCenterName},
-        #{A.activityContent},
-        #{A.activityType})
+        VALUES
+        <foreach collection="list" item="A" separator=",">
+            (#{A.resumeNo},
+            #{A.order},
+            #{A.startDate},
+            #{A.endDate},
+            #{A.activityCenterName},
+            #{A.activityContent},
+            #{A.activityType})
+        </foreach>
     </insert>
 </mapper>

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.void2.careermanagement.dao.JobPostDao">
     <select id="maxJopPostNo">
-        SELECT MAX(job_post_no) + 1 FROM tbl_job_post
+        SELECT MAX(job_post_no) FROM tbl_job_post
     </select>
     <insert id="insertJobPost" parameterType="com.void2.careermanagement.dto.request.JopPostRequestDto">
         INSERT INTO tbl_job_post

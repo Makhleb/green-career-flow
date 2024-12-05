@@ -1,7 +1,9 @@
 package com.void2.careermanagement.service;
 
 import com.void2.careermanagement.dao.*;
-import com.void2.careermanagement.dto.*;
+import com.void2.careermanagement.dto.LicenseDto;
+import com.void2.careermanagement.dto.PotfolioDto;
+import com.void2.careermanagement.dto.ResumeSkillDto;
 import com.void2.careermanagement.dto.request.ResumeFullRequestDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import org.springframework.stereotype.Service;
@@ -45,33 +47,20 @@ public class ResumeService {
         return resumeDao.getValidResumeListByUserId(userId);
     }
 
+    /**
+     * 이력서 관련 데이터 일괄 저장 서비스
+     * todo 데이터 반복해서 insert하지말고 values로 한번에 넣으세요
+     */
     @Transactional
     public void insertFullResume(ResumeFullRequestDto resumeFullRequestDto) {
         // 1. Resume 테이블에 삽입
         resumeDao.insertResume(resumeFullRequestDto.getResume());
-
-        for (ActivityDto activity : resumeFullRequestDto.getActivity()) {
-            activityDao.insertActivity(activity);
-        }
-
+        activityDao.insertActivity(resumeFullRequestDto.getActivity());
         educationDao.insertEducation(resumeFullRequestDto.getEducation());
-
-        for (IntroduceDto introduce : resumeFullRequestDto.getIntroduce()) {
-            introduceDao.insertIntroduce(introduce);
-        }
-
-        for (LicenseDto license : resumeFullRequestDto.getLicense()) {
-            licenseDao.insertLicense(license);
-        }
-
+        introduceDao.insertIntroduce(resumeFullRequestDto.getIntroduce());
+        licenseDao.insertLicense(resumeFullRequestDto.getLicense());
         militaryDao.insertMilitary(resumeFullRequestDto.getMilitary());
-
-        for (PotfolioDto potfolio : resumeFullRequestDto.getPotfolio()) {
-            potfolioDao.insertPotfolio(potfolio);
-        }
-
-        for (ResumeSkillDto resumeSkill : resumeFullRequestDto.getResumeSkill()) {
-            resumeSkillDao.insertResumeSkill(resumeSkill);
-        }
+        potfolioDao.insertPotfolio(resumeFullRequestDto.getPotfolio());
+        resumeSkillDao.insertResumeSkill(resumeFullRequestDto.getResumeSkill());
     }
 }

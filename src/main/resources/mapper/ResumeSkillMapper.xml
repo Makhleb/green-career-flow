@@ -7,6 +7,9 @@
         INSERT INTO tbl_resume_skill
         (resume_no, skill_code)
         VALUES
-        (#{RS.resumeNo}, #{RS.skillCode})
+        <foreach collection="list" item="RS" separator=",">
+            (#{RS.resumeNo}, #{RS.skillCode})
+        </foreach>
+
     </insert>
 </mapper>

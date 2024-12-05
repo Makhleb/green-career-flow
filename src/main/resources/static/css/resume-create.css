@@ -220,6 +220,7 @@ textarea {
     position: relative;
 }
 
+/*todo 화면 빈곳에 맞춰서 채우기*/
 .preview {
     margin: 0.5rem;
     border-radius: 10px;
@@ -253,15 +254,15 @@ textarea {
     cursor: pointer;
 }
 
-#companyAddressDetail {
+#userAddressDetail {
     width: 38rem;
 }
 
-#companyAddress {
+#userAddress {
     width: 22rem;
 }
 
-#companyZonecode {
+#userZonecode {
     width: 6rem;
 }
 
@@ -331,6 +332,7 @@ textarea {
 }
 
 .board textarea {
+    margin-top: 0;
     height: 10rem;
 }
 .plus-btn-container{
