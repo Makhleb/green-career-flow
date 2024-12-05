@@ -145,7 +145,7 @@
 
         <div id="resume_container">
             <div id="resume_title">
-                <h4>나의 이력서 ([[${resumeSize}]])</h4>
+                <h4 th:text="'나의 이력서 (' + ${#lists.size(resumeList)}+')'"></h4>
                 <a href=""> 더보기 + </a>
             </div>
             <hr>
@@ -169,7 +169,7 @@
 
         <div id="scrap_container">
             <div id="scrap_title">
-                <h4>나의 스크랩 ([[${scrapSize}]])</h4>
+                <h4 th:text="'나의 스크랩 (' + ${#lists.size(scrapList)}+')'"></h4>
                 <a href=""> 더보기 + </a>
             </div>
             <hr>
