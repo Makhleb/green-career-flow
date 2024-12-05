@@ -89,4 +89,18 @@ public class JobPostService {
         return jobPostResponseDto;
 
     }
+
+    public List<JobPostResponseDto> getJobPostListByCompanyId(String companyId) {
+        List<GroupCode> gubnList = new ArrayList<>();
+
+        gubnList.add(GroupCode.WORK_TYPE);
+        gubnList.add(GroupCode.WORK);
+        gubnList.add(GroupCode.EDUCATION);
+        gubnList.add(GroupCode.JOB_RANK);
+        return jobPostDao.getJobPostListByCompanyId(companyId, gubnList.stream().map(Enum::name).toList());
+    }
+
+    public int jobPostDelete(int jopPostNo) {
+        return jobPostDao.deleteJobPost(jopPostNo);
+    }
 }

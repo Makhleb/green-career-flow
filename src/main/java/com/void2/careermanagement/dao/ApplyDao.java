@@ -16,4 +16,8 @@ public interface ApplyDao {
     int checkApply(String userId, int jobPostNo);
 
     List<ApplyResponseDto> getApplyListByUserId(String userId);
+
+    List<ApplyResponseDto> getApplyListByJobPostNo(int jobPostNo);
+
+    void updatePass(ApplyRequestDto applyDto);
 }
