@@ -101,19 +101,28 @@
         }
 
         .content_title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .scrap_content_title {
+            width: 530px;
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 5px;
         }
 
         .scrap_items {
             display: flex;
-            width: 100%;
             margin-top: 10px;
             border-bottom: 1px solid #8B1FFF;
         }
 
         .content_title > span{
-            padding-left: 290px;
+            padding-right: 20px;
             color: gray;
+            float: right;
         }
 
         #scrap_item_icon {
@@ -188,7 +197,7 @@
                 <div class="scrap_items" th:each="dto, State: ${scrapList}" th:if="${State.index < 3}">
                     <div id="scrap_item_icon"><i class="bi bi-star-fill" style="color:#8B1FFF"></i></div>
                     <div id="scrap_item_content">
-                        <div class="content_title">
+                        <div class="scrap_content_title">
                             <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${dto.jobPostNo})}"><strong>[[${dto.title}]]</strong></a>
                             <span>[[${#temporals.format(dto.scrapDate,'yyyy-MM-dd')}]]</span>
                         </div>
