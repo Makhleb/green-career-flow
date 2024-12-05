@@ -107,6 +107,23 @@ public class MyPageController {
     public String apply(@PathVariable int jobPostNo, HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
 
+            model.addAttribute("applyList", applyList);
+            returnPage = "/mypage/user-apply";
+        } else if (userType.equals("C")) {
+//
+//            CompanyDto user = (CompanyDto) sessionUser;
+//            String companyId = user.getCompanyId();
+//            List<JobPostResponseDto> jobPostList = jobPostService.getJobPostListByCompanyId(companyId);
+//            System.out.println(jobPostList);
+//            model.addAttribute("jobPostList", jobPostList);
+//            returnPage = "/mypage/company-apply";
+        }
+        return returnPage;
+    }
+
+    @GetMapping("/apply/{jobPostNo}")
+    public String apply(@PathVariable int jobPostNo, HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
         String userType = session.getAttribute("userType").toString();
         String returnPage = "";
         Object sessionUser = session.getAttribute("user");
@@ -118,6 +135,31 @@ public class MyPageController {
             System.out.println(applyList);
             model.addAttribute("applyList", applyList);
             returnPage = "/mypage/company-apply";
+        }
+        return returnPage;
+    }
+
+    @GetMapping("/job-post")
+    public String jobPost(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
+
+        String userType = session.getAttribute("userType").toString();
+        String returnPage = "";
+        Object sessionUser = session.getAttribute("user");
+
+        if (userType.equals("U")) {
+
+            returnPage = "/mypage/user-mypage";
+
+        } else if (userType.equals("C")) {
+
+            CompanyDto user = (CompanyDto) sessionUser;
+            String companyId = user.getCompanyId();
+            List<JobPostResponseDto> jobPostList = jobPostService.getJobPostListByCompanyId(companyId);
+            System.out.println(jobPostList);
+            model.addAttribute("jobPostList", jobPostList);
+            returnPage = "/mypage/company-job-post";
+
         }
         return returnPage;
     }
