@@ -24,7 +24,6 @@ public class MyPageService {
     public List<MyPageScrapDto> MyPageScrapListByIdTop3(String userId) {
         return myPageDao.MyPageScrapListByIdTop3(userId);
     }
-
     public List<ProposalResponseDto> MyPageProposalListByCompanyIdTop3(String CompanyId) {
         return myPageDao.MyPageProposalListByCompanyIdTop3(CompanyId);
     }
@@ -35,4 +34,7 @@ public class MyPageService {
     //스크랩한 공고 삭제 -by 안제연
     public void removeUserScrapCompany(int jobPostNo){myPageDao.deleteScrapCompany(jobPostNo); }
 
+    public List<MyPageScrapDto> MyPageScrapListById(String userId) {
+        return myPageDao.MyPageScrapListById(userId);
+    }
 }

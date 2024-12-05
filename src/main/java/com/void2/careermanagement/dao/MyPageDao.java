@@ -22,4 +22,6 @@ public interface MyPageDao {
 
     //스크랩한 공고 삭제 -by 안제연
     public void deleteScrapCompany(int jobPostNo);
+
+    List<MyPageScrapDto> MyPageScrapListById(String userId);
 }
