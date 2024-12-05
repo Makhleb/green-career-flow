@@ -6,7 +6,7 @@
     <select id="maxJopPostNo">
         SELECT MAX(job_post_no) FROM tbl_job_post
     </select>
-    <insert id="insertJobPost" parameterType="com.void2.careermanagement.dto.request.JopPostRequestDto">
+    <insert id="insertJobPost" parameterType="com.void2.careermanagement.dto.request.JobPostRequestDto">
         INSERT INTO tbl_job_post
         (job_post_no,
          company_id,
