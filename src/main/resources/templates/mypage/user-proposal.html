@@ -74,8 +74,7 @@
 <main>
   <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
   <div id="main_content">
-    <div th:if="${session.userType == 'U'}" th:replace="~{layout/fragments/mypage-title :: titleUser}"></div>
-    <div th:if="${session.userType == 'C'}" th:replace="~{layout/fragments/mypage-title :: titleCompany}"></div>
+    <div th:replace="~{layout/fragments/mypage-title :: title(${session.userType == 'U' ? session.user.userName : session.user.companyName}, ${session.userType})}"></div>
 
     <div class="container">
       <div class="container_title">
