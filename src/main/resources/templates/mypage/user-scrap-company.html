@@ -91,7 +91,8 @@
             </div>
             <hr>
             <div id="scrap_box">
-                <div class="scrap_items" th:each="dto, State: ${scrapList}" th:if="${State.index < 3}">
+                <th:block th:if="${isEmpty != 'Empty'}">
+                <div class="scrap_items" th:each="dto, State: ${scrapList}">
                     <div id="scrap_item_icon">
                         <i class="bi bi-star-fill scrapIcon"
                            th:data-job-post-no="${dto.jobPostNo}"
@@ -114,7 +115,13 @@
                         <p style="margin-bottom: 10px"></p>
                     </div>
                 </div>
+                </th:block>
+                <th:block th:if="${isEmpty == 'Empty'}">
+                    <p style="margin:10px;"></p>
+                    <p style="padding-left:10px;">스크랩된 기업 공고가 없습니다..</p>
+                </th:block>
             </div>
+
         </div>
     </div>
 </main>

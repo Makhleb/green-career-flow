@@ -39,9 +39,10 @@ public class UserScrapController {
         List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListById(sessionUser.getUserId());
         if(!scrapList.isEmpty()) {
             for(MyPageScrapDto s:scrapList)  System.out.println(s);
-            model.addAttribute("scrapList", scrapList);
+
             isEmpty = "notEmpty";
         }
+        model.addAttribute("scrapList", scrapList);
         model.addAttribute("isEmpty", isEmpty);
 
         return "/mypage/user-scrap-company";
