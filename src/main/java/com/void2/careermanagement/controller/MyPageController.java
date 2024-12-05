@@ -1,7 +1,8 @@
 package com.void2.careermanagement.controller;
-
+import com.void2.careermanagement.dao.ApplyDao;
 import com.void2.careermanagement.dto.CompanyDto;
 import com.void2.careermanagement.dto.UserDto;
+import com.void2.careermanagement.dto.response.ApplyResponseDto;
 import com.void2.careermanagement.dto.response.MyPageScrapDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import com.void2.careermanagement.service.MyPageService;
@@ -27,6 +28,8 @@ public class MyPageController {
 
     @Autowired
     private MyPageService myPageService;
+    @Autowired
+    private ApplyDao applyDao;
 
 //    @RequestMapping("/profile")
 //    public String profile(HttpSession session, Model model) {
@@ -74,4 +77,19 @@ public class MyPageController {
         return "/mypage/user-proposal";
     }
 
+    @GetMapping("/apply")
+    public String apply(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
+
+        UserDto user = (UserDto) session.getAttribute("user");
+        String userId = user.getUserId();
+
+        List<ApplyResponseDto> applyList = applyDao.getApplyListByUserId(userId);
+
+        model.addAttribute("applyList", applyList);
+        return "/mypage/user-apply";
+    }
+
+    
 }
