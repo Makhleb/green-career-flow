@@ -1,5 +1,6 @@
 package com.void2.careermanagement.dao;
 
+import com.void2.careermanagement.dto.response.JobPostResponseDto;
 import com.void2.careermanagement.dto.response.MyPageScrapDto;
 import com.void2.careermanagement.dto.response.ProposalResponseDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
@@ -24,4 +25,8 @@ public interface MyPageDao {
     public void deleteScrapCompany(int jobPostNo);
 
     List<MyPageScrapDto> MyPageScrapListById(String userId);
+
+    int getCountJobPostByCompanyId(String companyId);
+
+    List<JobPostResponseDto> MyPageJobPostListByCompanyIdTop3(String companyId, List<String> groupCodeList);
 }
