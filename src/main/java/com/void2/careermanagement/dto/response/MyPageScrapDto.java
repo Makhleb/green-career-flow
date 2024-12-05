@@ -15,12 +15,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class MyPageScrapDto {
-        private String userId;  // user_id
-        private int jobPostNo;  // job_post_no
-        private String title;   // title
-        private LocalDateTime endDate;  // end_date
-        private String companyId;  // company_id
-        private String companyName;  // company_name
-        private LocalDateTime companyCreateDate;  // company_create_date
-        private LocalDateTime companyModifyDate;  // company_modify_date
+        private String userId;                          // user_id
+        private int jobPostNo;                          // job_post_no
+        private String title;                           // title
+        private LocalDateTime endDate;                  // end_date
+        private String companyId;                       // company_id
+        private String companyName;                     // company_name
+        private LocalDateTime scrapDate;                // scrap_date
     }
