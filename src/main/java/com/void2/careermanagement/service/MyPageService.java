@@ -23,4 +23,7 @@ public class MyPageService {
     public List<MyPageScrapDto> MyPageScrapListById(String userId) {
         return myPageDao.MyPageScrapListById(userId);
     }
+
+    //스크랩한 공고 삭제 -by 안제연
+    public void removeUserScrapCompany(int jobPostNo){myPageDao.deleteScrapCompany(jobPostNo); }
 }
