@@ -2,6 +2,7 @@ package com.void2.careermanagement.service;
 
 import com.void2.careermanagement.dao.MyPageDao;
 import com.void2.careermanagement.dto.response.MyPageScrapDto;
+import com.void2.careermanagement.dto.response.ProposalResponseDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,8 @@ public class MyPageService {
 
     public List<MyPageScrapDto> MyPageScrapListById(String userId) {
         return myPageDao.MyPageScrapListById(userId);
+    }
+    public List<ProposalResponseDto> MyPageProposalListByCompanyId(String CompanyId) {
+        return myPageDao.MyPageProposalListByCompanyId(CompanyId);
     }
 }

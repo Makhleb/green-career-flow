@@ -25,5 +25,5 @@ public class ProposalResponseDto {
     private String phone;
     private String email;
     private String userName;    // 구직자 이름
-
+    private String userId;
 }

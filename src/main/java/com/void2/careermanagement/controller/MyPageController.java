@@ -5,6 +5,7 @@ import com.void2.careermanagement.dto.CompanyDto;
 import com.void2.careermanagement.dto.UserDto;
 import com.void2.careermanagement.dto.response.ApplyResponseDto;
 import com.void2.careermanagement.dto.response.MyPageScrapDto;
+import com.void2.careermanagement.dto.response.ProposalResponseDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import com.void2.careermanagement.service.MyPageService;
 import com.void2.careermanagement.util.SessionUtil;
@@ -51,6 +52,8 @@ public class MyPageController {
         } else if (userType.equals("C")) {
             CompanyDto user = (CompanyDto) sessionUser;
             String companyId = user.getCompanyId();
+            List<ProposalResponseDto> proposalList = myPageService.MyPageProposalListByCompanyId(companyId);
+            model.addAttribute("plist", proposalList);
             returnUrl = "/mypage/company-mypage";
         }
         return returnUrl;

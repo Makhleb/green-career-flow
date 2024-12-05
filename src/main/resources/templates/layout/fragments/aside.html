@@ -26,29 +26,6 @@
 </aside>
 
 <aside th:fragment="asideCompany">
-  <h3><strong>님2222222222 <i class="bi bi-people-fill"></i></strong></h3>
-  <hr>
-  <p><strong>나의 알림</strong></p>
-  <ul>
-    <li><a th:href="@{/mypage/proposal}">제안서</a></li>
-    <li><a href="">내가 쓴 게시글</a></li>
-    <li><a href="">관심 기업</a></li>
-  </ul>
-  <hr>
-  <p><strong>나의 이력서</strong></p>
-  <ul>
-    <li><a href="">이력서 등록</a></li>
-    <li><a href="">이력서 조회</a></li>
-    <li><a href="/mypage/user-apply">지원이력</a></li>
-  </ul>
-  <hr>
-  <p><strong>나의 스크랩</strong></p>
-  <ul>
-    <li><a href="">나의 스크랩 보기</a></li>
-  </ul>
-</aside>
-
-<aside th:fragment="asideCompany">
   <h3><strong>[[${session.user.companyName}]] <i class="bi bi-building-fill"></i></strong></h3>
   <hr>
   <p><strong>채용공고</strong></p>
@@ -60,7 +37,7 @@
   <p><strong>나의 제안서</strong></p>
   <ul>
     <li><a href="">제안서 보내기</a></li>
-    <li><a href="">제안서 목록</a></li>
+    <li><a th:href="@{/mypage/proposal}">제안서 목록</a></li>
   </ul>
   <hr>
   <p><strong>관심 구직자</strong></p>
