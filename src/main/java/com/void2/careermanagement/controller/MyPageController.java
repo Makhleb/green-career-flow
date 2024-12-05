@@ -43,6 +43,7 @@ public class MyPageController {
         this.jobPostService = jobPostService;
         this.applyService = applyService;
     }
+    
 
 //    @RequestMapping("/profile")
 //    public String profile(HttpSession session, Model model) {
