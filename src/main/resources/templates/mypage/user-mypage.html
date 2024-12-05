@@ -72,7 +72,7 @@
             text-decoration: none;
         }
 
-        #resume_box, #dataBox {
+        #resume_box, #scrap_box {
             display: flex;
             flex-direction: column;
         }
@@ -91,11 +91,11 @@
             align-content: center;
         }
 
-        #resume_item_content, #dataItemContent {
+        #resume_item_content, #scrap_item_content {
             align-content: center;
         }
 
-        #resume_item_content p, #dataItemContent p {
+        #resume_item_content p, #scrap_item_content p {
             font-size: 13px;
             color: gray;
         }
@@ -104,16 +104,16 @@
             margin-bottom: 5px;
         }
 
-        #dataBox {
+        #scrap_box {
             border-bottom: 1px solid #8B1FFF;
         }
 
-        .data-items {
+        .scrap_items {
             display: flex;
             margin: 10px 0;
         }
 
-        #data-icon {
+        #scrap_item_icon {
             width: 50px;
             margin-right: 20px;
             text-align: end;
@@ -124,7 +124,7 @@
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
 <main>
-    <div th:replace="layout/fragments/aside :: asideUser"></div>
+    <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
     <div id="main_content">
         <div id="title">
             <h2>마이 페이지</h2>
