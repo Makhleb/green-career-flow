@@ -1,4 +1,5 @@
 package com.void2.careermanagement.controller;
+
 import com.void2.careermanagement.dao.ApplyDao;
 import com.void2.careermanagement.dto.CompanyDto;
 import com.void2.careermanagement.dto.UserDto;
@@ -10,7 +11,6 @@ import com.void2.careermanagement.util.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,25 +26,13 @@ import java.util.List;
 @RequestMapping("/mypage")
 public class MyPageController {
 
-    @Autowired
-    private MyPageService myPageService;
-    @Autowired
-    private ApplyDao applyDao;
+    private final MyPageService myPageService;
+    private final ApplyDao applyDao;
 
-//    @RequestMapping("/profile")
-//    public String profile(HttpSession session, Model model) {
-//        UserDto user = (UserDto) session.getAttribute("user");
-//        String userId = user.getUserId(); // UserDto 객체의 userId 필드 접근
-//        List<ResumeResponseDto> resumeList = myPageService.MyPageResumeListById(userId);
-//        List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListById(userId);
-//        int resumeSize = resumeList.size();
-//        int scrapSize = scrapList.size();
-//        model.addAttribute("resumeSize", resumeSize);
-//        model.addAttribute("scrapSize", scrapSize);
-//        model.addAttribute("resumeList", resumeList);
-//        model.addAttribute("scrapList", scrapList);
-//        return "/mypage/user-mypage";
-//    }
+    public MyPageController(MyPageService myPageService, ApplyDao applyDao) {
+        this.myPageService = myPageService;
+        this.applyDao = applyDao;
+    }
 
     @GetMapping("/profile")
     public String profile(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -57,10 +45,6 @@ public class MyPageController {
             String userId = user.getUserId(); // UserDto 객체의 userId 필드 접근
             List<ResumeResponseDto> resumeList = myPageService.MyPageResumeListById(userId);
             List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListById(userId);
-            int resumeSize = resumeList.size();
-            int scrapSize = scrapList.size();
-            model.addAttribute("resumeSize", resumeSize);
-            model.addAttribute("scrapSize", scrapSize);
             model.addAttribute("resumeList", resumeList);
             model.addAttribute("scrapList", scrapList);
             returnUrl = "/mypage/user-mypage";
@@ -72,10 +56,7 @@ public class MyPageController {
         return returnUrl;
     }
 
-    @RequestMapping("/proposal")
-    public String proposal() {
-        return "/mypage/user-proposal";
-    }
+
 
     @GetMapping("/apply")
     public String apply(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -91,5 +72,5 @@ public class MyPageController {
         return "/mypage/user-apply";
     }
 
-    
+
 }
