@@ -7,9 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * Created on 2024-12-04 by 황승현
- */
 @Mapper
 public interface ResumeDao {
     List<ResumeResponseDto> getValidResumeListByUserId(String userId);

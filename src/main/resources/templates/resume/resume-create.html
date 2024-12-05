@@ -23,18 +23,18 @@
                     <div class="form">
                         <p><span class="redPoint">* </span>기본 정보</p>
                         <div class="flex-row">
-                            <input id="userName" placeholder="이름">
-                            <input type="date" id="userBirth" placeholder="생년월일">
+                            <input id="userName" placeholder="이름" readonly>
+                            <input type="date" id="userBirth" placeholder="생년월일" readonly>
                             <input type="number" id="jobHistory" placeholder="경력(신입일시 0)">
                         </div>
                         <div class="flex-row">
-                            <input id="userEmail" placeholder="이메일">
-                            <input id="userPhone" placeholder="전화번호">
+                            <input id="userEmail" placeholder="이메일" readonly>
+                            <input id="userPhone" placeholder="전화번호" readonly>
                         </div>
                         <div class="flex-row">
                             <div class="flex-row">
                                 <input type="text" id="userAddress" class="fifty-top-margin" data-name="주소"
-                                       placeholder="회사 주소를 입력하세요" readonly>
+                                       placeholder="주소를 입력하세요" readonly>
                                 <input type="text" id="userZonecode" data-name="우편 번호" placeholder="우편번호" readonly>
                                 <button class="sub-btn moreWidth" onclick="addressFind()">주소 찾기</button>
                             </div>
@@ -232,6 +232,17 @@
 <script>
     let base64img = null;
     let uploadList = [];
+
+    window.onload = function () {
+        if(userSession === null){
+            alert("로그인 후 이용해주세요");
+        } else{
+            $('#userName').val(userSession.userName);
+            $('#userEmail').val(userSession.userEmail);
+            $('#userPhone').val(userSession.userPhone);
+            $('#userBirth').val(userSession.userBirth);
+        }
+    }
 
     /**
      * 장소 팝업 오픈
