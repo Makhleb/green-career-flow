@@ -13,10 +13,10 @@
       height: 1px;
       border: 0;
     }
-    #proposal_container{
+    .container{
       width: 620px;
     }
-    #proposal_container h4{
+    .container h4{
       margin: 10px;
     }
     #title{
@@ -35,7 +35,7 @@
       padding: 5px 10px; /* 버튼 내부 여백 */
       border-radius: 20px; /* 둥근 모서리 */
     }
-    #proposal_title a{
+    a{
       text-decoration: none;
     }
     #proposal_item_content{
@@ -49,14 +49,14 @@
     .content_title{
       margin-bottom: 5px;
     }
-    #proposal_box{
+    .box{
       border-bottom: 1px solid #8B1FFF;
     }
-    .proposal_items{
+    .box_items{
       display: flex;
       margin: 10px 0;
     }
-    #proposal_item_icon{
+    .item_icon{
       width: 100px; height: 65px;
       align-content: center;
       text-align: center;
@@ -72,36 +72,41 @@
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
 <main>
-  <div th:replace="~{layout/fragments/aside :: aside}"></div>
+  <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
   <div id="main_content">
     <div id="title">
       <h2>마이 페이지</h2>
-      <!--/*            [[${session.user.userName}]]*/-->
-      <h3>000님</h3>
+      <h3>[[${session.user.userName}]]님</h3>
       <div id="regist_btn_container">
         <button id="regist_btn">정보수정</button>
       </div>
     </div>
-    <div id="proposal_container">
-      <div id="proposal_title">
-        <h4>나에게 온 제안서 (0)</h4>
+    <div class="container">
+      <div class="container_title">
+        <h4 th:text="'나에게 온 제안서 ('+${#lists.size(plist)}+')'">나에게 온 제안서 (0)</h4>
       </div>
       <hr>
-      <div id="proposal_box">
-        <div class="proposal_items">
-          <div id="proposal_item_icon">
+      <div class="box">
+        <div class="box_items" th:each="dto : ${plist}">
+          <div class="item_icon">
+            <th:block th:if="${dto.readDate == null}">
             <i class="bi bi-envelope"></i>
+            </th:block>
+            <th:block th:if="${dto.readDate!=null}">
+              <i class="bi bi-envelope-open"></i>
+            </th:block>
           </div>
           <div id="proposal_item_content">
-            <div class="content_title"><strong>제안서 제목</strong></div>
+            <div class="content_title"><a th:href="@{/mypage/proposal_detail/{proposalNo}(proposalNo=${dto.proposalNo})}"><strong id="openProposal" onclick="open()" style="cursor:pointer" th:text="${dto.title}"></strong></a></div>
             <div class="content">
-              <p>기업이름</p>
-              <p>YYYY/MM/DD</p>
+              <p th:text="${dto.companyName}">기업이름</p>
+              <p th:text="${#temporals.format(dto.date, 'yyyy/MM/dd')}">YYYY/MM/DD</p>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>

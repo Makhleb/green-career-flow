@@ -60,6 +60,8 @@
                 #{R.offerYn},
                 NOW(),
                 NULL,
-                #{R.jobHistory})
+                #{R.jobHistory});
+
+
     </insert>
 </mapper>

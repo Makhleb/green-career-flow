@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 public class UserInterestCompanyDto {
+    private String companyId;
     private String companyImage;
     private String companyName;
     private String companyAddress;

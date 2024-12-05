@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.void2.careermanagement.dao.ProposalDao">
+    <select id="getProposalListById" resultType="com.void2.careermanagement.dto.response.ProposalResponseDto">
+        SELECT p.title, p.DATE, c.company_name, p.read_date, p.proposal_no
+        from tbl_proposal p
+        JOIN tbl_company c
+        ON p.company_id = c.company_id
+        WHERE user_id = #{userId};
+    </select>
+    <select id="getProposalById" resultType="com.void2.careermanagement.dto.response.ProposalResponseDto">
+        SELECT p.title, p.content, p.DATE, c.company_name, p.read_date, p.proposal_no, p.phone, p.email
+        from tbl_proposal p
+        JOIN tbl_company c
+        ON p.company_id = c.company_id
+        WHERE user_id = #{userId};
+    </select>
+</mapper>

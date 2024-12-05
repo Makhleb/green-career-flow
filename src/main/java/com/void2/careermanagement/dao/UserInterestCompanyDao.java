@@ -13,4 +13,5 @@ import java.util.List;
 public interface UserInterestCompanyDao {
     //관심기업 조회
     public List<UserInterestCompanyDto> getInterestList(String id);
+    public void deleteInterestCompany(String id);
 }
