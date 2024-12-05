@@ -28,11 +28,8 @@ public class MyPageService {
         return myPageDao.MyPageProposalListByCompanyIdTop3(CompanyId);
     }
 
-
-
-
     //스크랩한 공고 삭제 -by 안제연
-    public void removeUserScrapCompany(int jobPostNo){myPageDao.deleteScrapCompany(jobPostNo); }
+    public void removeUserScrapCompany(int jobPostNo, String userId){myPageDao.deleteScrapCompany(jobPostNo, userId); }
 
     public List<MyPageScrapDto> MyPageScrapListById(String userId) {
         return myPageDao.MyPageScrapListById(userId);

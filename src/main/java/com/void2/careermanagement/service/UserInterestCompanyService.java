@@ -22,6 +22,6 @@ public class UserInterestCompanyService {
     public List<UserInterestCompanyDto> getUserInterestCompanyList(String id) {return userInterestCompanyDao.getInterestList(id);}
 
     //관심기업 삭제
-    public void removeUserInterestCompany(String id) { userInterestCompanyDao.deleteInterestCompany(id);}
+    public void removeUserInterestCompany(String companyId, String userId) { userInterestCompanyDao.deleteInterestCompany(companyId, userId);}
 
 }
