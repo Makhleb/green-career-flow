@@ -66,4 +66,5 @@ public class MyPageController {
         return "/mypage/user-apply";
     }
 
+    
 }
