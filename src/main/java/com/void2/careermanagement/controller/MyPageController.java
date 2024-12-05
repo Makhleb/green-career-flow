@@ -14,6 +14,7 @@ import com.void2.careermanagement.util.SessionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,17 @@ public class MyPageController {
 
     private final MyPageService myPageService;
     private final ApplyDao applyDao;
+    private final JobPostService jobPostService;
+    private final ApplyService applyService;
+
+    @Autowired
+    public MyPageController(MyPageService myPageService, ApplyDao applyDao, JobPostService jobPostService, ApplyService applyService) {
+        this.myPageService = myPageService;
+        this.applyDao = applyDao;
+        this.jobPostService = jobPostService;
+        this.applyService = applyService;
+    }
+    
 
     public MyPageController(MyPageService myPageService, ApplyDao applyDao) {
         this.myPageService = myPageService;
@@ -95,6 +107,23 @@ public class MyPageController {
     public String apply(@PathVariable int jobPostNo, HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
 
+            model.addAttribute("applyList", applyList);
+            returnPage = "/mypage/user-apply";
+        } else if (userType.equals("C")) {
+//
+//            CompanyDto user = (CompanyDto) sessionUser;
+//            String companyId = user.getCompanyId();
+//            List<JobPostResponseDto> jobPostList = jobPostService.getJobPostListByCompanyId(companyId);
+//            System.out.println(jobPostList);
+//            model.addAttribute("jobPostList", jobPostList);
+//            returnPage = "/mypage/company-apply";
+        }
+        return returnPage;
+    }
+
+    @GetMapping("/apply/{jobPostNo}")
+    public String apply(@PathVariable int jobPostNo, HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
         String userType = session.getAttribute("userType").toString();
         String returnPage = "";
         Object sessionUser = session.getAttribute("user");
@@ -135,5 +164,29 @@ public class MyPageController {
         return returnPage;
     }
 
+    @GetMapping("/job-post")
+    public String jobPost(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
+
+        String userType = session.getAttribute("userType").toString();
+        String returnPage = "";
+        Object sessionUser = session.getAttribute("user");
+
+        if (userType.equals("U")) {
+
+            returnPage = "/mypage/user-mypage";
+
+        } else if (userType.equals("C")) {
+
+            CompanyDto user = (CompanyDto) sessionUser;
+            String companyId = user.getCompanyId();
+            List<JobPostResponseDto> jobPostList = jobPostService.getJobPostListByCompanyId(companyId);
+            System.out.println(jobPostList);
+            model.addAttribute("jobPostList", jobPostList);
+            returnPage = "/mypage/company-job-post";
+
+        }
+        return returnPage;
+    }
 
 }
