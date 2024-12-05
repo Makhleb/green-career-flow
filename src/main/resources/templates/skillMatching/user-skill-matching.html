@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<main>
+    <div id="skill_select">
+        <select id="skillType">
+            <option value="" selected>기술스택</option>
+            <th:block th:each="skillType : ${skillGubnList}">
+                <option th:value="${skillType.code}" th:text="${skillType.name}"></option>
+            </th:block>
+        </select>
+        <select id="workType">
+            <option value="" selected>경력</option>
+            <th:block th:each="workType : ${workTypeList}">
+                <option th:value="${workType.code}" th:text="${workType.name}"></option>
+            </th:block>
+        </select>
+    </div>
+    <div id="container">
+        <br>
+        <div class="grid-item">
+            <div class="grid_posting">
+                <th:block th:if="${isEmpty == 'notEmpty'}">
+                    <div class="grid_posting_item" th:each="company : ${lList}">
+                        <a th:href="@{/}"><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
+                        <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
+                        <p>
+                            [[${company.companyName}]]
+                        </p>
+                        <span>[[${company.companyAddress}]]
+                                <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                                <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
+                                <span th:if="${company.jobHistory <= 0}"> 신입 </span>
+                            </span>
+                    </div>
+                </th:block>
+                <th:block th:if="${isEmpty != 'notEmpty'}">
+                    <span style="padding:10px; color: gray; text-align: left">스킬을 매칭해 보세요</span>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
+</body>
+<script>
+
+</script>
+</html>
