@@ -47,3 +47,24 @@
     <li><a href="">나의 스크랩 보기</a></li>
   </ul>
 </aside>
+
+<aside th:fragment="asideCompany">
+  <h3><strong>[[${session.user.companyName}]] <i class="bi bi-building-fill"></i></strong></h3>
+  <hr>
+  <p><strong>채용공고</strong></p>
+  <ul>
+    <li><a href="">채용공고 등록</a></li>
+    <li><a href="">채용공고 조회</a></li>
+  </ul>
+  <hr>
+  <p><strong>나의 제안서</strong></p>
+  <ul>
+    <li><a href="">제안서 보내기</a></li>
+    <li><a href="">제안서 목록</a></li>
+  </ul>
+  <hr>
+  <p><strong>관심 구직자</strong></p>
+  <ul>
+    <li><a href="">구직자 목록</a></li>
+  </ul>
+</aside>
