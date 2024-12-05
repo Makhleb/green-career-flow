@@ -48,7 +48,7 @@
     </select>
     <delete id="deleteScrapCompany">
         delete FROM tbl_jpl
-        WHERE job_post_no = #{jobPostNo}
+        WHERE job_post_no = #{jobPostNo} and user_id = #{userId}
     </delete>
     <select id="MyPageScrapListById" resultType="com.void2.careermanagement.dto.response.MyPageScrapDto">
         SELECT j.user_id, j.job_post_no, jp.title, jp.end_date

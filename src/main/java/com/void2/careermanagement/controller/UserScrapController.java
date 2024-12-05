@@ -49,8 +49,9 @@ public class UserScrapController {
     }
 
     @GetMapping("/delete-scrap-company")
-    public String deleteScrapCompany(@RequestParam("jobPostNo") int jobPostNo){
-        myPageService.removeUserScrapCompany(jobPostNo);
+    public String deleteScrapCompany(@RequestParam("jobPostNo") int jobPostNo, HttpSession session) {
+        UserDto sessionUser = (UserDto) session.getAttribute("user");
+        myPageService.removeUserScrapCompany(jobPostNo, sessionUser.getUserId());
         return "redirect:/mypage/user-scrap-company";
     }
 }

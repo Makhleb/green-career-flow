@@ -46,9 +46,12 @@ public class UserInterestController {
     }
 
     @GetMapping("/delete-interest-company")
-    public String deleteInterestCompany(@RequestParam("companyId") String companyId, Model model, HttpSession session) {
+    public String deleteInterestCompany(@RequestParam("companyId") String companyId,
+                                        Model model, HttpSession session) {
+        UserDto sessionUser = (UserDto)session.getAttribute("user");
         System.out.println(companyId);
-        userInterestCompanyService.removeUserInterestCompany(companyId);
+
+        userInterestCompanyService.removeUserInterestCompany(companyId, sessionUser.getUserId());
         return "redirect:/mypage/user-interest-company";
     }
 }
