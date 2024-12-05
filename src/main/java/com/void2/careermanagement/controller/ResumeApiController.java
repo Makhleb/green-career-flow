@@ -42,12 +42,11 @@ public class ResumeApiController {
     }
 
     @PostMapping("/create/full")
-    public ResponseEntity<String> createTotalResume(@RequestBody ResumeFullRequestDto resumeFullRequestDto) {
+    public int createTotalResume(@RequestBody ResumeFullRequestDto resumeFullRequestDto) {
         try {
-            resumeService.insertFullResume(resumeFullRequestDto);
-            return ResponseEntity.ok("Resume data saved successfully.");
+            return resumeService.insertFullResume(resumeFullRequestDto);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving resume data.");
+            return 0;
         }
     }
 }

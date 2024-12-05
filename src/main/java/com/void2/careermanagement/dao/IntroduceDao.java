@@ -8,5 +8,5 @@ import java.util.List;
 
 @Mapper
 public interface IntroduceDao {
-    void insertIntroduce(@Param("list") List<IntroduceDto> introduceDtoList);
+    void insertIntroduce(@Param("list") List<IntroduceDto> introduceDtoList,@Param("resumeNoPk") int resumeNoPk);
 }

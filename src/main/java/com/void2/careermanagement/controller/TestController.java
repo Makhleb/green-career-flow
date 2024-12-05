@@ -34,38 +34,38 @@ public class TestController {
     }
 
     @PostMapping("/activity")
-    public int activity(@RequestBody List<ActivityDto> activityDtoList) {
-        return activityDao.insertActivity(activityDtoList);
+    public void activity(@RequestBody List<ActivityDto> activityDtoList) {
+        activityDao.insertActivity(activityDtoList,11);
     }
 
     @PostMapping("/education")
-    public int activity2(@RequestBody EducationDto educationDto) {
-        return educationDao.insertEducation(educationDto);
+    public void activity2(@RequestBody EducationDto educationDto) {
+        educationDao.insertEducation(educationDto,11);
     }
 
     @PostMapping("/introduce")
     public void introduce(@RequestBody List<IntroduceDto> introduceDtoList) {
-        introduceDao.insertIntroduce(introduceDtoList);
+        introduceDao.insertIntroduce(introduceDtoList,10);
     }
 
     @PostMapping("/license")
-    public int activity3(@RequestBody List<LicenseDto> LicenseDto) {
-        return licenseDao.insertLicense(LicenseDto);
+    public void activity3(@RequestBody List<LicenseDto> LicenseDto) {
+        licenseDao.insertLicense(LicenseDto,10);
     }
 
     @PostMapping("/military")
-    public int activity4(@RequestBody MilitaryDto MilitaryDto) {
-        return militaryDao.insertMilitary(MilitaryDto);
+    public void activity4(@RequestBody MilitaryDto MilitaryDto) {
+        militaryDao.insertMilitary(MilitaryDto,13);
     }
 
     @PostMapping("/potfolio")
-    public int activity5(@RequestBody List<PotfolioDto> PotfolioDto) {
-        return potfolioDao.insertPotfolio(PotfolioDto);
+    public void activity5(@RequestBody List<PotfolioDto> PotfolioDto) {
+        potfolioDao.insertPotfolio(PotfolioDto,15);
     }
 
     @PostMapping("/resume-skill")
-    public int activity6(@RequestBody List<ResumeSkillDto> ResumeSkillDto) {
-        return resumeSkillDao.insertResumeSkill(ResumeSkillDto);
+    public void activity6(@RequestBody List<ResumeSkillDto> ResumeSkillDto) {
+        resumeSkillDao.insertResumeSkill(ResumeSkillDto,10);
     }
 
 }

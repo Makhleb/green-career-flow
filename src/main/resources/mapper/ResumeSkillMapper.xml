@@ -8,7 +8,7 @@
         (resume_no, skill_code)
         VALUES
         <foreach collection="list" item="RS" separator=",">
-            (#{RS.resumeNo}, #{RS.skillCode})
+            (#{resumeNoPk}, #{RS.skillCode})
         </foreach>
 
     </insert>

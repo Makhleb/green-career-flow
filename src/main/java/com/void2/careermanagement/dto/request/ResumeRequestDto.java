@@ -23,3 +23,4 @@ public class ResumeRequestDto {
     private LocalDateTime modifyDate;
     private int jobHistory;
 }
+

@@ -14,6 +14,7 @@ import java.util.List;
 public interface ResumeDao {
     List<ResumeResponseDto> getValidResumeListByUserId(String userId);
     int insertResume(@Param("R")ResumeRequestDto resumeRequestDto);
+    int maxResumeNo();
     int updateResume(ResumeRequestDto resumeRequestDto);
     int deleteResume(ResumeRequestDto resumeRequestDto);
 }

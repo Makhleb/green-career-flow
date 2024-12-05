@@ -27,6 +27,10 @@
           AND is_not_empty(address)
           AND (SELECT COUNT(user_id) FROM tbl_introduce WHERE user_id = #{user_id}) > 0
     </select>
+    <select id="maxResumeNo">
+        SELECT MAX(resume_no) from tbl_resume
+    </select>
+
     <insert id="insertResume">
         INSERT INTO tbl_resume
         (resume_no,
@@ -61,7 +65,5 @@
                 NOW(),
                 NULL,
                 #{R.jobHistory});
-
-
     </insert>
 </mapper>

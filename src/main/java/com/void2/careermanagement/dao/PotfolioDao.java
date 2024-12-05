@@ -8,5 +8,5 @@ import java.util.List;
 
 @Mapper
 public interface PotfolioDao {
-    int insertPotfolio(@Param("list") List<PotfolioDto> potfolioDtoList);
+    void insertPotfolio(@Param("list") List<PotfolioDto> potfolioDtoList,@Param("resumeNoPk") int resumeNoPk);
 }

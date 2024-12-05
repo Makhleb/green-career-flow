@@ -24,8 +24,8 @@
                         <p><span class="redPoint">* </span>기본 정보</p>
                         <div class="flex-row">
                             <input id="userName" placeholder="이름">
-                            <input id="userGender" placeholder="이름">
-                            <input type="date" id="userBirth" placeholder="이름">
+                            <input type="date" id="userBirth" placeholder="생년월일">
+                            <input type="number" id="jobHistory" placeholder="경력(신입일시 0)">
                         </div>
                         <div class="flex-row">
                             <input id="userEmail" placeholder="이메일">
@@ -64,14 +64,14 @@
                         <select id="wishTimeStart">
                             <option value="" selected>선택</option>
                             <th:block th:each="wishTime : ${#numbers.sequence(0,23)}">
-                                <option th:value="${wishTime}" th:text="${wishTime}"></option>
+                                <option th:value="${wishTime}+':00'" th:text="${wishTime}+':00'"></option>
                             </th:block>
                         </select>
                         <p>~</p>
                         <select id="wishTimeEnd">
                             <option value="" selected>선택</option>
                             <th:block th:each="wishTime : ${#numbers.sequence(0,23)}">
-                                <option th:value="${wishTime}" th:text="${wishTime}"></option>
+                                <option th:value="${wishTime}+':00'" th:text="${wishTime}+':00'"></option>
                             </th:block>
                         </select>
                     </div>
@@ -84,14 +84,14 @@
                             <!--                    <option>백엔드</option>-->
                             <!--                    <option>프론트엔드</option>-->
                         </select>
-                        <input id="wish_area" placeholder="희망근무지역">
-                        <input id="wish_salary" placeholder="희망 연봉">
+                        <input id="wishArea" placeholder="희망근무지역">
+                        <input id="wishSalary" placeholder="희망 연봉">
                     </div>
                 </div>
             </div>
 
             <div class="form margin">
-                <p>기본 정보</p>
+                <p>포트 폴리오</p>
                 <div>
                     <div class="tabs">
                         <button class="tab active" data-tab="link">링크</button>
@@ -102,8 +102,12 @@
                     <input id="portfolioLink">
                 </div>
                 <div class="noneBoard" id="attach">
-                    <input id="portfolioAttach">
-                    <button class="sub-btn" style="height: 3rem">찾아보기...</button>
+                    <div class="potfolio-board" data-name="potfolio">
+                        <input class="portfolioAttach" style="width: calc(100% - 8rem)" readonly>
+                        <label for="portfileInput" class="sub-btn" style="height: 3rem">찾아보기</label>
+                        <input type="file" id="portfileInput" name="files" accept=".doc,.docx,.pdf,.txt,.odt,.rtf"
+                               style="display: none" multiple>
+                    </div>
                 </div>
             </div>
             <div class="form margin">
@@ -141,11 +145,11 @@
                     <select id="educode" placeholder="학교 구분">
                         <option value="" selected>구분</option>
                         <th:block th:each="education :${educationList}">
-                            <option th:value="${education.name}" th:text="${education.name}"></option>
+                            <option th:value="${education.code}" th:text="${education.name}"></option>
                         </th:block>
                     </select>
-                    <input type="date" id="enterDate" placeholder="입학년월">
-                    <input type="date" id="graduateDate" placeholder="졸업년월">
+                    <input id="enterDate" placeholder="입학년월">
+                    <input id="graduateDate" placeholder="졸업년월">
                 </div>
                 <div class="flex-row">
                     <input id="schoolName" placeholder="학교명">
@@ -154,11 +158,12 @@
             </div>
             <div class="form margin">
                 <p>병력 사항</p>
+                <!--                todo 저기에 data-name을 추가해야하나? -->
                 <div class="flex-row">
                     <select id="militaryCode" placeholder="복무 유형">
                         <option value="" selected>구분</option>
                         <th:block th:each="military :${militaryList}">
-                            <option th:value="${military.name}" th:text="${military.name}"></option>
+                            <option th:value="${military.code}" th:text="${military.name}"></option>
                         </th:block>
                     </select>
                     <input type="date" id="enlistDate" placeholder="입대년월">
@@ -181,57 +186,23 @@
                     </div>
                 </div>
             </div>
-            <div class="form margin">
-                <p>직무 관련 경력</p>
+            <div class="form margin" th:each="activityType : ${activityTypes}">
+                <p th:switch="${activityType.name()}">
+                    <span th:case="'JOB_CAREER'">직무 관련 경력</span>
+                    <span th:case="'JOB_ACT'">직무 관련 활동</span>
+                    <span th:case="'SOCIAL_ACT'">사회 경험 활동</span>
+                </p>
                 <div class="board">
-                    <div class="careerAct-board" data-name="careerAct">
-                        <div class="flex-row">
-                            <input class="careerCenterName" placeholder="활동기관명">
-                            <input class="careerStart" placeholder="시작년월">
-                            <input class="careerEnd" placeholder="종료년월">
-                        </div>
-                        <textarea class="careerContents"></textarea>
-                    </div>
-                    <div class="plus-btn-container flex-row">
-                        <div class="plus-btn flex-row" onclick="addElement('careerAct')">
-                            <img src="/static/images/black_plus_btn.svg" alt="플러스버튼">
-                            <div>추가하기</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form margin">
-                <p>직무 관련 활동</p>
-                <div class="board">
-                    <div class="act-board" data-name="act">
+                    <div class="act-board" th:data-name="${activityType.name()}">
                         <div class="flex-row">
                             <input class="actCenterName" placeholder="활동기관명">
-                            <input class="actStart" placeholder="시작년월">
-                            <input class="actEnd" placeholder="종료년월">
+                            <input type="date" class="actStart" placeholder="시작년월">
+                            <input type="date" class="actEnd" placeholder="종료년월">
                         </div>
                         <textarea class="actContents"></textarea>
                     </div>
                     <div class="plus-btn-container flex-row">
-                        <div class="plus-btn flex-row" onclick="addElement('act')">
-                            <img src="/static/images/black_plus_btn.svg" alt="플러스버튼">
-                            <div>추가하기</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form margin">
-                <p>사회 경험 활동</p>
-                <div class="board">
-                    <div class="social-board" data-name="socialAct">
-                        <div class="flex-row">
-                            <input class="socialCenterName" placeholder="활동기관명">
-                            <input class="socialStart" placeholder="시작년월">
-                            <input class="socialEnd" placeholder="종료년월">
-                        </div>
-                        <textarea class="socialContents"></textarea>
-                    </div>
-                    <div class="plus-btn-container flex-row">
-                        <div class="plus-btn flex-row" onclick="addElement('socialAct')">
+                        <div class="plus-btn flex-row" th:attr="onclick=|addElement('${activityType.name()}')|">
                             <img src="/static/images/black_plus_btn.svg" alt="플러스버튼">
                             <div>추가하기</div>
                         </div>
@@ -242,22 +213,26 @@
                 <div class="board flex-row bottom-radio">
                     <div>포지션 제안 받고 더 좋은 커리어 기회를 열어둘까요?</div>
                     <div class="flex-row" style="align-items: center">
-                        <input type="radio" id="proposalOn" name="options" value="yes">
+                        <input type="radio" id="proposalOn" name="options" value="Y">
                         <label for="proposalOn" style="padding-right: 2rem">네</label>
-
-                        <input type="radio" id="proposalOff" name="options" value="no">
+                        <input type="radio" id="proposalOff" name="options" value="N">
                         <label for="proposalOff">아니요</label>
                     </div>
-
                 </div>
             </div>
-            <button class="submit-button" onclick="resumeRegist()">이력서 생성</button>
+            <button class="submit-button" id="totalSubmit" onclick="resumeRegist()">이력서 생성</button>
         </div>
     </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
+<script th:inline="javascript">
+    const userSession = [[${session.user}]];
+</script>
 <script>
+    let base64img = null;
+    let uploadList = [];
+
     /**
      * 장소 팝업 오픈
      */
@@ -319,6 +294,7 @@
             }
         })
     })
+
     /**
      * 기술스택 토글
      */
@@ -339,7 +315,6 @@
     // gubn,limit << 로 적어서 컬럼별로 갯수 제한하도록
     function addElement(gubn) {
         const targetDiv = $(`div[data-name="${gubn}"]`);
-        console.log($(targetDiv.length));
         const newElement = targetDiv.prop('outerHTML');
 
         if (targetDiv.length <= 6) {
@@ -349,25 +324,37 @@
         }
     }
 
-    function getPrimaryKey(){
-        axios.get()
-    }
+    function resumeTotalInfo() {
+        let wishTime = $('#wishTimeStart').val() + '-' + $('#wishTimeEnd').val();
 
-    function resumeRegist() {
+        let basicResume = {
+            resumeNo: null,
+            title: $('#title').val(),
+            address: $('#userAddress').val(),
+            addressDetail: $('#userAddressDetail').val(),
+            zonecode: $('#userZonecode').val(),
+            userId: userSession.userId,
+            image: base64img.split(',')[1],
+            wishArea: $('#wishArea').val(),
+            wishSalary: $('#wishSalary').val(),
+            wishTime: wishTime,
+            workCode: $('#workCode').val(),
+            portfolioLink: $('#portfolioLink').val(),
+            offerYn: $("input[name='options']:checked").val(),
+            jobHistory: $('#jobHistory').val()
+        }
+
         let introArr = [];
-
         $('.introduce-board').each(function (index) {
             introArr.push({
-                resumeNo: 1,
+                resumeNo: 0,
                 title: $(this).find('.introTitle').val(),
                 content: $(this).find('.introText').val(),
                 order: index + 1
             })
         });
 
-        console.log(introArr);
-
-        const skillList = [];
+        let skillList = [];
         $('.minus-stack')
             .map(function () {
                 skillList.push({
@@ -376,13 +363,110 @@
                 });
             });
 
-        // axios.post('/testtest/introduce', introArr)
-        //     .then(function (response) {
-        //         console.log(response);
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     })
+        let education = {
+            educationCode: $('#educode').val(),
+            schoolName: $('#schoolName').val(),
+            specialty: $('#specialty').val(),
+            enterDate: $('#enterDate').val(),
+            graduateDate: $('#graduateDate').val(),
+        }
+
+        let military = {
+            resumeNo: 0,
+            enlistDate: $('#enlistDate').val(),
+            releaseDate: $('#releaseDate').val(),
+            militaryCode: $('#militaryCode').val(),
+        }
+
+        let licenseArr = [];
+        $('.license-board').each(function () {
+            licenseArr.push({
+                resumeNo: 0,
+                licenseName: $(this).find('.licenseName').val(),
+                licenseCenterName: $(this).find('.licenseCenterName').val(),
+                passDate: $(this).find('.passDate').val()
+            })
+        });
+
+        let potfolioArr = [];
+        uploadList.forEach(function (element) {
+            potfolioArr.push({
+                resumeNo: 0,
+                potfolioFilename: element
+            })
+        });
+
+        let activityArr = [];
+        $('.act-board').each(function (index) {
+            console.log($(this).data('name'));
+            activityArr.push({
+                resumeNo: 0,
+                order: index + 1,
+                startDate: $(this).find('.actStart').val(),
+                endDate: $(this).find('.actEnd').val(),
+                activityCenterName: $(this).find('.actCenterName').val(),
+                activityContent: $(this).find('.actContents').val(),
+                activityType: $(this).data('name')
+            })
+        })
+
+        return {
+            resume: basicResume,
+            activity: activityArr,
+            education: education,
+            introduce: introArr,
+            license: licenseArr,
+            military: military,
+            potfolio: potfolioArr,
+            resumeSkill: skillList
+        };
+    }
+
+    function resumeRegist() {
+        let totalInfo = resumeTotalInfo();
+
+        axios.post('/api/resume/create/full', totalInfo)
+            .then(function (response) {
+                console.log(response);
+                if (response.data !== 0) {
+                    alert("이력서 등록 성공");
+                    upload(response.data);
+                } else{
+                    alert("어딘가 문제생김")
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    $("#portfileInput").on('change', function () {
+        let files = $("#portfileInput")[0].files;
+        for (let i = 0; i < files.length; i++) {
+            uploadList.push(files[i].name);
+        }
+        console.log(uploadList);
+        $(".portfolioAttach").val(uploadList);
+    });
+
+    function upload(resumeNo) {
+        const files = $('#portfileInput')[0].files;
+        const formData = new FormData();
+        $.each(files, function (index, file) {
+            formData.append('files', file);
+        });
+        axios.post('/api/file/upload/multiple?resumeNo=' + resumeNo, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data' // 파일 전송 시 반드시 지정
+            }
+        })
+            .then(response => {
+                response.data;
+                console.log("파일 업로드 완료")
+            })
+            .catch(error => {
+                console.error('파일 업로드 실패:', error);
+            });
     }
 </script>
 </html>

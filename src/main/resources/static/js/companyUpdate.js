@@ -70,7 +70,6 @@ function sessionUpdate() {
  * 업데이트 함수
  */
 function update() {
-    console.log(base64img);
     if (confirm("정말루?")) {
         axios.put("/api/company/account/update", {
             companyId: $("#companyId").val(),
