@@ -1,7 +1,6 @@
-package com.void2.careermanagement.response;
+package com.void2.careermanagement.dto.response;
 
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created on 2024-12-02 by 안제연

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.void2.careermanagement.dao.ApplyDao">
+    <insert id="insert">
+        INSERT INTO tbl_aplc_hstr(job_post_no, resume_no)
+        VALUES (#{jobPostNo}, #{resumeNo})
+    </insert>
+    <select id="checkApply">
+        SELECT COUNT(resume_no)
+        FROM tbl_aplc_hstr
+        WHERE job_post_no = #{jobPostNo}
+          AND resume_no IN
+            (SELECT resume_no
+            FROM tbl_resume
+            WHERE user_id = #{userId})
+    </select>
+
+    <select id="getApplyListByUserId">
+        SELECT apply.job_post_no,
+               re.resume_no,
+               apply.aplc_hstr_date,
+               apply.pass_yn,
+               re.title      AS resume_title,
+               jp.company_id,
+               company.company_name,
+               jp.start_date AS job_post_startDate,
+               jp.end_date   AS job_post_endDate,
+               jp.title AS job_post_title
+
+        FROM tbl_aplc_hstr apply
+                 RIGHT JOIN (SELECT resume_no, title
+                             FROM tbl_resume
+                             WHERE user_id = #{userId}) re
+                            ON apply.resume_no = re.resume_no
+                 LEFT JOIN tbl_job_post jp ON apply.job_post_no = jp.job_post_no
+                 LEFT JOIN tbl_company company ON jp.company_id = company.company_id
+        ORDER BY aplc_hstr_date DESC
+    </select>
+</mapper>

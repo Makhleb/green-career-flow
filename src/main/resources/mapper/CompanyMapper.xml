@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.void2.careermanagement.dao.CompanyDao">
-    <select id="getHighRatingList" resultType="com.void2.careermanagement.response.CompanyResponseDto">
+    <select id="getHighRatingList" resultType="com.void2.careermanagement.dto.response.CompanyResponseDto">
         <![CDATA[
             SELECT
                 c.company_name,
@@ -29,7 +29,7 @@
                 LIMIT 6
             ]]>
     </select>
-    <select id="getFastEndDateList" resultType="com.void2.careermanagement.response.CompanyResponseDto">
+    <select id="getFastEndDateList" resultType="com.void2.careermanagement.dto.response.CompanyResponseDto">
         <![CDATA[
         SELECT j.company_id, c.company_name, c.company_address, j.title, j.start_date, c.company_image, j.job_history,
                 CASE
@@ -45,9 +45,9 @@
         ORDER BY end_date asc LIMIT 6
         ]]>
     </select>
-    <select id="getLikeList" resultType="com.void2.careermanagement.response.CompanyResponseDto">
+    <select id="getLikeList" resultType="com.void2.careermanagement.dto.response.CompanyResponseDto">
         <![CDATA[
-        SELECT j.company_id, c.company_name, c.company_address, j.title, j.start_date, c.company_image, j.job_history,
+        SELECT j.company_id, c.company_name, c.company_address, j.title, j.start_date, c.company_image, j.job_history, j.job_post_no,
                CASE
                    WHEN j.end_date IS NULL THEN '상시'
                    ELSE CONCAT('D-', DATEDIFF(j.end_date, NOW()))

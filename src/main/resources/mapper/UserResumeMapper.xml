@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.void2.careermanagement.dao.UserResumeDao">
+    <select id="getHighLikeUserList" resultType="com.void2.careermanagement.dto.response.ApplicantResponseDto">
+        <![CDATA[
+        SELECT u.user_name,
+               TIMESTAMPDIFF(YEAR, u.user_birth, CURDATE())-(RIGHT(CURDATE(), 5) < RIGHT(u.user_birth, 5)) AS user_age,
+               IFNULL(re.job_history, 0) AS job_history, re.resume_no,
+               l.like_count
+        FROM tbl_user u JOIN
+             (SELECT user_id, COUNT(like_type) AS like_count
+              FROM tbl_like
+              WHERE like_type = 'C'
+              GROUP BY user_id) AS l
+                        JOIN (SELECT r.user_id, s.skill_code, r.title, r.job_history, r.resume_no
+                              FROM tbl_resume r, tbl_resume_skill s
+                              WHERE r.resume_no = s.resume_no) AS re
+        WHERE u.user_id = l.user_id
+          AND u.user_id = re.user_id
+        GROUP BY re.user_id, u.user_name, user_age, re.job_history, l.like_count
+        ORDER BY like_count DESC
+            LIMIT 8;
+        ]]>
+    </select>
+    <select id="getApplyListByCompanyId" resultType="com.void2.careermanagement.dto.response.UserResponseDto">
+        <![CDATA[
+        SELECT
+            hstr.job_post_no,
+            jp.title AS job_post_title,
+            hstr.pass_yn,
+            re.resume_no,
+            re.title AS resume_title,
+            re.job_history,
+            re.user_id,
+            us.user_name,
+            us.user_gender,
+            TIMESTAMPDIFF(YEAR, us.user_birth, CURDATE())-(RIGHT(CURDATE(), 5) < RIGHT(us.user_birth, 5)) AS user_age
+                , hstr.pass_yn
+                , hstr.aplc_hstr_date
+        FROM
+-- 지원이력
+(SELECT job_post_no, resume_no, aplc_hstr_date
+-- CASE pass_yn
+-- WHEN 'Y' THEN '합격'
+-- WHEN 'N' THEN '불합격'
+-- ELSE '미확인' END AS pass_yn
+      , pass_yn
+ FROM tbl_aplc_hstr
+ WHERE job_post_no
+           IN (SELECT job_post_no
+               FROM tbl_job_post
+               WHERE company_id = #{companyId})) AS hstr
+    LEFT JOIN tbl_job_post jp ON hstr.job_post_no = jp.job_post_no -- 기업정보
+    LEFT JOIN tbl_resume re ON hstr.resume_no = re.resume_no -- 이력서 정보
+    LEFT JOIN tbl_user us ON re.user_id = us.user_id -- 유저 정보
+        WHERE jp.company_id = #{companyId}
+        ORDER BY hstr.aplc_hstr_date DESC
+            LIMIT 3;
+        ]]>
+    </select>
+    <select id="getSkillListByResumeNo" resultType="com.void2.careermanagement.dto.GubnDto">
+        SELECT
+            A.resume_no, A.skill_code AS code, B.name AS name
+        FROM tbl_resume_skill A
+                 LEFT JOIN
+             (SELECT CODE, NAME
+              FROM tbl_gubn
+              WHERE group_code = 'SKILL') B
+             ON A.skill_code = B.code
+        WHERE A.resume_no = #{resumeNo}
+    </select>
+</mapper>

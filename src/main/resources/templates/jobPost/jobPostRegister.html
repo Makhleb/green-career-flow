@@ -354,7 +354,7 @@
         </div>
 
         <div class="form">
-            <button onclick="submitJobPost()" class="submit-button">채용공고 등록</button>
+            <button th:data-company-id="${session.user.companyId}" onclick="submitJobPost(this)" class="submit-button">채용공고 등록</button>
         </div>
     </div>
 </div>
@@ -398,8 +398,9 @@
         endDate.prop('disabled', checkAlways);
     }
 
-    function submitJobPost() {
+    function submitJobPost(ele) {
         const jobPostData = {
+            companyId : ele.getAttribute("data-company-id"),
             title: $('#title').val(),
             managerName: $('#managerName').val(),
             managerEmail: $('#managerEmail').val(),
