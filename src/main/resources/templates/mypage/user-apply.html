@@ -58,18 +58,16 @@
         }
 
         .item_content {
+            width: 88%;
             height: 44px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            font-size: 13px;
+            color: gray;
             /*align-items: center;*/
             /*align-content: center;*/
 
-        }
-
-        .item_content {
-            font-size: 13px;
-            color: gray;
         }
 
         .content_title {
@@ -86,17 +84,18 @@
         .items {
             border: 1px #8B1FFF solid;
             border-radius: 12px;
-            padding-top: 10px;
-            padding-bottom: 10px;
+            padding: 10px;
             min-height: 46px;
             height: auto;
+            display: flex;
+            flex-direction: row;
         }
 
         .content {
-            width: 500px;
+            width: 100%;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            /*justify-content: space-between;*/
+            /*align-items: center;*/
         }
 
         .item_icon {
@@ -130,10 +129,38 @@
         .age {
             margin-left: 10px;
         }
+
         .box {
             display: flex;
             flex-direction: column;
         }
+
+        .right-content {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        .content-form {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .value {
+            margin: 0 4px 0 4px;
+        }
+
+        a {
+            text-decoration-line: none;
+        }
+
+        a:link,
+        a:visited {
+            color: inherit; /* 기본 텍스트 색상과 동일하게 설정 */
+        }
+
     </style>
 </head>
 <body>
@@ -162,23 +189,30 @@
                     <div class="item_content">
                         <div class="content_title">
                             <strong th:text="${apply.companyName}"></strong>
-                            <p th:text="${'&nbsp;' + apply.jobPostTitle + '&nbsp;'}"></p>
-                            <p class="job-history">|&nbsp;경력 10년</p>
+                            <p>&nbsp;|&nbsp;</p>
+                            <a th:href="'/job-post/detail/' + ${apply.jobPostNo}"
+                               th:text="${apply.jobPostTitle}"></a>
+                            <p>&nbsp;|&nbsp;</p>
+                            <div class="content-form">
+                                <div class="label">마감일</div>
+                                <p class="value"
+                                   th:text="${#temporals.format(apply.aplcHstrDate, 'yy. MM. dd. a h:mm')}"></p>
+                            </div>
                         </div>
                         <div class="content">
-                            <p>기술스택</p>
-                            <div class="stack-items">
-                                <div class="stack-item">JAVA</div>
-                                <div class="stack-item">SQL</div>
-                                <div class="stack-item">JAVA</div>
-                                <div class="stack-item">SQL</div>
-                                <div class="stack-item">JAVA</div>
-                                <div class="stack-item">SQL</div>
-                                <div class="stack-item">JAVA</div>
-                                <div class="stack-item">SQL</div>
+                            <p th:text="${apply.resumeTitle}"></p>
+                            <p>&nbsp;|&nbsp;</p>
+                            <div class="content-form">
+                                <div class="label">지원일시</div>
+                                <p class="value"
+                                   th:text="${#temporals.format(apply.aplcHstrDate, 'yy. MM. dd. a h:mm')}"></p>
                             </div>
-                            <p class="date">YYYY/MM/DD</p>
                         </div>
+                    </div>
+                    <div class="right-content">
+                        <div th:if="${apply.passYn eq 'Y'}">합격</div>
+                        <div th:if="${apply.passYn eq 'N'}">불합격</div>
+                        <div th:if="${apply.passYn eq null}">미확인</div>
                     </div>
                 </div>
             </div>

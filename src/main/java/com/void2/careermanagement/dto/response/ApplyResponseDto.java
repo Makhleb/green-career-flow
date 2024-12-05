@@ -18,4 +18,5 @@ public class ApplyResponseDto {
     private String companyName;
     private LocalDateTime jobPostStartDate;
     private LocalDateTime jobPostEndDate;
+    private String jobPostTitle;
 }

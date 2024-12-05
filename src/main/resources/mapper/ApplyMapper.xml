@@ -25,8 +25,9 @@
                re.title      AS resume_title,
                jp.company_id,
                company.company_name,
-               jp.start_date AS jobPostStartDate,
-               jp.end_date   AS jobPostEndDate
+               jp.start_date AS job_post_startDate,
+               jp.end_date   AS job_post_endDate,
+               jp.title AS job_post_title
 
         FROM tbl_aplc_hstr apply
                  RIGHT JOIN (SELECT resume_no, title
@@ -35,5 +36,6 @@
                             ON apply.resume_no = re.resume_no
                  LEFT JOIN tbl_job_post jp ON apply.job_post_no = jp.job_post_no
                  LEFT JOIN tbl_company company ON jp.company_id = company.company_id
+        ORDER BY aplc_hstr_date DESC
     </select>
 </mapper>
