@@ -23,4 +23,5 @@ public class UserInterestCompanyService {
 
     //관심기업 삭제
     public void removeUserInterestCompany(String id) { userInterestCompanyDao.deleteInterestCompany(id);}
+
 }

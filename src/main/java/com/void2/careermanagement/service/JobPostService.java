@@ -1,9 +1,10 @@
 package com.void2.careermanagement.service;
 
 import com.void2.careermanagement.dao.JobPostDao;
-import com.void2.careermanagement.dto.request.JopPostRequestDto;
+import com.void2.careermanagement.dto.request.JobPostRequestDto;
 import com.void2.careermanagement.dto.response.JobPostResponseDto;
 import com.void2.careermanagement.type.GroupCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 public class JobPostService {
     private final JobPostDao jobPostDao;
 
+    @Autowired
     public JobPostService(JobPostDao jobPostDao) {
         this.jobPostDao = jobPostDao;
     }
@@ -26,7 +28,7 @@ public class JobPostService {
      * @param jopPostRequestDto
      * @return 성공 시 1 실패 0
      */
-    public int jobPostInsert(JopPostRequestDto jopPostRequestDto) {
+    public int jobPostInsert(JobPostRequestDto jopPostRequestDto) {
         try {
 //            jopPostRequestDto.setCompanyId("company01");
             jobPostDao.insertJobPost(jopPostRequestDto);
@@ -50,7 +52,7 @@ public class JobPostService {
      * @param jopPostRequestDto
      * @return 성공 시 1 실패 0
      */
-    public int jobPostUpdate(JopPostRequestDto jopPostRequestDto) {
+    public int jobPostUpdate(JobPostRequestDto jopPostRequestDto) {
         try {
             int jobPostNo = jopPostRequestDto.getJobPostNo();
 //            jopPostRequestDto.setCompanyId("company01");
@@ -88,5 +90,19 @@ public class JobPostService {
         System.out.println(jobPostResponseDto.getSkillList());
         return jobPostResponseDto;
 
+    }
+
+    public List<JobPostResponseDto> getJobPostListByCompanyId(String companyId) {
+        List<GroupCode> gubnList = new ArrayList<>();
+
+        gubnList.add(GroupCode.WORK_TYPE);
+        gubnList.add(GroupCode.WORK);
+        gubnList.add(GroupCode.EDUCATION);
+        gubnList.add(GroupCode.JOB_RANK);
+        return jobPostDao.getJobPostListByCompanyId(companyId, gubnList.stream().map(Enum::name).toList());
+    }
+
+    public int jobPostDelete(int jopPostNo) {
+        return jobPostDao.deleteJobPost(jopPostNo);
     }
 }

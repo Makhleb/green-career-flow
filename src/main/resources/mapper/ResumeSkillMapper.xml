@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.void2.careermanagement.dao.ResumeSkillDao">
+    <insert id="insertResumeSkill" parameterType="ResumeSkillDto">
+        INSERT INTO tbl_resume_skill
+        (resume_no, skill_code)
+        VALUES
+        <foreach collection="list" item="RS" separator=",">
+            (#{RS.resumeNo}, #{RS.skillCode})
+        </foreach>
+
+    </insert>
+</mapper>

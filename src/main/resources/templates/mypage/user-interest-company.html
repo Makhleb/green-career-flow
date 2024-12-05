@@ -54,10 +54,6 @@
             padding-top: 5px;
             font-size: 14px;
         }
-        .interest_grid_item >p> span{
-            float: right;
-            padding-right:20px;
-        }
         .interest_grid_item > a > img{
             width:100%;
             border-radius: 5px;
@@ -86,14 +82,12 @@
                     <th:block th:if="${isEmpty == 'notEmpty'}">
                         <div class="interest_grid_item" th:each="company, state : ${uiList}">
                             <a href=""><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
-                            <p style="font-weight: 500; font-size: 16px;">[[${company.companyName}]]
-                                <span>
+                            <p style="font-weight: 500; font-size: 16px;">[[${company.companyName}]]&nbsp;&nbsp;&nbsp;
                                     <i class="bi bi-suit-heart-fill likeIcon"
                                        style="color:#8B1FFF"
                                        th:id="'likeIcon' + ${state.count}"
                                        th:data-company-id="${company.companyId}">
                                     </i>
-                                </span>
                             </p>
                             <p>[[${company.companyAddress}]] [[${company.companyAddressDetail}]]</p>
                             <p>[[${company.companyEmail}]]</p>

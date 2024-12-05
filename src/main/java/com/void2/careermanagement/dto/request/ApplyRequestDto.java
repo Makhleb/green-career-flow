@@ -9,4 +9,5 @@ import lombok.Data;
 public class ApplyRequestDto {
     private int jobPostNo;
     private String resumeNo;
+    private String passYn;
 }
