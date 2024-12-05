@@ -50,6 +50,7 @@
         <div class="container">
             <div class="container_title">
                 <h2>제안서 <i class="bi bi-envelope-open"></i></h2>
+
             </div>
             <hr>
             <div class="box">
@@ -61,7 +62,7 @@
                 <div class="box_content">
                     <p th:text="${proposal.content}">content</p>
                     <p th:text="'연락망 : '+${proposal.phone}+'  이메일 : '+${proposal.email}">연락망 : 0000-0000    이메일 : example@domain.com </p>
-                    <p class="date" th:text="'읽은 날짜 : ' + ${#temporals.format(proposal.readDate, 'yyyy년 MM월 dd일')}">읽은 날짜 : YYYY년 MM월 DD일</p>
+<!--                    <p class="date" th:text="'읽은 날짜 : ' + ${#temporals.format(proposal.readDate, 'yyyy년 MM월 dd일')}">읽은 날짜 : YYYY년 MM월 DD일</p>-->
                 </div>
             </div>
         </div>
@@ -69,4 +70,5 @@
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
+
 </html>

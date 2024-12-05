@@ -2,6 +2,7 @@ package com.void2.careermanagement.service;
 
 import com.void2.careermanagement.dao.MyPageDao;
 import com.void2.careermanagement.dto.response.MyPageScrapDto;
+import com.void2.careermanagement.dto.response.ProposalResponseDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,12 @@ public class MyPageService {
         return myPageDao.MyPageScrapListById(userId);
     }
 
+    public List<ProposalResponseDto> MyPageProposalListByCompanyId(String CompanyId) {
+        return myPageDao.MyPageProposalListByCompanyId(CompanyId);
+    }
+
+
     //스크랩한 공고 삭제 -by 안제연
     public void removeUserScrapCompany(int jobPostNo){myPageDao.deleteScrapCompany(jobPostNo); }
+
 }

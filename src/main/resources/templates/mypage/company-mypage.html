@@ -53,7 +53,7 @@
             text-decoration: none;
         }
 
-        .box {
+        .box_item {
             border-bottom: 1px solid #8B1FFF;
         }
 
@@ -170,21 +170,26 @@
 
         <div class="container">
             <div class="title">
-                <h4>나의 제안서 (0)</h4>
-                <a href=""> 더보기 + </a>
+                <h4 th:text="'나의 제안서 ('+${#lists.size(plist)}+')'">나의 제안서 (0)</h4>
+                <a th:href="@{/mypage/proposal}"> 더보기 + </a>
             </div>
             <hr>
             <div class="box">
-                <div class="box_item">
+                <div class="box_item" th:each="dto : ${plist}">
                     <div id="proposal_items">
                         <div class="item_icon">
-                            <i class="bi bi-envelope"></i>
+                            <th:block th:if="${dto.readDate == null}">
+                                <i class="bi bi-envelope"></i>
+                            </th:block>
+                            <th:block th:if="${dto.readDate != null}">
+                                <i class="bi bi-envelope-open"></i>
+                            </th:block>
                         </div>
                         <div class="item_content">
-                            <div class="content_title"><strong>제안서 제목</strong></div>
+                            <div class="content_title"><strong th:text="${dto.title}">제안서 제목</strong></div>
                             <div class="content">
-                                <p>구직자 이름</p>
-                                <p>YYYY/MM/DD</p>
+                                <p th:text="${dto.userName}">구직자 이름</p>
+                                <p th:text="${#temporals.format(dto.date, 'yyyy/MM/dd')}">YYYY/MM/DD</p>
                             </div>
                         </div>
                     </div>
