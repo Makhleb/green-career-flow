@@ -49,6 +49,14 @@
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 <script>
-
+    $(function (){
+        axios.get()
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
 </script>
 </html>
