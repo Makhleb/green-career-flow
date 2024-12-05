@@ -1,7 +1,9 @@
 package com.void2.careermanagement.controller;
 
+import com.void2.careermanagement.dao.ApplyDao;
 import com.void2.careermanagement.dto.CompanyDto;
 import com.void2.careermanagement.dto.UserDto;
+import com.void2.careermanagement.dto.response.ApplyResponseDto;
 import com.void2.careermanagement.dto.response.MyPageScrapDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import com.void2.careermanagement.service.MyPageService;
@@ -25,9 +27,11 @@ import java.util.List;
 public class MyPageController {
 
     private final MyPageService myPageService;
+    private final ApplyDao applyDao;
 
-    public MyPageController(MyPageService myPageService) {
+    public MyPageController(MyPageService myPageService, ApplyDao applyDao) {
         this.myPageService = myPageService;
+        this.applyDao = applyDao;
     }
 
     @GetMapping("/profile")
@@ -52,6 +56,21 @@ public class MyPageController {
         return returnUrl;
     }
 
+
+
+    @GetMapping("/apply")
+    public String apply(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
+
+        UserDto user = (UserDto) session.getAttribute("user");
+        String userId = user.getUserId();
+
+        List<ApplyResponseDto> applyList = applyDao.getApplyListByUserId(userId);
+
+        model.addAttribute("applyList", applyList);
+        return "/mypage/user-apply";
+    }
 
 
 }
