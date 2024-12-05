@@ -162,3 +162,7 @@ aside a {
     text-decoration: none;
 }
 /*aside-css*/
+
+#regist_btn {
+    cursor: pointer;
+}

@@ -200,14 +200,7 @@
 <main>
     <div th:replace="~{layout/fragments/aside :: asideCompany}"></div>
     <div id="main_content">
-        <div id="title">
-            <h2>마이 페이지</h2>
-            <h3 th:text="${session.user.companyName}"></h3>
-            <div id="regist_btn_container">
-                <button id="regist_btn">정보수정</button>
-            </div>
-        </div>
-
+        <div th:replace="~{layout/fragments/mypage-title :: title(${session.userType == 'U' ? session.user.userName : session.user.companyName}, ${session.userType})}"></div>
         <div class="container">
             <div class="title">
                 <h4 th:text="${'지원이력(' + applyList.size() + ')'}"></h4>

@@ -117,6 +117,7 @@
             align-items: center;
             width: 10%;
         }
+
         .stack-items {
             width: 80%;
             display: flex;
@@ -136,9 +137,11 @@
             padding: 0 6px 0 6px;
             box-sizing: border-box; /* 보더 포함 크기 계산 */
         }
+
         .age {
             margin-left: 10px;
         }
+
         .job-item-content {
             width: 88%;
             height: 44px;
@@ -207,14 +210,7 @@
 <main>
     <div th:replace="~{layout/fragments/aside :: asideCompany}"></div>
     <div id="main_content">
-        <div id="title">
-            <h2>마이 페이지</h2>
-            <h3>[[${session.user.companyName}]]님</h3>
-            <div id="regist_btn_container">
-                <button id="regist_btn">정보수정</button>
-            </div>
-        </div>
-
+        <div th:replace="~{layout/fragments/mypage-title :: title(${session.userType == 'U' ? session.user.userName : session.user.companyName}, ${session.userType})}"></div>
         <div class="container">
             <div class="title">
                 <h4 th:text="${'채용공고(' + jobPostSize + ')'}"></h4>

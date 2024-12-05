@@ -146,13 +146,8 @@
 <main>
     <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
     <div id="main_content">
-        <div id="title">
-            <h2>마이 페이지</h2>
-            <h3>[[${session.user.userName}]]님</h3>
-            <div id="regist_btn_container">
-                <button id="regist_btn">정보수정</button>
-            </div>
-        </div>
+        <div th:replace="~{layout/fragments/mypage-title :: title(${session.userType == 'U' ? session.user.userName : session.user.companyName}, ${session.userType})}"></div>
+
         <div id="noti_container">
             <h4>나의 알림 <i class="bi bi-bell"></i> (0)</h4>
             <hr>
