@@ -70,7 +70,7 @@
 <body>
     <div th:replace="~{layout/fragments/header :: header}"></div>
     <main>
-        <div th:replace="~{layout/fragments/aside :: aside}"></div>
+        <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
         <div id="main_content">
             <div id="title">
                 <h2>마이 페이지</h2>
@@ -83,12 +83,25 @@
                 <h4>관심기업([[${uiList.size()}]])</h4>
                 <hr>
                 <div class="interest_grid">
-                    <div class="interest_grid_item" th:each="company, state : ${uiList}">
-                        <a href=""><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
-                        <p style="font-weight: 500; font-size: 16px;">[[${company.companyName}]] <span><i class="bi bi-suit-heart-fill likeIcon" style="color:#8B1FFF" th:id="'likeIcon' + ${state.count}"></i></span></p>
-                        <p>[[${company.companyAddress}]] [[${company.companyAddressDetail}]]</p>
-                        <p>[[${company.companyEmail}]]</p>
-                    </div>
+                    <th:block th:if="${isEmpty == 'notEmpty'}">
+                        <div class="interest_grid_item" th:each="company, state : ${uiList}">
+                            <a href=""><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
+                            <p style="font-weight: 500; font-size: 16px;">[[${company.companyName}]]
+                                <span>
+                                    <i class="bi bi-suit-heart-fill likeIcon"
+                                       style="color:#8B1FFF"
+                                       th:id="'likeIcon' + ${state.count}"
+                                       th:data-company-id="${company.companyId}">
+                                    </i>
+                                </span>
+                            </p>
+                            <p>[[${company.companyAddress}]] [[${company.companyAddressDetail}]]</p>
+                            <p>[[${company.companyEmail}]]</p>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${isEmpty == 'Empty'}">
+                        <span style="color: gray; margin-top: 10px">관심기업을 등록해보세요..</span>
+                    </th:block>
                 </div>
             </div>
         </div>
@@ -98,7 +111,11 @@
 <script>
     document.querySelectorAll('.likeIcon').forEach(function(icon){
         icon.addEventListener('click', function(event){
-            confirm('선택된 관심기업을 삭제하시겠습니까?');
+            let userConfirmed = confirm('선택된 관심기업을 삭제하시겠습니까?');
+            if(userConfirmed){
+                let companyId = event.target.getAttribute('data-company-id');
+                location.href="/mypage/delete-interest-company?companyId="+companyId;
+            }
         })
     })
 </script>
