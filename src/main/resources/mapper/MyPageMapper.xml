@@ -5,10 +5,10 @@
 <mapper namespace="com.void2.careermanagement.dao.MyPageDao">
     <select id="MyPageResumeListById" resultType="com.void2.careermanagement.dto.response.ResumeResponseDto">
         SELECT resume_no
-            , title
-            , user_id
-            , create_date
-            , modify_date
+        , title
+        , user_id
+        , create_date
+        , modify_date
         FROM tbl_resume
         WHERE user_id = #{userId}
         ORDER BY resume_no DESC
@@ -16,17 +16,18 @@
     </select>
     <select id="MyPageScrapListByIdTop3" resultType="com.void2.careermanagement.dto.response.MyPageScrapDto">
         SELECT j.user_id, j.job_post_no, jp.title, jp.end_date
-                , c.company_id, c.company_name, j.scrap_date
+        , c.company_id, c.company_name, j.scrap_date
         FROM tbl_jpl j
-            inner JOIN tbl_job_post jp
-            ON j.job_post_no = jp.job_post_no
-            INNER JOIN tbl_company c
-            ON jp.company_id = c.company_id
+        inner JOIN tbl_job_post jp
+        ON j.job_post_no = jp.job_post_no
+        INNER JOIN tbl_company c
+        ON jp.company_id = c.company_id
         WHERE user_id= #{userId}
         ORDER BY j.scrap_date DESC
         LIMIT 3;
     </select>
-    <select id="MyPageProposalListByCompanyIdTop3" resultType="com.void2.careermanagement.dto.response.ProposalResponseDto">
+    <select id="MyPageProposalListByCompanyIdTop3"
+            resultType="com.void2.careermanagement.dto.response.ProposalResponseDto">
         SELECT p.title, p.DATE, u.user_name, p.proposal_no, p.read_date
         from tbl_proposal p
         JOIN tbl_user u
@@ -59,6 +60,63 @@
         ON jp.company_id = c.company_id
         WHERE user_id= #{userId}
         ORDER BY j.scrap_date DESC
+    </select>
+
+    <select id="MyPageJobPostListByCompanyIdTop3">
+        SELECT
+        A.job_post_no,
+        A.company_id,
+        company.company_name,
+        company.company_address,
+        company.company_address_detail,
+        company.company_birth,
+        company.company_image,
+        company.company_email,
+        company.company_employee,
+        company.company_info,
+        company.company_website,
+        company.company_zonecode,
+        A.title,
+        A.job_history,
+        A.job_salary,
+        A.content,
+        A.method,
+        A.add_notice,
+        A.manager_name,
+        A.manager_email,
+        A.manager_phone,
+        A.education_code,
+        A.job_rank_code,
+        A.work_code,
+        A.work_type_code,
+        A.process,
+        A.start_date,
+        A.end_date,
+        <!-- gubnList에서 각 항목의 NAME을 선택 -->
+        <foreach collection="groupCodeList" item="groupCode" index="index" separator=",">
+            ${groupCode}.NAME AS ${groupCode}_name
+        </foreach>
+        FROM
+        tbl_job_post A
+        LEFT JOIN tbl_company company ON A.company_id = company.company_id
+        <!-- gubnList를 기반으로 LEFT JOIN 생성 -->
+        <foreach collection="groupCodeList" item="groupCode" index="index">
+            LEFT JOIN (
+            SELECT *
+            FROM tbl_gubn
+            WHERE group_code = #{groupCode}
+            ) ${groupCode}
+            ON A.${groupCode}_CODE = ${groupCode}.CODE
+        </foreach>
+        WHERE
+        A.company_id = #{companyId}
+        LIMIT 3
+    </select>
+
+    <select id="getCountJobPostByCompanyId">
+        SELECT COUNT(*)
+        FROM tbl_job_post
+        WHERE company_id = #{companyId}
     </select>
 
 </mapper>

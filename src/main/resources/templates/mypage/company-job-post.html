@@ -78,7 +78,7 @@
             /*margin-bottom: 5px;*/
         }
 
-        #proposal_items, .items {
+        .items {
             display: flex;
             margin: 10px 0;
         }
@@ -98,38 +98,6 @@
             display: flex;
             /*justify-content: space-between;*/
             /*align-items: center;*/
-        }
-
-        .item_icon {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            width: 10%;
-        }
-
-        .stack-items {
-            width: 80%;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            /*width: 100%; !* 부모 컨테이너의 너비에 맞춤 *!*/
-        }
-
-        .date {
-            width: 10%;
-        }
-
-        .stack-item {
-            border: 1px solid #8B1FFF;
-            border-radius: 50px;
-            margin: 0 2px 0 2px;
-            padding: 0 6px 0 6px;
-            box-sizing: border-box; /* 보더 포함 크기 계산 */
-        }
-
-        .age {
-            margin-left: 10px;
         }
 
         .box {
@@ -172,7 +140,7 @@
     <div id="main_content">
         <div id="title">
             <h2>마이 페이지</h2>
-            <h3 th:text="${session.user.companyName}"></h3>
+            <h3 th:text="${session.user.companyName} + '님'"></h3>
             <div id="regist_btn_container">
                 <button id="regist_btn">정보수정</button>
             </div>
