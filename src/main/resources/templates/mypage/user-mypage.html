@@ -189,12 +189,12 @@
 
         <div id="scrap_container">
             <div id="scrap_title">
-                <h4 th:text="'나의 스크랩 (' + ${#lists.size(scrapList)}+')'"></h4>
+                <h4 th:text="'나의 스크랩 (' + ${scrapSize}+')'"></h4>
                 <a href="/mypage/user-scrap-company"> 더보기 + </a>
             </div>
             <hr>
             <div id="scrap_box">
-                <div class="scrap_items" th:each="dto, State: ${scrapList}" th:if="${State.index < 3}">
+                <div class="scrap_items" th:each="dto, State: ${scrapList}">
                     <div id="scrap_item_icon"><i class="bi bi-star-fill" style="color:#8B1FFF"></i></div>
                     <div id="scrap_item_content">
                         <div class="scrap_content_title">

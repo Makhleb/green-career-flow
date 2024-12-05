@@ -21,13 +21,15 @@ public class MyPageService {
         return myPageDao.MyPageResumeListById(userId);
     }
 
-    public List<MyPageScrapDto> MyPageScrapListById(String userId) {
-        return myPageDao.MyPageScrapListById(userId);
+    public List<MyPageScrapDto> MyPageScrapListByIdTop3(String userId) {
+        return myPageDao.MyPageScrapListByIdTop3(userId);
     }
 
-    public List<ProposalResponseDto> MyPageProposalListByCompanyId(String CompanyId) {
-        return myPageDao.MyPageProposalListByCompanyId(CompanyId);
+    public List<ProposalResponseDto> MyPageProposalListByCompanyIdTop3(String CompanyId) {
+        return myPageDao.MyPageProposalListByCompanyIdTop3(CompanyId);
     }
+
+
 
 
     //스크랩한 공고 삭제 -by 안제연

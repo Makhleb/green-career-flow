@@ -36,7 +36,7 @@ public class UserScrapController {
         String isEmpty = "Empty";
         UserDto sessionUser = (UserDto) session.getAttribute("user");
         //나의 스크랩 보기
-        List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListById(sessionUser.getUserId());
+        List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListByIdTop3(sessionUser.getUserId());
         if(!scrapList.isEmpty()) {
             for(MyPageScrapDto s:scrapList)  System.out.println(s);
             model.addAttribute("scrapList", scrapList);
