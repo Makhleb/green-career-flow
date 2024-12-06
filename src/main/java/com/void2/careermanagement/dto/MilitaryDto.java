@@ -13,3 +13,4 @@ public class MilitaryDto {
   private LocalDate releaseDate;
   private String militaryCode;
 }
+

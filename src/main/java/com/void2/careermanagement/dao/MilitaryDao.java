@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MilitaryDao {
-    int insertMilitary(@Param("M")MilitaryDto militaryDto);
+    int insertMilitary(@Param("M")MilitaryDto militaryDto,@Param("resumeNoPk") int resumeNoPk);
 }

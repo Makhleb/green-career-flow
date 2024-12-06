@@ -8,7 +8,7 @@
         (resume_no, license_name, license_center_name, pass_date)
         VALUES
         <foreach collection="list" item="L" separator=",">
-            (#{L.resumeNo}, #{L.licenseName}, #{L.licenseCenterName}, #{L.passDate})
+            (#{resumeNoPk}, #{L.licenseName}, #{L.licenseCenterName}, #{L.passDate})
         </foreach>
     </insert>
 </mapper>

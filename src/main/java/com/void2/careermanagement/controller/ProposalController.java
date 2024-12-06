@@ -85,6 +85,11 @@ public class ProposalController {
     public String registForm(){
         return "/mypage/company-proposal-regist";
     }
+    @GetMapping("/proposal-registForm/{userId}")
+    public String registForm(@PathVariable String userId, Model model){
+        model.addAttribute("userId", userId);
+        return "/mypage/company-proposal-regist";
+    }
 
     @PostMapping("/regist")
     public String registProposal(ProposalDto proposalDto){

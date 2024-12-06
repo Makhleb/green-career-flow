@@ -163,9 +163,28 @@ aside a {
 }
 /*aside-css*/
 
-#regist_btn {
+.regist_btn {
+    width: 80px;
+    height: 30px;
+    line-height: 15px;
+    font-size: 15px;
+    background-color: #B067FF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 20px;
     cursor: pointer;
 }
-.regist_btn {
+
+#regist_btn {
+    width: 80px;
+    height: 30px;
+    line-height: 15px;
+    font-size: 15px;
+    background-color: #B067FF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 20px;
     cursor: pointer;
 }

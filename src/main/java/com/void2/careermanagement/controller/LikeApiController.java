@@ -1,8 +1,7 @@
 package com.void2.careermanagement.controller;
 
-import com.void2.careermanagement.dto.CompanyDto;
-import com.void2.careermanagement.dto.UserDto;
 import com.void2.careermanagement.service.LikeService;
+import com.void2.careermanagement.util.SessionUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,14 +29,9 @@ public class LikeApiController {
         if(session.getAttribute("user") == null) {
             return -1;
         }
-        Object user = session.getAttribute("user");
         String userType = session.getAttribute("userType").toString();
-        String id = "";
-        if (userType.equals("U")) {
-            id = ((UserDto) user).getUserId();
-        } else if (userType.equals("C")) {
-            id = ((CompanyDto) user).getCompanyId();
-        }
+        String id = SessionUtil.getSessionUserId(session);
+
         return likeService.insertOrDelete(id, likeId, userType);
     }
 }
