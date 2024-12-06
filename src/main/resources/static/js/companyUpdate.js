@@ -8,7 +8,7 @@ window.onload = function sessionCheck() {
         location.href = "/";
     } else {
         base64img = userSession.companyImage;
-
+        console.log(base64img);
         $('#companyId').val(userSession.companyId);
         $('#companyPw').val(userSession.companyPw);
         $('#companyName').val(userSession.companyName);
@@ -21,7 +21,7 @@ window.onload = function sessionCheck() {
         $('#companyEmail').val(userSession.companyEmail);
         $('#companyContact').val(userSession.companyContact);
         $("#companyInfo").val(userSession.companyInfo);
-        $('.preview').attr('src', loadImage(userSession.companyImage) + base64img);
+        $('.preview').attr('src', loadImage(base64img));
         $('#companyEmployee').val(userSession.companyEmployee);
     }
 }

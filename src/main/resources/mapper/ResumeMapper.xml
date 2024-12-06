@@ -31,6 +31,26 @@
         SELECT MAX(resume_no) from tbl_resume
     </select>
 
+    <select id="getResumeByResumeId" resultType="com.void2.careermanagement.dto.response.ResumeResponseDto">
+        SELECT resume_no,
+               title,
+               address,
+               address_detail,
+               zonecode,
+               user_id,
+               image,
+               wish_area,
+               wish_salary,
+               wish_time,
+               work_code,
+               portfolio_link,
+               offer_yn,
+               create_date,
+               modify_date,
+               job_history
+        FROM tbl_resume WHERE resume_no = #{resumeNo}
+    </select>
+
     <insert id="insertResume">
         INSERT INTO tbl_resume
         (resume_no,

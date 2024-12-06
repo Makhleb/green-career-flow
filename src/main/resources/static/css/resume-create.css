@@ -60,9 +60,9 @@ input:focus, select:focus, textarea:focus, .minus-stack:hover, .add-stack:hover,
 }
 
 .stack-wrapper {
-    display: flex; /* 수평 정렬 */
-    flex-wrap: wrap; /* 요소가 화면에 넘칠 경우 줄바꿈 */
-    margin-top: 1rem; /* 상단 여백 */
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1rem;
     width: 50rem;
     /*gap: 3px;*/
 }

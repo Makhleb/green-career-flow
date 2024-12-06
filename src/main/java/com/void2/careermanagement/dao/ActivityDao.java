@@ -9,4 +9,5 @@ import java.util.List;
 @Mapper
 public interface ActivityDao {
     void insertActivity(@Param("list") List<ActivityDto> activityDtoList, @Param("resumeNoPk") int resumeNo);
+    List<ActivityDto> getActivity(@Param("resumeNo") int resumeNo);
 }

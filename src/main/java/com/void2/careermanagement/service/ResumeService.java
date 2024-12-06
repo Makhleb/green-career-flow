@@ -1,10 +1,9 @@
 package com.void2.careermanagement.service;
 
 import com.void2.careermanagement.dao.*;
-import com.void2.careermanagement.dto.LicenseDto;
-import com.void2.careermanagement.dto.PotfolioDto;
-import com.void2.careermanagement.dto.ResumeSkillDto;
+import com.void2.careermanagement.dto.ActivityDto;
 import com.void2.careermanagement.dto.request.ResumeFullRequestDto;
+import com.void2.careermanagement.dto.response.ResumeFullResponseDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,26 +59,31 @@ public class ResumeService {
         // 2. Optional을 사용하여 insert를 처리
         Optional.ofNullable(resumeFullRequestDto.getActivity())
                 .ifPresent(activity -> activityDao.insertActivity(activity, resumeNo));
-        System.out.println("활동완료");
         Optional.ofNullable(resumeFullRequestDto.getEducation())
                 .ifPresent(education -> educationDao.insertEducation(education, resumeNo));
-        System.out.println("학력완료");
         Optional.ofNullable(resumeFullRequestDto.getIntroduce())
                 .ifPresent(introduce -> introduceDao.insertIntroduce(introduce, resumeNo));
-        System.out.println("자소서완료");
         Optional.ofNullable(resumeFullRequestDto.getLicense())
                 .ifPresent(license -> licenseDao.insertLicense(license, resumeNo));
-        System.out.println("자격증완료");
         Optional.ofNullable(resumeFullRequestDto.getMilitary())
                 .ifPresent(military -> militaryDao.insertMilitary(military, resumeNo));
-        System.out.println("복무완료");
         Optional.ofNullable(resumeFullRequestDto.getPotfolio())
                 .ifPresent(potfolio -> potfolioDao.insertPotfolio(potfolio, resumeNo));
-        System.out.println("포폴완료");
         Optional.ofNullable(resumeFullRequestDto.getResumeSkill())
                 .ifPresent(resumeSkill -> resumeSkillDao.insertResumeSkill(resumeSkill, resumeNo));
-        System.out.println("스킬완료");
         return resumeNo;
     }
 
+    public ResumeFullResponseDto getTotalResume(int resumeNo) {
+        return new ResumeFullResponseDto(
+                resumeDao.getResumeByResumeId(resumeNo),
+                activityDao.getActivity(resumeNo),
+                educationDao.getEducation(resumeNo),
+                introduceDao.getIntroduceDtoList(resumeNo),
+                licenseDao.getLicense(resumeNo),
+                militaryDao.getMilitaryById(resumeNo),
+                potfolioDao.getPotfolio(resumeNo),
+                resumeSkillDao.getResumeSkill(resumeNo)
+        );
+    }
 }

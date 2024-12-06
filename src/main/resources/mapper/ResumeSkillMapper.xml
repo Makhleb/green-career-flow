@@ -10,6 +10,13 @@
         <foreach collection="list" item="RS" separator=",">
             (#{resumeNoPk}, #{RS.skillCode})
         </foreach>
-
     </insert>
+
+    <select id="getResumeSkill" resultType="com.void2.careermanagement.dto.ResumeSkillDto">
+        SELECT resume_no,
+        skill_code
+        FROM tbl_resume_skill
+        WHERE resume_no = #{resumeNo}
+    </select>
+
 </mapper>
