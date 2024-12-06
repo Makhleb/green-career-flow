@@ -12,61 +12,25 @@
 <div th:replace="~{layout/fragments/header :: header}"></div>
 <main>
     <select onchange="changeSkill(this)" name="skillSelect" class="select_box" id="skillSelectBox">
-        <option value="none" selected style="background-color: white; color:black;">기술스택<i
+        <option value="" selected style="background-color: white; color:black;">기술스택<i
                 class="bi bi-chevron-down"></i></option>
         <th:block th:each="skill : ${skillGubnList}">
             <option th:value="${skill.code}" style="background-color: white; color:black;">[[${skill.name}]]</option>
         </th:block>
     </select>
     <div id="offerContainer">
-        <div th:each="offerYuser, state : ${offerYList}">
-            <div class="offerY-item">
-                [[${offerYuser.userName}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${offerYuser.title}]]<br/>
-                [[${offerYuser.userGender}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                [[${offerYuser.userAge}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <span th:if="${offerYuser.jobHistory > 0}"> 경력 [[${offerYuser.jobHistory}]]년 이상</span>
-                <span th:if="${offerYuser.jobHistory == 0}"> 신입</span>
-                <span class="skill_codes">기술스택</span>
-                <th:block th:each="skill : ${offerYuser.skillList}">
-                    <span class="skill_box">[[${skill.name}]]</span>
-                </th:block>
 
-                <span class="right">
-                    <i onclick="likeUser(this)" th:data-user-id="${offerYuser.userId}" th:class="${offerYuser.likeYn == 'Y' ? 'bi bi-suit-heart-fill like-btn' : 'bi bi-suit-heart like-btn'} " ></i>
-                </span>
-            </div>
-        </div>
     </div>
 
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 <script>
-    const skillSelect = document.getElementById("skillSelectBox");
-
-    // skillSelect.addEventListener("change", function () {
-    //     const selectedValue = this.value;
-    //     console.log(selectedValue);
-    //     axios.get('/api/companySkillMatching/select', {
-    //         params: {
-    //             skillCode: selectedValue
-    //         }
-    //     })
-    //         .then(function (response) {
-    //             console.log(response);
-    //             const offerSkillMatchingList = response.data;
-    //             renderSkillMatchingList(offerSkillMatchingList);
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // });
-
     function changeSkill(ele){
-        const selectedValue = ele.value;
-        console.log(selectedValue);
+        // const selectedValue = ele.value;
+        // console.log(selectedValue);
         axios.get('/api/companySkillMatching/select', {
             params: {
-                skillCode: !ele ? '': selectedValue
+                skillCode: !ele ? '' : ele.value
             }
         })
             .then(function (response) {
@@ -79,7 +43,9 @@
             });
     }
 
-    changeSkill();
+    $(function(){
+        changeSkill();
+    })
 
     function renderSkillMatchingList(offerSkillMatchingList) {
         const offerContainer = document.getElementById('offerContainer');
@@ -102,7 +68,7 @@
                     <span class="skill_codes">기술스택:</span> ${skillHtml}
 
 
-                    <span class="right"><i onclick="likeUser(this)" data-user-id="${skillMatchingUser.userId}" class="${skillMatchingUser.likeYn ? 'bi bi-suit-heart-fill like-btn' : 'bi bi-suit-heart like-btn'} " ></i></span>
+                    <span class="right"><i onclick="likeUser(this)" data-user-id="${skillMatchingUser.userId}" class="${skillMatchingUser.likeYn == 'Y' ? 'bi bi-suit-heart-fill like-btn' : 'bi bi-suit-heart like-btn'} " ></i></span>
             `;
 
             offerContainer.appendChild(skillMatchingItem);  // 컨테이너에 추가
@@ -112,9 +78,8 @@
 
     function likeUser(ele) {
         const likeArr = ['bi-suit-heart-fill', 'bi-suit-heart'];
-        const userId = ele.getAttribute('data-user-id');  // Get the user ID from the element
+        const userId = ele.getAttribute('data-user-id');
 
-        // Send a POST request to like/unlike the user
         axios.post("/api/like/" + userId)
             .then(res => {
                 console.log(res);

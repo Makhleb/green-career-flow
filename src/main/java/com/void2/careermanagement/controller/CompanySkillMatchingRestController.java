@@ -38,18 +38,19 @@ public class CompanySkillMatchingRestController {
     @GetMapping("/select")
     public List<CompanySkillMatcingResponseDto> select(@RequestParam("skillCode") String skillCode, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println(skillCode);
-        List<CompanySkillMatcingResponseDto> skillMatchingList = null;
-        if(!skillCode.equals("none")){
-            skillMatchingList =companySkillMappingDao.getSkillMatchingOfferYBySkillCode(skillCode);
-            for(int i=0;i<skillMatchingList.size();i++){
-                skillMatchingList.get(i).setSkillList(userResumeDao.getSkillListByResumeNo(skillMatchingList.get(i).getResumeNo()));
-            }
-        }
-        else{
-            String companyId = SessionUtil.getSessionUserId(session);
-            skillMatchingList = companySkillMatchingService.getCompanySkillMatchingOfferY(companyId);
 
+        String companyId = SessionUtil.getSessionUserId(session);
+        List<CompanySkillMatcingResponseDto> skillMatchingList = companySkillMappingDao.getSkillMatchingList(companyId, skillCode);
+        for(int i=0;i<skillMatchingList.size();i++){
+            skillMatchingList.get(i).setSkillList(userResumeDao.getSkillListByResumeNo(skillMatchingList.get(i).getResumeNo()));
         }
+
+        for(CompanySkillMatcingResponseDto d : skillMatchingList){
+            System.out.println(d);
+        }
+
+
+
         return skillMatchingList;
     }
 
