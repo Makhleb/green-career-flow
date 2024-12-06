@@ -1,6 +1,7 @@
 package com.void2.careermanagement.controller;
 
 import com.void2.careermanagement.service.GubnService;
+import com.void2.careermanagement.type.ActivityType;
 import com.void2.careermanagement.type.GroupCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ public class ResumeController {
 
     @GetMapping("/create")
     public String create(Model model) {
+        model.addAttribute("activityTypes", ActivityType.values());
         model.addAttribute("skillGubnList", gubnService.getGubnList(GroupCode.SKILL.name()));
         model.addAttribute("workList", gubnService.getGubnList(GroupCode.WORK.name()));
         model.addAttribute("educationList", gubnService.getGubnList(GroupCode.EDUCATION.name()));

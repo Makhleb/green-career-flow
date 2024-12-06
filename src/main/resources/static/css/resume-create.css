@@ -12,6 +12,10 @@ html {
     box-sizing: border-box; /* 모든 요소에 박스 모델 적용 */
 }
 
+p {
+    white-space: nowrap;
+}
+
 .form.margin {
     margin-top: 4rem;
 }
@@ -28,18 +32,6 @@ html {
 
 .container-title {
     font-size: 2rem; /* 24px */
-}
-
-.left-form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 1rem; /* 16px */
-}
-
-.left-form p {
-    font-size: 1rem; /* 14px */
-    font-weight: 400;
-    margin-left: 0.5rem;
 }
 
 input::placeholder {
@@ -115,7 +107,7 @@ textarea {
 }
 
 #userName {
-    width: 18rem;
+    width: 8rem;
 }
 
 #userGender {
@@ -275,7 +267,7 @@ textarea {
     justify-content: space-around;
 }
 
-.bottom-radio{
+.bottom-radio {
     justify-content: space-between;
     padding: 1rem;
 }
@@ -318,10 +310,6 @@ textarea {
     width: calc(100% - 1rem);
 }
 
-#portfolioAttach {
-    width: calc(100% - 8rem);
-}
-
 .board {
     background-color: #F3F3F3;
     color: #2E2E2E;
@@ -335,17 +323,19 @@ textarea {
     margin-top: 0;
     height: 10rem;
 }
-.plus-btn-container{
+
+.plus-btn-container {
     padding-bottom: 1rem;
     padding-right: 0.5rem;
     justify-content: flex-end;
 }
-.plus-btn{
+
+.plus-btn {
     align-items: center;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-input[type='radio']{
+input[type='radio'] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;

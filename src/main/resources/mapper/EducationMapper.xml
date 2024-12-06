@@ -7,7 +7,7 @@
         INSERT INTO tbl_education
         (resume_no, education_code, school_name, specialty, enter_date, graduate_date)
         VALUES
-        (#{E.resumeNo}, #{E.educationCode}, #{E.schoolName}, #{E.specialty}, #{E.enterDate}, #{E.graduateDate})
+        (#{resumeNoPk}, #{E.educationCode}, #{E.schoolName}, #{E.specialty}, #{E.enterDate}, #{E.graduateDate})
     </insert>
 </mapper>
 

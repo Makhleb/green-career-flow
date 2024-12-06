@@ -8,8 +8,8 @@
         (resume_no, potfolio_filename)
         VALUES
         <foreach collection="list" item="P" separator=",">
-            (#{P.resumeNo}, #{P.potfolioFilename})
+            (#{resumeNoPk}, #{P.potfolioFilename})
         </foreach>
-
     </insert>
 </mapper>
+
