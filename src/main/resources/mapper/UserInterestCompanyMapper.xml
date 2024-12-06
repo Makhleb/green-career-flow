@@ -12,6 +12,6 @@
     </select>
     <delete id="deleteInterestCompany">
         DELETE FROM tbl_like
-        WHERE company_id =#{id}
+        WHERE company_id =#{companyId} and user_id = #{userId} and like_type='U'
     </delete>
 </mapper>

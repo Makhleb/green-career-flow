@@ -28,6 +28,14 @@ public class UserResumeService {
         return highLikeList;
     }
 
+    public List<UserResponseDto> getUserResumeListByApplyIdTop3(String companyId) {
+        List<UserResponseDto> userResumeListTop3 = userResumeDao.getApplyListByCompanyIdTop3(companyId);
+        for (int i = 0; i < userResumeListTop3.size(); i++) {
+            userResumeListTop3.get(i).setSkillList(userResumeDao.getSkillListByResumeNo(userResumeListTop3.get(i).getResumeNo()));
+        }
+        return userResumeListTop3;
+    }
+
     public List<UserResponseDto> getUserResumeListByApplyId(String companyId) {
         List<UserResponseDto> userResumeList = userResumeDao.getApplyListByCompanyId(companyId);
         for (int i = 0; i < userResumeList.size(); i++) {

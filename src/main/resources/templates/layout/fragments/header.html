@@ -6,37 +6,47 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/static/css/common.css">
 
-        <div class="header-container">
-            <div class="first-line">
-                <div class="logo-search-container">
-                    <div class="logo">
-                        <img src="/static/images/vo2d_logo.png" onclick="location.href='/'" alt="Logo" class="footer-logo">
-                    </div>
-                    <div class="search-bar">
-                        <input type="text" placeholder="검색어를 입력해주세요" class="search-input">
-                        <img src="/static/images/purple_search_btn.svg" alt="조회버튼" class="search-icon">
-                    </div>
+    <div class="header-container">
+        <div class="first-line">
+            <div class="logo-search-container">
+                <div class="logo">
+                    <img src="/static/images/vo2d_logo.png" onclick="location.href='/'" alt="Logo" class="footer-logo">
                 </div>
-                <div class="nav-links">
-                    <ul th:if="${session.user != null}">
-                        <li class="margin-left"><a href="/mypage/profile">내 프로필</a></li>
-                        <li class="margin-left"><a href="/account/logout">로그아웃</a></li>
-                    </ul>
-
-                    <ul th:unless="${session.user != null}">
-                        <li class="margin-left"><a href="/user/account/login">로그인</a></li>
-                        <li class="margin-left"><a href="/user/account/regist">회원가입</a></li>
-                    </ul>
+                <div class="search-bar">
+                    <input type="text" placeholder="검색어를 입력해주세요" class="search-input">
+                    <img src="/static/images/purple_search_btn.svg" alt="조회버튼" class="search-icon">
                 </div>
             </div>
-
-            <nav class="nav-links">
-                <ul>
-                    <li class="margin-right"><a href="#">이력서 등록</a></li>
-                    <li class="margin-right"><a href="#">기술스택매칭</a></li>
-                    <li class="margin-right"><a href="/board/boardmain">커뮤니티</a></li>
+            <div class="nav-links">
+                <ul th:if="${session.user != null}">
+                    <li class="margin-left"><a href="/mypage/profile">내 프로필</a></li>
+                    <li class="margin-left"><a href="/account/logout">로그아웃</a></li>
                 </ul>
-            </nav>
+
+                <ul th:if="${session.user == null}">
+                    <li class="margin-left"><a href="/user/account/login">로그인</a></li>
+                    <li class="margin-left"><a href="/user/account/regist">회원가입</a></li>
+                </ul>
+            </div>
         </div>
+
+        <nav class="nav-links">
+            <ul th:if="${session.user != null && session.userType == 'C'}">
+                <li class="margin-right"><a href="/job-post/register">공고 등록</a></li>
+                <li class="margin-right"><a href="/skillMatching/company-skill-matching">기술스택매칭</a></li>
+            </ul>
+
+            <ul th:if="${session.user != null && session.userType == 'U'}">
+                <li class="margin-right"><a href="/resume/create">이력서 등록</a></li>
+                <li class="margin-right"><a href="#">기술스택매칭</a></li>
+                <li class="margin-right"><a href="/board/boardmain">커뮤니티</a></li>
+            </ul>
+
+            <ul th:if="${session.user == null}">
+                <li class="margin-right"><a href="#">기술스택매칭</a></li>
+                <li class="margin-right"><a href="/board/boardmain">커뮤니티</a></li>
+            </ul>
+        </nav>
+    </div>
 
 </header>

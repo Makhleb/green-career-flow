@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProposalDto {
     private int proposalNo;
-    private int companyId;
-    private String user_id;
+    private String companyId;
+    private String userId;
     private String title;
     private String content;
     private String date;
-    private String read_date;
+    private String readDate;
     private String phone;
     private String email;
 }

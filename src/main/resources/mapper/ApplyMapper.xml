@@ -12,9 +12,9 @@
         FROM tbl_aplc_hstr
         WHERE job_post_no = #{jobPostNo}
           AND resume_no IN
-            (SELECT resume_no
-            FROM tbl_resume
-            WHERE user_id = #{userId})
+              (SELECT resume_no
+               FROM tbl_resume
+               WHERE user_id = #{userId})
     </select>
 
     <select id="getApplyListByUserId">
@@ -27,7 +27,7 @@
                company.company_name,
                jp.start_date AS job_post_startDate,
                jp.end_date   AS job_post_endDate,
-               jp.title AS job_post_title
+               jp.title      AS job_post_title
 
         FROM tbl_aplc_hstr apply
                  RIGHT JOIN (SELECT resume_no, title
@@ -38,4 +38,42 @@
                  LEFT JOIN tbl_company company ON jp.company_id = company.company_id
         ORDER BY aplc_hstr_date DESC
     </select>
+    <select id="getApplyListByJobPostNo">
+        <![CDATA[
+        SELECT apply.job_post_no,
+               re.resume_no,
+               apply.aplc_hstr_date,
+               apply.pass_yn,
+               re.title                                         AS resume_title,
+               jp.company_id,
+               company.company_name,
+               jp.start_date                                    AS job_post_startDate,
+               jp.end_date                                      AS job_post_endDate,
+               jp.title                                         AS job_post_title,
+               us.user_id,
+               us.user_name,
+               re.job_history,
+               TIMESTAMPDIFF(YEAR, us.user_birth, CURDATE()) -
+               (RIGHT(CURDATE(), 5) < RIGHT (us.user_birth, 5)) AS user_age
+
+        FROM tbl_job_post jp
+                 LEFT JOIN tbl_aplc_hstr apply ON apply.job_post_no = jp.job_post_no
+                 LEFT JOIN tbl_company company ON jp.company_id = company.company_id
+                 LEFT JOIN tbl_resume re ON apply.resume_no = re.resume_no
+                 LEFT JOIN tbl_user us ON re.user_id = us.user_id
+        WHERE jp.job_post_no = #{jobPostNo}
+        AND us.user_id IS NOT NULL
+        ORDER BY apply.aplc_hstr_date DESC,
+            CASE WHEN NULLIF(apply.pass_yn, '') = '' THEN 0
+                WHEN NULLIF(apply.pass_yn, '') = 'Y' THEN 1
+                WHEN NULLIF(apply.pass_yn, '') = 'N' THEN 2
+            END
+        ]]>
+    </select>
+    <update id="updatePass">
+        UPDATE tbl_aplc_hstr
+        SET pass_yn = #{passYn}
+        WHERE job_post_no = #{jobPostNo}
+        AND resume_no = #{resumeNo}
+    </update>
 </mapper>

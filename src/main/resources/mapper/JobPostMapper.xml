@@ -6,7 +6,7 @@
     <select id="maxJopPostNo">
         SELECT MAX(job_post_no) FROM tbl_job_post
     </select>
-    <insert id="insertJobPost" parameterType="com.void2.careermanagement.dto.request.JopPostRequestDto">
+    <insert id="insertJobPost" parameterType="com.void2.careermanagement.dto.request.JobPostRequestDto">
         INSERT INTO tbl_job_post
         (job_post_no,
          company_id,
@@ -151,6 +151,59 @@
     <delete id="deleteSkillList">
         DELETE
         FROM tbl_job_post_skill
+        WHERE job_post_no = #{jobPostNo}
+    </delete>
+    <select id="getJobPostListByCompanyId">
+        SELECT
+        A.job_post_no,
+        A.company_id,
+        company.company_name,
+        company.company_address,
+        company.company_address_detail,
+        company.company_birth,
+        company.company_image,
+        company.company_email,
+        company.company_employee,
+        company.company_info,
+        company.company_website,
+        company.company_zonecode,
+        A.title,
+        A.job_history,
+        A.job_salary,
+        A.content,
+        A.method,
+        A.add_notice,
+        A.manager_name,
+        A.manager_email,
+        A.manager_phone,
+        A.education_code,
+        A.job_rank_code,
+        A.work_code,
+        A.work_type_code,
+        A.process,
+        A.start_date,
+        A.end_date,
+        <!-- gubnList에서 각 항목의 NAME을 선택 -->
+        <foreach collection="groupCodeList" item="groupCode" index="index" separator=",">
+            ${groupCode}.NAME AS ${groupCode}_name
+        </foreach>
+        FROM
+        tbl_job_post A
+        LEFT JOIN tbl_company company ON A.company_id = company.company_id
+        <!-- gubnList를 기반으로 LEFT JOIN 생성 -->
+        <foreach collection="groupCodeList" item="groupCode" index="index">
+            LEFT JOIN (
+            SELECT *
+            FROM tbl_gubn
+            WHERE group_code = #{groupCode}
+            ) ${groupCode}
+            ON A.${groupCode}_CODE = ${groupCode}.CODE
+        </foreach>
+        WHERE
+        A.company_id = #{companyId}
+    </select>
+    <delete id="deleteJobPost">
+        DELETE FROM tbl_job_post
         WHERE job_post_no = #{jobPostNo}
     </delete>
 </mapper>

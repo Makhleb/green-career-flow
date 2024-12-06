@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <style>
         main {
@@ -161,15 +163,44 @@
             color: inherit; /* 기본 텍스트 색상과 동일하게 설정 */
         }
 
+        .stack-items {
+            width: 85%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            /*width: 100%; !* 부모 컨테이너의 너비에 맞춤 *!*/
+        }
+
+        .stack-item {
+            border: 1px solid #8B1FFF;
+            border-radius: 50px;
+            margin: 0 2px 0 2px;
+            padding: 0 6px 0 6px;
+            box-sizing: border-box; /* 보더 포함 크기 계산 */
+        }
+
+        .pass-yn {
+            border-radius: 50px;
+            border: 1px solid #8B1FFF;
+        }
+
+        .content-form-skill {
+            display: flex;
+            flex-direction: row;
+            width: 100%
+        }
+
+        .content-form-skill .label {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
 <main>
-    <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
+    <div th:replace="~{layout/fragments/aside :: asideCompany}"></div>
     <div id="main_content">
         <div th:replace="~{layout/fragments/mypage-title :: title(${session.userType == 'U' ? session.user.userName : session.user.companyName}, ${session.userType})}"></div>
-
         <div class="container">
             <div class="title">
                 <h4 th:text="${'지원이력(' + applyList.size() + ')'}"></h4>
@@ -182,19 +213,15 @@
                 <div th:each="apply : ${applyList}" class="items">
                     <div class="item_content">
                         <div class="content_title">
-                            <strong th:text="${apply.companyName}"></strong>
+                            <strong th:text="${apply.userName + '(' + apply.userId + ')'}"></strong>
                             <p>&nbsp;|&nbsp;</p>
-                            <a th:href="'/job-post/detail/' + ${apply.jobPostNo}"
-                               th:text="${apply.jobPostTitle}"></a>
+                            <p th:text="${apply.userAge} + '세'"></p>
                             <p>&nbsp;|&nbsp;</p>
                             <div class="content-form">
-                                <div class="label">마감일</div>
+                                <div class="label">경력</div>
                                 <p class="value"
-                                   th:text="${#temporals.format(apply.jobPostEndDate, 'yy. MM. dd. a h:mm')}"></p>
+                                   th:text="${apply.jobHistory eq 0 ? '신입' : apply.jobHistory + '년' }"></p>
                             </div>
-                        </div>
-                        <div class="content">
-                            <p th:text="${apply.resumeTitle}"></p>
                             <p>&nbsp;|&nbsp;</p>
                             <div class="content-form">
                                 <div class="label">지원일시</div>
@@ -202,11 +229,22 @@
                                    th:text="${#temporals.format(apply.aplcHstrDate, 'yy. MM. dd. a h:mm')}"></p>
                             </div>
                         </div>
+                        <div class="content">
+                            <div class="content-form-skill">
+                                <div class="label">기술스택</div>
+                                <div class="stack-items">
+                                    <div class="stack-item" th:each="skill : ${apply.skillList}"
+                                         th:text="${skill.name}"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="right-content">
-                        <div th:if="${apply.passYn eq 'Y'}">합격</div>
-                        <div th:if="${apply.passYn eq 'N'}">불합격</div>
-                        <div th:if="${apply.passYn eq null}">미확인</div>
+                        <select class="pass-yn" th:data-resume-no="${apply.resumeNo}" th:data-job-post-no="${apply.jobPostNo}">
+                            <option th:selected="${apply.passYn eq null}" value="">미확인</option>
+                            <option th:selected="${apply.passYn eq 'Y'}" value="Y">합격</option>
+                            <option th:selected="${apply.passYn eq 'N'}" value="N">불합격</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -215,4 +253,35 @@
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
+<script>
+    $(function () {
+        let previousValue = null;
+        $('.pass-yn').on('focus', function () {
+            // 변경 전 값 저장
+            previousValue = $(this).find(':selected').val();
+        }).on('change', function (event) {
+            const selectVal = $(this).find(':selected').val();
+            if (selectVal === '') {
+                alert("미확인 처리는 불가능합니다.");
+                event.preventDefault();
+                $(this).val(previousValue);
+                return;
+            }
+            axios.post('/api/apply/pass', {
+                jobPostNo: this.getAttribute('data-job-post-no'),
+                resumeNo: this.getAttribute('data-resume-no'),
+                passYn: selectVal
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data == 1) {
+                        alert(($(this).val() === 'Y' ? '합격' : '불합격') + '처리되었습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        })
+    })
+</script>
 </html>

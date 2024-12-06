@@ -49,7 +49,7 @@
     .content_title{
       margin-bottom: 5px;
     }
-    .box{
+    .box_items{
       border-bottom: 1px solid #8B1FFF;
     }
     .box_items{
@@ -74,13 +74,8 @@
 <main>
   <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
   <div id="main_content">
-    <div id="title">
-      <h2>마이 페이지</h2>
-      <h3>[[${session.user.userName}]]님</h3>
-      <div id="regist_btn_container">
-        <button id="regist_btn">정보수정</button>
-      </div>
-    </div>
+    <div th:replace="~{layout/fragments/mypage-title :: title(${session.userType == 'U' ? session.user.userName : session.user.companyName}, ${session.userType})}"></div>
+
     <div class="container">
       <div class="container_title">
         <h4 th:text="'나에게 온 제안서 ('+${#lists.size(plist)}+')'">나에게 온 제안서 (0)</h4>

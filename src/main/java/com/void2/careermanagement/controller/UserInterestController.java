@@ -3,6 +3,9 @@ package com.void2.careermanagement.controller;
 import com.void2.careermanagement.dto.UserDto;
 import com.void2.careermanagement.dto.response.UserInterestCompanyDto;
 import com.void2.careermanagement.service.UserInterestCompanyService;
+import com.void2.careermanagement.util.SessionUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -26,7 +30,8 @@ public class UserInterestController {
         this.userInterestCompanyService = userInterestCompanyService;
     }
     @GetMapping("/user-interest-company")
-    public String userInterestCompany(Model model, HttpSession session) {
+    public String userInterestCompany(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if(SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
         String isEmpty = "Empty";
         System.out.println("user-interest-company...");
         UserDto sessionUser = (UserDto)session.getAttribute("user");
@@ -41,9 +46,12 @@ public class UserInterestController {
     }
 
     @GetMapping("/delete-interest-company")
-    public String deleteInterestCompany(@RequestParam("companyId") String companyId, Model model, HttpSession session) {
+    public String deleteInterestCompany(@RequestParam("companyId") String companyId,
+                                        Model model, HttpSession session) {
+        UserDto sessionUser = (UserDto)session.getAttribute("user");
         System.out.println(companyId);
-        userInterestCompanyService.removeUserInterestCompany(companyId);
+
+        userInterestCompanyService.removeUserInterestCompany(companyId, sessionUser.getUserId());
         return "redirect:/mypage/user-interest-company";
     }
 }

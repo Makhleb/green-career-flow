@@ -24,4 +24,10 @@ public class ApplyApiController {
         return applyService.insert(applyDto);
     }
 
+    @PostMapping("/pass")
+    public int pass(@RequestBody ApplyRequestDto applyDto) {
+        System.out.println(applyDto);
+        return applyService.updatePass(applyDto);
+    }
+
 }

@@ -9,7 +9,7 @@ import java.util.List;
  * Created on 2024-12-02 by 황승현
  */
 @Data
-public class JopPostRequestDto {
+public class JobPostRequestDto {
     private int jobPostNo;
     private String companyId;
     private String title;

@@ -53,7 +53,7 @@
             text-decoration: none;
         }
 
-        .box {
+        .box_item {
             border-bottom: 1px solid #8B1FFF;
         }
 
@@ -117,6 +117,7 @@
             align-items: center;
             width: 10%;
         }
+
         .stack-items {
             width: 80%;
             display: flex;
@@ -140,6 +141,68 @@
         .age {
             margin-left: 10px;
         }
+
+        .job-item-content {
+            width: 88%;
+            height: 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 13px;
+            color: gray;
+        }
+
+        .job-content-title {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .job-item {
+            display: flex;
+            margin: 10px 0;
+            border: 1px #8B1FFF solid;
+            border-radius: 12px;
+            padding: 10px;
+            min-height: 46px;
+            height: auto;
+            flex-direction: row;
+        }
+
+        .job-content {
+            width: 100%;
+            display: flex;
+        }
+
+        .job-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .job-right-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .job-content-form {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .job-value {
+            margin: 0 4px 0 4px;
+        }
+
+        a {
+            text-decoration-line: none;
+        }
+
+        a:link,
+        a:visited {
+            color: inherit; /* 기본 텍스트 색상과 동일하게 설정 */
+        }
     </style>
 </head>
 <body>
@@ -147,45 +210,80 @@
 <main>
     <div th:replace="~{layout/fragments/aside :: asideCompany}"></div>
     <div id="main_content">
-        <div id="title">
-            <h2>마이 페이지</h2>
-            <h3>[[${session.user.companyName}]]님</h3>
-            <div id="regist_btn_container">
-                <button id="regist_btn">정보수정</button>
+        <div th:replace="~{layout/fragments/mypage-title :: title(${session.userType == 'U' ? session.user.userName : session.user.companyName}, ${session.userType})}"></div>
+        <div class="container">
+            <div class="title">
+                <h4 th:text="${'채용공고(' + jobPostSize + ')'}"></h4>
+                <a href="/mypage/job-post"> 더보기 + </a>
             </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="job-box">
+                <div th:each="jobPost : ${jobPostList}" class="job-item">
+                    <div class="job-item-content">
+                        <div class="job-content-title">
+                            <a th:text="${jobPost.title}" th:href="'/job-post/detail/' + ${jobPost.jobPostNo}"></a>
+                            <p>&nbsp;|&nbsp;</p>
+                            <div class="job-content-form">
+                                <p class="job-value"
+                                   th:text="${#temporals.format(jobPost.startDate, 'yy. MM. dd. a h:mm')}"></p>
+                            </div>
+                            <p>&nbsp;~&nbsp;</p>
+                            <div class="job-content-form">
+                                <p class="job-value"
+                                   th:text="${jobPost.endDate eq null ? '상시' : #temporals.format(jobPost.endDate, 'yy. MM. dd. a h:mm')}"></p>
+                            </div>
+                        </div>
+                        <div class="job-content">
+                            <div class="job-content-form">
+                                <div class="job-label">근무형태</div>
+                                <p class="job-value" th:text="${jobPost.workTypeName}"></p>
+                            </div>
+                            <p>&nbsp;|&nbsp;</p>
+                            <div class="job-content-form">
+                                <div class="job-label">직급/직책</div>
+                                <p class="job-value" th:text="${jobPost.jobRankName}"></p>
+                            </div>
+                            <p>&nbsp;|&nbsp;</p>
+                            <div class="job-content-form">
+                                <div class="job-label">직무</div>
+                                <p class="job-value" th:text="${jobPost.workName}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="job-right-content">
+                        <a th:href="'/job-post/update/' + ${jobPost.jobPostNo}">수정</a>
+                        <a href="#" onclick="deleteJobPost(this)" th:data-job-post-no="${jobPost.jobPostNo}">삭제</a>
+                        <a th:href="'/mypage/apply/'+ ${jobPost.jobPostNo}">지원이력</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <div class="container">
             <div class="title">
-                <h4>채용공고 (0)</h4>
-                <a href=""> 더보기 + </a>
+                <h4 th:text="'나의 제안서 ('+${proposalSize}+')'">나의 제안서 (0)</h4>
+                <a th:href="@{/mypage/proposal}"> 더보기 + </a>
             </div>
             <hr>
             <div class="box">
-                <div id="box_item1" class="box_item"></div>
-                <div id="box_item2" class="box_item"></div>
-                <div id="box_item3" class="box_item"></div>
-                <div id="box_item4" class="box_item"></div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="title">
-                <h4>나의 제안서 (0)</h4>
-                <a href=""> 더보기 + </a>
-            </div>
-            <hr>
-            <div class="box">
-                <div class="box_item">
+                <div class="box_item" th:each="dto : ${plist}">
                     <div id="proposal_items">
                         <div class="item_icon">
-                            <i class="bi bi-envelope"></i>
+                            <th:block th:if="${dto.readDate == null}">
+                                <i class="bi bi-envelope"></i>
+                            </th:block>
+                            <th:block th:if="${dto.readDate != null}">
+                                <i class="bi bi-envelope-open"></i>
+                            </th:block>
                         </div>
                         <div class="item_content">
-                            <div class="content_title"><strong>제안서 제목</strong></div>
+                            <div class="content_title"><strong th:text="${dto.title}">제안서 제목</strong></div>
                             <div class="content">
-                                <p>구직자 이름</p>
-                                <p>YYYY/MM/DD</p>
+                                <p th:text="${dto.userName}">구직자 이름</p>
+                                <p th:text="${#temporals.format(dto.date, 'yyyy/MM/dd')}">YYYY/MM/DD</p>
                             </div>
                         </div>
                     </div>
@@ -343,4 +441,26 @@
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
+<script>
+    function deleteJobPost(ele) {
+
+        if (confirm("삭제하시겠습니까?")) {
+            axios.delete("/api/job-post/" + ele.getAttribute('data-job-post-no'))
+                .then(res => {
+                    console.log(res);
+                    if (res.data == 1) {
+                        alert("삭제되었습니다.");
+                        location.reload();
+                    } else {
+                        alert("삭제 실패");
+                    }
+                })
+                .catch(error => {
+                    alert("삭제실패");
+                    console.log(error);
+                })
+        }
+
+    }
+</script>
 </html>
