@@ -9,12 +9,30 @@
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
 <main>
-    <select name="skill" class="skill_name">
+    <select name="skill" class="select_box">
         <option value="" disabled selected style="background-color: white; color:black;">기술스택<i class="bi bi-chevron-down"></i></option>
         <th:block th:each="skill : ${skillGubnList}">
             <option th:value="skill.name" style="background-color: white; color:black;">[[${skill.name}]]</option>
         </th:block>
     </select>
+
+    <div>
+        <th:block th:each="applicant : ${applicantList}">
+            <div class="applicant-item">
+                <p>[[${applicant.jobPostTitle}]]</p>
+                [[${applicant.userName}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${applicant.resumeTitle}]]<br/>
+                [[${applicant.userGender}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span> [[${applicant.userAge}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                <span th:if="${applicant.jobHistory > 0}"> 경력 [[${applicant.jobHistory}]]년 이상</span>
+                <span th:if="${applicant.jobHistory == 0}"> 신입</span>
+                <span class="right">
+                  <span class="skill_codes">기술스택</span>
+                  <th:block th:each="skill : ${applicant.skillList}">
+                      <span class="select_box">[[${skill.name}]]</span>
+                  </th:block>
+              </span>
+            </div>
+        </th:block>
+    </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
