@@ -20,4 +20,5 @@ public class CompanySkillMatcingResponseDto {
     private String wishSalary;
     private int userAge;
     private List<GubnDto> skillList;  // 스킬리스트
+    private String likeYn;
 }

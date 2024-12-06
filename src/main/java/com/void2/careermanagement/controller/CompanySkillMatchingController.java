@@ -35,7 +35,7 @@ public class CompanySkillMatchingController {
     public String companySkillMatching(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
         String companyId = SessionUtil.getSessionUserId(session);
-        List<CompanySkillMatcingResponseDto> offerYList = companySkillMatchingService.getCompanySkillMatchingOfferY();
+        List<CompanySkillMatcingResponseDto> offerYList = companySkillMatchingService.getCompanySkillMatchingOfferY(companyId);
         model.addAttribute("skillGubnList", gubnService.getGubnList(GroupCode.SKILL.name()));
         model.addAttribute("offerYList", offerYList);
         System.out.println("companySkillMatching..");

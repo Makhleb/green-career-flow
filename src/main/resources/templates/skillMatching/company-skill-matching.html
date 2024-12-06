@@ -11,24 +11,29 @@
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
 <main>
-    <select name="skillSelect" class="select_box" id="skillSelectBox">
-        <option value="none" selected style="background-color: white; color:black;">기술스택<i class="bi bi-chevron-down"></i></option>
+    <select onchange="changeSkill(this)" name="skillSelect" class="select_box" id="skillSelectBox">
+        <option value="none" selected style="background-color: white; color:black;">기술스택<i
+                class="bi bi-chevron-down"></i></option>
         <th:block th:each="skill : ${skillGubnList}">
             <option th:value="${skill.code}" style="background-color: white; color:black;">[[${skill.name}]]</option>
         </th:block>
     </select>
     <div id="offerContainer">
         <div th:each="offerYuser, state : ${offerYList}">
-            <div class="offerY-item" >
-            [[${offerYuser.userName}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${offerYuser.title}]]<br/>
-            [[${offerYuser.userGender}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span> [[${offerYuser.userAge}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <span th:if="${offerYuser.jobHistory > 0}"> 경력 [[${offerYuser.jobHistory}]]년 이상</span>
-            <span th:if="${offerYuser.jobHistory == 0}"> 신입</span>
-              <span class="skill_codes">기술스택</span>
-              <th:block th:each="skill : ${offerYuser.skillList}">
-                  <span class="skill_box">[[${skill.name}]]</span>
-              </th:block>
-            <span class="right"><i class="bi bi-suit-heart" style="border:#8B1FFF" id="'${}'"></i></span>
+            <div class="offerY-item">
+                [[${offerYuser.userName}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${offerYuser.title}]]<br/>
+                [[${offerYuser.userGender}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                [[${offerYuser.userAge}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                <span th:if="${offerYuser.jobHistory > 0}"> 경력 [[${offerYuser.jobHistory}]]년 이상</span>
+                <span th:if="${offerYuser.jobHistory == 0}"> 신입</span>
+                <span class="skill_codes">기술스택</span>
+                <th:block th:each="skill : ${offerYuser.skillList}">
+                    <span class="skill_box">[[${skill.name}]]</span>
+                </th:block>
+
+                <span class="right">
+                    <i onclick="likeUser(this)" th:data-user-id="${offerYuser.userId}" th:class="${offerYuser.likeYn == 'Y' ? 'bi bi-suit-heart-fill like-btn' : 'bi bi-suit-heart like-btn'} " ></i>
+                </span>
             </div>
         </div>
     </div>
@@ -38,30 +43,50 @@
 <script>
     const skillSelect = document.getElementById("skillSelectBox");
 
-    skillSelect.addEventListener("change", function() {
-        const selectedValue = this.value;
+    // skillSelect.addEventListener("change", function () {
+    //     const selectedValue = this.value;
+    //     console.log(selectedValue);
+    //     axios.get('/api/companySkillMatching/select', {
+    //         params: {
+    //             skillCode: selectedValue
+    //         }
+    //     })
+    //         .then(function (response) {
+    //             console.log(response);
+    //             const offerSkillMatchingList = response.data;
+    //             renderSkillMatchingList(offerSkillMatchingList);
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
+    // });
+
+    function changeSkill(ele){
+        const selectedValue = ele.value;
         console.log(selectedValue);
         axios.get('/api/companySkillMatching/select', {
-                params: {
-                    skillCode: selectedValue
-                }
-            })
-            .then(function(response) {
+            params: {
+                skillCode: !ele ? '': selectedValue
+            }
+        })
+            .then(function (response) {
                 console.log(response);
                 const offerSkillMatchingList = response.data;
                 renderSkillMatchingList(offerSkillMatchingList);
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error);
             });
-    });
+    }
 
-    function renderSkillMatchingList(offerSkillMatchingList){
+    changeSkill();
+
+    function renderSkillMatchingList(offerSkillMatchingList) {
         const offerContainer = document.getElementById('offerContainer');
-        offerContainer.innerHTML='';
-        offerSkillMatchingList.forEach(skillMatchingUser=>{
-                const skillMatchingItem = document.createElement('div');
-                skillMatchingItem.classList.add('offerY-item');
+        offerContainer.innerHTML = '';
+        offerSkillMatchingList.forEach(skillMatchingUser => {
+            const skillMatchingItem = document.createElement('div');
+            skillMatchingItem.classList.add('offerY-item');
 
             let skillHtml = '';
             // 기술 스택 목록 생성
@@ -76,13 +101,41 @@
                     ${skillMatchingUser.jobHistory > 0 ? `경력 ${skillMatchingUser.jobHistory}년 이상` : '신입'}<br/>
                     <span class="skill_codes">기술스택:</span> ${skillHtml}
 
-                <span class="right"><i class="bi bi-suit-heart" style="border:#8B1FFF"></i></span>
+
+                    <span class="right"><i onclick="likeUser(this)" data-user-id="${skillMatchingUser.userId}" class="${skillMatchingUser.likeYn ? 'bi bi-suit-heart-fill like-btn' : 'bi bi-suit-heart like-btn'} " ></i></span>
             `;
 
             offerContainer.appendChild(skillMatchingItem);  // 컨테이너에 추가
         });
     }
 
+
+    function likeUser(ele) {
+        const likeArr = ['bi-suit-heart-fill', 'bi-suit-heart'];
+        const userId = ele.getAttribute('data-user-id');  // Get the user ID from the element
+
+        // Send a POST request to like/unlike the user
+        axios.post("/api/like/" + userId)
+            .then(res => {
+                console.log(res);
+                if (res.data == 1) {
+
+                    if (ele.classList.contains('bi-suit-heart')) {
+                        ele.classList.remove('bi-suit-heart');
+                        ele.classList.add('bi-suit-heart-fill');
+                    }
+
+                    else if (ele.classList.contains('bi-suit-heart-fill')) {
+                        ele.classList.remove('bi-suit-heart-fill');
+                        ele.classList.add('bi-suit-heart');
+                    }
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+    }
 
 
 </script>

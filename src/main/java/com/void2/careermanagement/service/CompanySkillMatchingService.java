@@ -21,8 +21,8 @@ public class CompanySkillMatchingService {
         this.userResumeDao = userResumeDao;
     }
 
-    public List<CompanySkillMatcingResponseDto> getCompanySkillMatchingOfferY() {
-        List<CompanySkillMatcingResponseDto> offerYList = companySkillMappingDao.getSkillMatchingOfferY();
+    public List<CompanySkillMatcingResponseDto> getCompanySkillMatchingOfferY(String companyId) {
+        List<CompanySkillMatcingResponseDto> offerYList = companySkillMappingDao.getSkillMatchingOfferY(companyId);
         for (int i = 0; i < offerYList.size(); i++) {
             offerYList.get(i).setSkillList(userResumeDao.getSkillListByResumeNo(offerYList.get(i).getResumeNo()));
         }
