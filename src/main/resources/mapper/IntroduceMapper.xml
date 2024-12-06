@@ -8,7 +8,7 @@
         (resume_no, title, content, `order`)
         VALUES
         <foreach collection="list" item="I" separator=",">
-            (#{I.resumeNo}, #{I.title}, #{I.content}, #{I.order})
+            (#{resumeNoPk}, #{I.title}, #{I.content}, #{I.order})
         </foreach>
     </insert>
 </mapper>

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Mapper
 public interface LicenseDao {
-    int insertLicense(@Param("list") List<LicenseDto> licenseDtoList);
+    int insertLicense(@Param("list") List<LicenseDto> licenseDtoList,@Param("resumeNoPk") int resumeNoPk);
 }

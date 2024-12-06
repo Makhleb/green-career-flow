@@ -7,6 +7,6 @@
         INSERT INTO tbl_military
         (resume_no, enlist_date, release_date, military_code)
         VALUES
-        (#{M.resumeNo}, #{M.enlistDate}, #{M.releaseDate}, #{M.militaryCode})
+        (#{resumeNoPk}, #{M.enlistDate}, #{M.releaseDate}, #{M.militaryCode})
     </insert>
 </mapper>

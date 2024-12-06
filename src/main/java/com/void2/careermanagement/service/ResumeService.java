@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created on 2024-12-04 by 황승현
@@ -49,18 +50,36 @@ public class ResumeService {
 
     /**
      * 이력서 관련 데이터 일괄 저장 서비스
-     * todo 데이터 반복해서 insert하지말고 values로 한번에 넣으세요
      */
     @Transactional
-    public void insertFullResume(ResumeFullRequestDto resumeFullRequestDto) {
+    public int insertFullResume(ResumeFullRequestDto resumeFullRequestDto) {
         // 1. Resume 테이블에 삽입
         resumeDao.insertResume(resumeFullRequestDto.getResume());
-        activityDao.insertActivity(resumeFullRequestDto.getActivity());
-        educationDao.insertEducation(resumeFullRequestDto.getEducation());
-        introduceDao.insertIntroduce(resumeFullRequestDto.getIntroduce());
-        licenseDao.insertLicense(resumeFullRequestDto.getLicense());
-        militaryDao.insertMilitary(resumeFullRequestDto.getMilitary());
-        potfolioDao.insertPotfolio(resumeFullRequestDto.getPotfolio());
-        resumeSkillDao.insertResumeSkill(resumeFullRequestDto.getResumeSkill());
+        int resumeNo = resumeDao.maxResumeNo();
+
+        // 2. Optional을 사용하여 insert를 처리
+        Optional.ofNullable(resumeFullRequestDto.getActivity())
+                .ifPresent(activity -> activityDao.insertActivity(activity, resumeNo));
+        System.out.println("활동완료");
+        Optional.ofNullable(resumeFullRequestDto.getEducation())
+                .ifPresent(education -> educationDao.insertEducation(education, resumeNo));
+        System.out.println("학력완료");
+        Optional.ofNullable(resumeFullRequestDto.getIntroduce())
+                .ifPresent(introduce -> introduceDao.insertIntroduce(introduce, resumeNo));
+        System.out.println("자소서완료");
+        Optional.ofNullable(resumeFullRequestDto.getLicense())
+                .ifPresent(license -> licenseDao.insertLicense(license, resumeNo));
+        System.out.println("자격증완료");
+        Optional.ofNullable(resumeFullRequestDto.getMilitary())
+                .ifPresent(military -> militaryDao.insertMilitary(military, resumeNo));
+        System.out.println("복무완료");
+        Optional.ofNullable(resumeFullRequestDto.getPotfolio())
+                .ifPresent(potfolio -> potfolioDao.insertPotfolio(potfolio, resumeNo));
+        System.out.println("포폴완료");
+        Optional.ofNullable(resumeFullRequestDto.getResumeSkill())
+                .ifPresent(resumeSkill -> resumeSkillDao.insertResumeSkill(resumeSkill, resumeNo));
+        System.out.println("스킬완료");
+        return resumeNo;
     }
+
 }

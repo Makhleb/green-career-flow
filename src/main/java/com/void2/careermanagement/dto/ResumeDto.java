@@ -1,11 +1,15 @@
-package com.void2.careermanagement.dto.request;
+package com.void2.careermanagement.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-public class ResumeRequestDto {
+@AllArgsConstructor
+@NoArgsConstructor
+public class ResumeDto {
     private int resumeNo;
     private String title;
     private String address;
@@ -13,14 +17,13 @@ public class ResumeRequestDto {
     private String zonecode;
     private String userId;
     private byte[] image;
+    private Integer jobHistory;
     private String wishArea;
-    private int wishSalary;
+    private Integer wishSalary;
     private String wishTime;
     private String workCode;
     private String portfolioLink;
-    private char offerYn;
+    private Character offerYn;
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
-    private int jobHistory;
 }
-

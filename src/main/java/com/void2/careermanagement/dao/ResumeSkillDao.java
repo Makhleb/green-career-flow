@@ -8,5 +8,5 @@ import java.util.List;
 
 @Mapper
 public interface ResumeSkillDao {
-    int insertResumeSkill(@Param("list") List<ResumeSkillDto> resumeSkillDtoList);
+    void insertResumeSkill(@Param("list") List<ResumeSkillDto> resumeSkillDtoList, @Param("resumeNoPk") int resumeNoPk);
 }
