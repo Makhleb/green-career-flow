@@ -28,7 +28,7 @@ public enum TblLike {
     public static Optional<TblLike> findEnum(String enumName) {
         for (TblLike like : TblLike.values()) {
 //            equalsIgnoreCase : 이거 써야 대소문자 비교 안함 \^o^/
-            if (like.getInputColumn().equalsIgnoreCase(enumName)) {
+            if (like.name().equalsIgnoreCase(enumName)) {
                 return Optional.of(like);
             }
         }

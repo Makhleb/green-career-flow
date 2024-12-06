@@ -14,7 +14,7 @@
         activity_type)
         VALUES
         <foreach collection="list" item="A" separator=",">
-            (#{A.resumeNo},
+            (#{resumeNoPk},
             #{A.order},
             #{A.startDate},
             #{A.endDate},

@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface EducationDao {
-    int insertEducation(@Param("E")EducationDto educationDto);
+    int insertEducation(@Param("E")EducationDto educationDto,@Param("resumeNoPk") int resumeNoPk);
 }
