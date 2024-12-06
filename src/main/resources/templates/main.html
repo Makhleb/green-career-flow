@@ -73,6 +73,7 @@
                                 [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
                                 <i class="bi bi-suit-heart-fill" style="color:#8B1FFF"></i>
                             </p>
+                            <p>[[${company.title}]]</p>
                             <span>[[${company.companyAddress}]]
                                 <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                                 <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
@@ -100,6 +101,7 @@
                         <i class="bi bi-star-fill" style="color:#F2AE2E"></i>&nbsp;&nbsp;
                         <span th:text="${#numbers.formatDecimal(company.rating, 1, 1)}"></span>
                     </p>
+                    <p>[[${company.title}]]</p>
                     <span>[[${company.companyAddress}]]
                         <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                         <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
@@ -123,6 +125,7 @@
                     <p>
                         [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
                     </p>
+                    <p>[[${company.title}]]</p>
                     <span>[[${company.companyAddress}]]
                         <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                         <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
