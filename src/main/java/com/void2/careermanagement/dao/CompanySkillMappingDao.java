@@ -2,6 +2,7 @@ package com.void2.careermanagement.dao;
 
 import com.void2.careermanagement.dto.response.CompanySkillMatcingResponseDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -10,6 +11,5 @@ import java.util.List;
  */
 @Mapper
 public interface CompanySkillMappingDao {
-    List<CompanySkillMatcingResponseDto> getSkillMatchingOfferY(String companyId);
-    List<CompanySkillMatcingResponseDto> getSkillMatchingOfferYBySkillCode(String skillCode);
+    List<CompanySkillMatcingResponseDto> getSkillMatchingList(@RequestParam("companyId") String companyId, @RequestParam("skillCode") String skillCode);
 }
