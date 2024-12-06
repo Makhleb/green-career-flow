@@ -67,4 +67,11 @@
         AND tl.company_id = #{company_id}
         ]]>
     </select>
+
+    <select id="selectSkillList">
+        SELECT A.skill_code AS code, B.name
+        FROM tbl_resume_skill A
+                 LEFT JOIN (SELECT * FROM tbl_gubn WHERE group_code = 'skill') B ON A.skill_code = B.code
+        WHERE resume_no = ${resumeNo}
+    </select>
 </mapper>
