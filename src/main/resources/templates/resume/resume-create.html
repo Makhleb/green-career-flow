@@ -236,6 +236,7 @@
     window.onload = function () {
         if(userSession === null){
             alert("로그인 후 이용해주세요");
+            location.href = "/";
         } else{
             $('#userName').val(userSession.userName);
             $('#userEmail').val(userSession.userEmail);
@@ -337,7 +338,6 @@
 
     function resumeTotalInfo() {
         let wishTime = $('#wishTimeStart').val() + '-' + $('#wishTimeEnd').val();
-
         let basicResume = {
             resumeNo: null,
             title: $('#title').val(),
@@ -433,17 +433,32 @@
         };
     }
 
-    function resumeRegist() {
-        let totalInfo = resumeTotalInfo();
+    function checkDuplicateValues(targetClass) {
+        let values = $(targetClass).map(function() {
+            return $(this).val().trim(); // 공백 제거
+        }).get();
+        let duplicates = values.filter((value, index, self) => self.indexOf(value) !== index);
+        return duplicates.length > 0;
+    }
 
-        axios.post('/api/resume/create/full', totalInfo)
+    function resumeRegist() {
+        if(checkDuplicateValues('.introTitle')) {
+           alert("자기소개서는 중복된 제목으로 작성할 수 없습니다.");
+           return;
+        }
+        if(checkDuplicateValues('.licenseName')) {
+            alert("자격증은 중복하여 추가할 수 없습니다.");
+            return;
+        }
+
+        axios.post('/api/resume/create/full', resumeTotalInfo())
             .then(function (response) {
                 console.log(response);
                 if (response.data !== 0) {
                     alert("이력서 등록 성공");
                     upload(response.data);
                 } else{
-                    alert("어딘가 문제생김")
+                    alert("오류 발생. 이력서 등록 실패")
                 }
             })
             .catch(function (error) {
@@ -451,12 +466,13 @@
             })
     }
 
+    //todo 다중 파일 등록 후 추가 등록 불가. 이점 고쳐야 함
     $("#portfileInput").on('change', function () {
+        uploadList = [];
         let files = $("#portfileInput")[0].files;
         for (let i = 0; i < files.length; i++) {
             uploadList.push(files[i].name);
         }
-        console.log(uploadList);
         $(".portfolioAttach").val(uploadList);
     });
 

@@ -60,24 +60,25 @@ public class ResumeService {
         // 2. Optional을 사용하여 insert를 처리
         Optional.ofNullable(resumeFullRequestDto.getActivity())
                 .ifPresent(activity -> activityDao.insertActivity(activity, resumeNo));
-
+        System.out.println("활동완료");
         Optional.ofNullable(resumeFullRequestDto.getEducation())
                 .ifPresent(education -> educationDao.insertEducation(education, resumeNo));
-
+        System.out.println("학력완료");
         Optional.ofNullable(resumeFullRequestDto.getIntroduce())
                 .ifPresent(introduce -> introduceDao.insertIntroduce(introduce, resumeNo));
-
+        System.out.println("자소서완료");
         Optional.ofNullable(resumeFullRequestDto.getLicense())
                 .ifPresent(license -> licenseDao.insertLicense(license, resumeNo));
-
+        System.out.println("자격증완료");
         Optional.ofNullable(resumeFullRequestDto.getMilitary())
                 .ifPresent(military -> militaryDao.insertMilitary(military, resumeNo));
-
+        System.out.println("복무완료");
         Optional.ofNullable(resumeFullRequestDto.getPotfolio())
                 .ifPresent(potfolio -> potfolioDao.insertPotfolio(potfolio, resumeNo));
-
+        System.out.println("포폴완료");
         Optional.ofNullable(resumeFullRequestDto.getResumeSkill())
                 .ifPresent(resumeSkill -> resumeSkillDao.insertResumeSkill(resumeSkill, resumeNo));
+        System.out.println("스킬완료");
         return resumeNo;
     }
 
