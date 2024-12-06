@@ -21,4 +21,16 @@ public class UserSkillMatchingService {
         List<UserSkillMatchingResponseDto> list = userSkillMatchingDao.getRecentJobPostList();
         return list;
     }
+
+    public List<UserSkillMatchingResponseDto> getSkillTypePostList(String skillCode){
+        List<UserSkillMatchingResponseDto> list = userSkillMatchingDao.getSkillTypePostList(skillCode);
+
+//        for (int i = 0; i < list.size(); i++) {
+//            list.get(i).setSkillList(userSkillMatchingDao.getSkillListByJobPostNo(list.get(i).getJobPostNo()));
+//        }
+//        for(UserSkillMatchingResponseDto dto : list){
+//            System.out.println(dto);
+//        }
+        return list;
+    }
 }

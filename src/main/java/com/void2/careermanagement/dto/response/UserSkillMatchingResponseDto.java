@@ -3,7 +3,6 @@ package com.void2.careermanagement.dto.response;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * Created on 2024-12-06 by 최윤서
@@ -20,7 +19,9 @@ public class UserSkillMatchingResponseDto {
     private int jobHistory;      // 업무 경력
     private LocalDate startDate;    // 시작 날짜
     private LocalDate endDate;
-    private String skillCode;
-    private List<String> skillCodes;       // 기술 코드
+    private String skillCodes;       // 기술 코드
+    private String skillCode;       // 기술 코드
+
+//    private List<GubnDto> skillList;
 
 }

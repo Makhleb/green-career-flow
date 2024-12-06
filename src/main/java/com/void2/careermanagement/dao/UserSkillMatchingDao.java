@@ -12,4 +12,6 @@ import java.util.List;
 public interface UserSkillMatchingDao {
 
     public List<UserSkillMatchingResponseDto> getRecentJobPostList();
+    public List<UserSkillMatchingResponseDto> getSkillTypePostList(String skillCode);
+//    List<GubnDto> getSkillListByJobPostNo(int jobPostNo);
 }
