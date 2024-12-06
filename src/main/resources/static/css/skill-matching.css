@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+
+.select_box{
+    display: inline-block;
+    border: #8B1FFF solid 1px;
+    width:120px;
+    height: 26px;
+    margin: 10px;
+    border-radius: 20px;
+    text-align: center;
+    align-items: center;
+}
+
+.select_box:hover{
+    background-color: #8B1FFF;
+    color: white;
+}
+
+.select_box:focus{
+    border: #8B1FFF solid 1px;
+}
+
+.applicant-item{
+    border : #8B1FFF 1px solid;
+    border-radius: 5px;
+    padding:20px;
+    margin: 10px 0 20px 0;
+}
+.right{
+    float: right;
+    transform: translateY(-10px);
+}

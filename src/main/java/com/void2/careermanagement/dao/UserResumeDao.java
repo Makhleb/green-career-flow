@@ -15,6 +15,7 @@ public interface UserResumeDao {
     public List<ApplicantResponseDto> getHighLikeUserList();
 
 
+    List<UserResponseDto> getApplyListByCompanyIdTop3(String companyId);
     List<UserResponseDto> getApplyListByCompanyId(String companyId);
     List<GubnDto> getSkillListByResumeNo(int resumeNo);
 }
