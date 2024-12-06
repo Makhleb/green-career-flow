@@ -21,7 +21,7 @@
             /*border: 1px solid black;*/
         }
 
-        img{
+        #skillCodeList img{
             border-radius: 5px;
             margin-top: 20px;
             width: 100%;
@@ -29,9 +29,24 @@
             transition: transform 0.3s ease;
         }
 
-        img:hover{
+        #skillCodeList img:hover{
             transform: scale(1.1);
             border-radius: 5px;
+        }
+        .select_box{
+            display: inline-block;
+            border: #8B1FFF solid 1px;
+            width:120px;
+            height: 35px;
+            margin: 10px;
+            border-radius: 20px;
+            text-align: center;
+            align-items: center;
+        }
+
+        .select_box:hover{
+            background-color: #8B1FFF;
+            color: white;
         }
 
     </style>
@@ -40,16 +55,15 @@
 <div th:replace="~{layout/fragments/header :: header}"></div>
 <main>
     <div id="wrapper">
-        <div id="skill_select">
-            <select id="skillType">
-                <option value="" selected>기술스택</option>
+        <div class="skill_select">
+            <select id="skillType" class="select_box">
+                <option value="" selected disabled style="background-color: white; color:black;">기술스택</option>
                 <th:block th:each="skillType : ${skillGubnList}">
-                    <option th:value="${skillType.code}" th:text="${skillType.name}"></option>
+                    <option th:value="${skillType.code}" th:text="${skillType.name}" style="background-color: white; color:black;"></option>
                 </th:block>
             </select>
         </div>
         <div id="container">
-            <br>
             <!--            <div class="grid-container">-->
             <!--                <div class="grid-item">-->
             <div id="skillCodeList">
