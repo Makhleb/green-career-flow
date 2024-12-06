@@ -26,5 +26,6 @@ public class CompanySkillMatchingService {
         for (int i = 0; i < offerYList.size(); i++) {
             offerYList.get(i).setSkillList(userResumeDao.getSkillListByResumeNo(offerYList.get(i).getResumeNo()));
         }
-        return offerYList;}
+        return offerYList;
+    }
 }

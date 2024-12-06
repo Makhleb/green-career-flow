@@ -5,10 +5,28 @@
     <select id="getSkillMatchingOfferY" resultType="com.void2.careermanagement.dto.response.CompanySkillMatcingResponseDto">
         <![CDATA[
         SELECT u.user_id, r.resume_no, u.user_name, r.title, u.user_gender, r.job_history, r.wish_salary,
-        TIMESTAMPDIFF(YEAR, u.user_birth, CURDATE())-(RIGHT(CURDATE(), 5) < RIGHT(u.user_birth, 5)) AS user_age
+               TIMESTAMPDIFF(YEAR, u.user_birth, CURDATE())-(RIGHT(CURDATE(), 5) < RIGHT(u.user_birth, 5)) AS user_age
         FROM tbl_resume r
-        LEFT JOIN tbl_user u ON r.user_id = u.user_id
-        WHERE r.offer_yn = 'Y';
+                 LEFT JOIN tbl_user u ON r.user_id = u.user_id
+        WHERE r.offer_yn = 'Y'
+        ORDER BY r.create_date desc;
+        ]]>
+    </select>
+
+    <select id="getSkillMatchingOfferYBySkillCode" resultType="com.void2.careermanagement.dto.response.CompanySkillMatcingResponseDto">
+        <![CDATA[
+        SELECT r.resume_no, r.title, r.job_history, r.user_id, u.user_name, u.user_gender,
+                TIMESTAMPDIFF(YEAR, u.user_birth, CURDATE())-(RIGHT(CURDATE(), 5) < RIGHT(u.user_birth, 5)) AS user_age
+        FROM tbl_resume r join tbl_user u
+                ON r.user_id = u.user_id
+        WHERE r.resume_no IN(
+                SELECT resume_no
+                FROM tbl_resume_skill
+                WHERE skill_code =
+                    (SELECT CODE
+                    FROM tbl_gubn
+                    WHERE group_code = "skill" AND CODE = #{skillCode}))
+                ORDER BY r.create_date;
         ]]>
     </select>
 </mapper>

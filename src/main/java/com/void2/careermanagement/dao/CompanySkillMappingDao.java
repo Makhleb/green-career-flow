@@ -11,4 +11,5 @@ import java.util.List;
 @Mapper
 public interface CompanySkillMappingDao {
     List<CompanySkillMatcingResponseDto> getSkillMatchingOfferY();
+    List<CompanySkillMatcingResponseDto> getSkillMatchingOfferYBySkillCode(String skillCode);
 }

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,11 +40,5 @@ public class CompanySkillMatchingController {
         model.addAttribute("offerYList", offerYList);
         System.out.println("companySkillMatching..");
         return "/skillMatching/company-skill-matching";
-    }
-
-    @GetMapping("/selectedSkillMatching")
-    public String selectedSkillMatching(@RequestParam("skillName") String skillName, Model model, HttpSession session){
-        System.out.println(skillName);
-        return "";
     }
 }

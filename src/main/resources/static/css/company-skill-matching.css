@@ -46,6 +46,7 @@
 .right{
     float: right;
     margin-right: 30px;
+    transform: translateY(-10px);
 }
 
 i {
