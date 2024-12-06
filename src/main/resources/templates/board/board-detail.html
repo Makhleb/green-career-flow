@@ -223,11 +223,6 @@
                 </tr>
                 </tbody>
             </table>
-            <div id="btn_container">
-                <th:block th:if="${commentCnt!=0}">
-                    <button id="btn">댓글 더보기</button>
-                </th:block>
-            </div>
 
             <p>작성자 : [[${session.user.userId}]]</p>
             <input type="hidden" name="communityNo" id="communityNo" th:value="${board.communityNo}">
