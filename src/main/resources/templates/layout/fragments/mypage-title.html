@@ -1,0 +1,14 @@
+<div id="title" th:fragment="title(name, userType)">
+    <h2>마이 페이지</h2>
+    <h3 th:text="${name} + '님'"></h3>
+    <div id="regist_btn_container">
+        <button th:if="${userType == 'U'}" id="regist_btn"
+                onclick="location.href='/user/account/update'">
+            정보수정
+        </button>
+        <button th:if="${userType == 'C'}" id="regist_btn"
+                onclick="location.href='/company/account/update'">
+            정보수정
+        </button>
+    </div>
+</div>
