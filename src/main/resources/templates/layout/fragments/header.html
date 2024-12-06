@@ -33,7 +33,7 @@
         <nav class="nav-links">
             <ul th:if="${session.user != null && session.userType == 'C'}">
                 <li class="margin-right"><a href="/job-post/register">공고 등록</a></li>
-                <li class="margin-right"><a href="#">기술스택매칭</a></li>
+                <li class="margin-right"><a href="/skillMatching/company-skill-matching">기술스택매칭</a></li>
             </ul>
 
             <ul th:if="${session.user != null && session.userType == 'U'}">

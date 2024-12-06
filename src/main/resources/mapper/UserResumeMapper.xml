@@ -23,7 +23,7 @@
             LIMIT 8;
         ]]>
     </select>
-    <select id="getApplyListByCompanyId" resultType="com.void2.careermanagement.dto.response.UserResponseDto">
+    <select id="getApplyListByCompanyIdTop3" resultType="com.void2.careermanagement.dto.response.UserResponseDto">
         <![CDATA[
         SELECT
             hstr.job_post_no,
@@ -69,5 +69,41 @@
               WHERE group_code = 'SKILL') B
              ON A.skill_code = B.code
         WHERE A.resume_no = #{resumeNo}
+    </select>
+
+    <select id="getApplyListByCompanyId" resultType="com.void2.careermanagement.dto.response.UserResponseDto">
+        <![CDATA[
+        SELECT
+            hstr.job_post_no,
+            jp.title AS job_post_title,
+            hstr.pass_yn,
+            re.resume_no,
+            re.title AS resume_title,
+            re.job_history,
+            re.user_id,
+            us.user_name,
+            us.user_gender,
+            TIMESTAMPDIFF(YEAR, us.user_birth, CURDATE())-(RIGHT(CURDATE(), 5) < RIGHT(us.user_birth, 5)) AS user_age
+                , hstr.pass_yn
+                , hstr.aplc_hstr_date
+        FROM
+-- 지원이력
+(SELECT job_post_no, resume_no, aplc_hstr_date
+-- CASE pass_yn
+-- WHEN 'Y' THEN '합격'
+-- WHEN 'N' THEN '불합격'
+-- ELSE '미확인' END AS pass_yn
+      , pass_yn
+ FROM tbl_aplc_hstr
+ WHERE job_post_no
+           IN (SELECT job_post_no
+               FROM tbl_job_post
+               WHERE company_id = #{companyId})) AS hstr
+    LEFT JOIN tbl_job_post jp ON hstr.job_post_no = jp.job_post_no -- 기업정보
+    LEFT JOIN tbl_resume re ON hstr.resume_no = re.resume_no -- 이력서 정보
+    LEFT JOIN tbl_user us ON re.user_id = us.user_id -- 유저 정보
+        WHERE jp.company_id = #{companyId}
+        ORDER BY hstr.aplc_hstr_date DESC;
+        ]]>
     </select>
 </mapper>

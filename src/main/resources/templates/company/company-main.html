@@ -70,7 +70,7 @@
             </span>
           </div>
           <div class="grid-item">
-              <th:block th:each="applicant : ${aList}">
+              <th:block th:each="applicant : ${aListTop3}">
                   <div class="grid-resume">
                       <p>[[${applicant.jobPostTitle}]]</p>
                       [[${applicant.userName}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${applicant.resumeTitle}]]<br/>

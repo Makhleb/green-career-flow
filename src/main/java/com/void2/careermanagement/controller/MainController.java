@@ -65,11 +65,11 @@ public class MainController {
                 //for(ApplicantResponseDto u : uList) System.out.println(u);
 
                 //최근 입사지원내역 리스트
-                List<UserResponseDto> aList = userResumeService.getUserResumeListByApplyId(sessionUser.getCompanyId());
-                if (!aList.isEmpty()) {
-                    for (UserResponseDto a : aList) System.out.println(a);
+                List<UserResponseDto> aListTop3 = userResumeService.getUserResumeListByApplyIdTop3(sessionUser.getCompanyId());
+                if (!aListTop3.isEmpty()) {
+                    for (UserResponseDto a : aListTop3) System.out.println(a);
                     isEmpty = "notEmpty";
-                    model.addAttribute("aList", aList);
+                    model.addAttribute("aListTop3", aListTop3);
 
                 }
                 model.addAttribute("isEmpty", isEmpty);
