@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+
+.skill_name{
+    display: inline-block;
+    border: #8B1FFF solid 1px;
+    width:120px;
+    height: 26px;
+    margin: 10px;
+    border-radius: 20px;
+    text-align: center;
+    align-items: center;
+}
+
+.skill_name:hover{
+    background-color: #8B1FFF;
+    color: white;
+}
+
+.select_name:focus{
+    border: #8B1FFF solid 1px;
+}
