@@ -1,9 +1,6 @@
 package com.void2.careermanagement.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -11,9 +8,6 @@ import java.time.LocalDateTime;
  * Created on 2024-12-05 by 최윤서
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class ProposalResponseDto {
 
     private int proposalNo;

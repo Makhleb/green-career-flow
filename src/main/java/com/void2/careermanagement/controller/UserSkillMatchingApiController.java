@@ -1,6 +1,6 @@
 package com.void2.careermanagement.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import com.void2.careermanagement.service.UserSkillMatchingService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/skillMatching")
 public class UserSkillMatchingApiController {
 
-    @GetMapping("/")
-    public String
+    private final UserSkillMatchingService userSkillMatchingService;
+
+    public UserSkillMatchingApiController(UserSkillMatchingService userSkillMatchingService) {
+        this.userSkillMatchingService = userSkillMatchingService;
+    }
 
 }

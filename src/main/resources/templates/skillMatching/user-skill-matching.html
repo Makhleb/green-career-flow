@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/main.css}"/>
 </head>
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
@@ -25,21 +26,32 @@
         <br>
         <div class="grid-item">
             <div class="grid_posting">
-                <th:block th:if="${isEmpty == 'notEmpty'}">
-                    <div class="grid_posting_item" th:each="company : ${lList}">
-                        <a th:href="@{/}"><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
-                        <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
+                <th:block >
+                    <div class="grid_posting_item" th:each="Recentlist : ${ulist}">
+<!--                        <a th:href="@{/}">-->
+                            <img th:src="@{/static/images/{companyImage}(companyImage=${Recentlist.companyImage})}" style="width: 380px" height="250px">
+<!--                        </a>-->
+                        <div class="grid_posting_item_enddate">
+                          <th:block th:if="${Recentlist.endDate != null}">
+                            [[${Recentlist.endDate}]]
+                          </th:block>
+                            <th:block th:if="${Recentlist.endDate == null}">
+                                상시채용
+                            </th:block>
+
+                        </div>
                         <p>
-                            [[${company.companyName}]]
+                            [[${Recentlist.companyName}]]
                         </p>
-                        <span>[[${company.companyAddress}]]
+                        <p th:text="${#strings.arrayJoin(Recentlist.skillCodes, ', ')}"></p>
+                        <span>[[${Recentlist.companyAddress}]]
                                 <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                                <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
-                                <span th:if="${company.jobHistory <= 0}"> 신입 </span>
+                                <span th:if="${Recentlist.jobHistory > 0}"> 경력 [[${Recentlist.jobHistory}]]년 이상</span>
+                                <span th:if="${Recentlist.jobHistory <= 0}"> 신입 </span>
                             </span>
                     </div>
                 </th:block>
-                <th:block th:if="${isEmpty != 'notEmpty'}">
+                <th:block>
                     
                 </th:block>
             </div>
