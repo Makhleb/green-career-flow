@@ -9,26 +9,28 @@
             width: 1500px;
         }
 
-        .grid-container {
+        #skillCodeList {
             display: grid;
-            width: 100%;
-            grid-template-rows: 1fr auto;
-            grid-template-columns: 1fr auto;
+            grid-template-columns: repeat(3, 400px);
+            /*grid-auto-rows: 350px;*/
+            gap: 20px;
         }
 
-        a {
-            text-decoration: none;
+        .grid_posting_item, .grid_item_content {
+            padding: 5px;
+            /*border: 1px solid black;*/
         }
 
-        .grid-item {
+        img{
             border-radius: 5px;
-            font-size: 22px;
-            font-weight: 500;
-            position: relative;
+            margin-top: 20px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
         }
 
-        .grid-item > img {
-            margin-top: 15px;
+        img:hover{
+            transform: scale(1.1);
             border-radius: 5px;
         }
 
@@ -45,50 +47,43 @@
                     <option th:value="${skillType.code}" th:text="${skillType.name}"></option>
                 </th:block>
             </select>
-<!--            <select id="workType">-->
-<!--                <option value="" selected>경력</option>-->
-<!--                <th:block th:each="workType : ${workTypeList}">-->
-<!--                    <option th:value="${workType.code}" th:text="${workType.name}"></option>-->
-<!--                </th:block>-->
-<!--            </select>-->
         </div>
         <div id="container">
             <br>
-            <div class="grid-container">
-                <div class="grid-item">
-                    <div id="skillCodeList">
-                        <div class="grid_posting">
-                            <th:block>
-                                <div class="grid_posting_item" th:each="Recentlist : ${ulist}">
-                                    <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${Recentlist.jobPostNo})}">
-                                        <img th:src="@{/static/images/{companyImage}(companyImage=${Recentlist.companyImage})}"
-                                             style="width: 380px" height="250px">
-                                    </a>
-                                    <div class="grid_posting_item_enddate">
-                                        <th:block th:if="${Recentlist.endDate != null}">
-                                            [[${Recentlist.endDate}]]
-                                        </th:block>
-                                        <th:block th:if="${Recentlist.endDate == null}">
-                                            상시채용
-                                        </th:block>
-                                    </div>
-                                    <p>
-                                        [[${Recentlist.companyName}]]
-                                    </p>
-                                    <p th:text="${Recentlist.skillCodes}"></p>
-                                    <span>[[${Recentlist.companyAddress}]]
-                                <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                                <span th:if="${Recentlist.jobHistory > 0}"> 경력 [[${Recentlist.jobHistory}]]년 이상</span>
-                                <span th:if="${Recentlist.jobHistory <= 0}"> 신입 </span>
-                            </span>
-                                </div>
-                            </th:block>
-                        </div>
+            <!--            <div class="grid-container">-->
+            <!--                <div class="grid-item">-->
+            <div id="skillCodeList">
+                <!--                        <div class="grid_posting">-->
+                <div class="grid_posting_item" th:each="Recentlist : ${ulist}">
+                    <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${Recentlist.jobPostNo})}">
+                        <img th:src="@{/static/images/{companyImage}(companyImage=${Recentlist.companyImage})}"
+                             style="width: 380px" height="250px">
+                    </a>
+                    <!--                                    <div class="grid_posting_item_enddate">-->
+                    <!--                    <th:block th:if="${Recentlist.endDate != null}">-->
+                    <!--                        [[${Recentlist.endDate}]]-->
+                    <!--                    </th:block>-->
+                    <!--                    <th:block th:if="${Recentlist.endDate == null}">-->
+                    <!--                        상시채용-->
+                    <!--                    </th:block>-->
+                    <div class="grid_item_content">
+                        <p>
+                            [[${Recentlist.companyName}]]
+                        </p>
+                        <p th:text="${Recentlist.skillCodes}"></p>
+                        <span>[[${Recentlist.companyAddress}]]
+                    <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                    <span th:if="${Recentlist.jobHistory > 0}"> 경력 [[${Recentlist.jobHistory}]]년 이상</span>
+                    <span th:if="${Recentlist.jobHistory <= 0}"> 신입 </span>
+                    </span>
                     </div>
                 </div>
             </div>
+            <!--                    </div>-->
         </div>
-    </div>
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--    </div>-->
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
@@ -97,9 +92,9 @@
         const selectedSkillType = this.value;
         console.log(selectedSkillType);
         if (selectedSkillType) {
-            axios.get('/api/skillMatching/select',{
+            axios.get('/api/skillMatching/select', {
                 params: {
-                    skillCode : selectedSkillType
+                    skillCode: selectedSkillType
                 }
             })
                 .then(function (response) {
@@ -114,9 +109,9 @@
                             <a href="/job-post/detail/${post.jobPostNo}">
                                 <img src="/static/images/${post.companyImage}" style="width: 380px" height="250px" />
                             </a>
-                            <div class="grid_posting_item_enddate">
+                            <!--/*<div class="grid_posting_item_enddate">
                                 ${post.endDate != null ? post.endDate : '상시채용'}
-                            </div>
+                            </div>*/-->
                             <p>${post.companyName}</p>
                             <p>${post.skillCodes}</p>
                             <span>${post.companyAddress}
