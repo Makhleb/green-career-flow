@@ -21,4 +21,50 @@
         AND ${receiveColumnName} = #{likeId}
         AND like_type = #{gubn}
     </select>
+
+    <select id="getLikeListByCompanyId">
+        <![CDATA[
+        SELECT tl.user_id,
+               us.user_name,
+               re.resume_no,
+               re.job_history,
+               TIMESTAMPDIFF(YEAR, us.user_birth, CURDATE()) -
+               (RIGHT(CURDATE(), 5) < RIGHT (us.user_birth, 5)) AS user_age
+        FROM tbl_like tl
+                 INNER JOIN tbl_user us ON tl.user_id = us.user_id
+                 INNER JOIN tbl_resume re ON us.user_id = re.user_id AND re.offer_yn = 'Y'
+        WHERE tl.like_type = 'C'
+        AND tl.company_id = #{company_id}
+        ORDER BY tl.like_date desc
+        ]]>
+    </select>
+
+    <select id="getLikeListByCompanyIdTop3">
+        <![CDATA[
+        SELECT tl.user_id,
+               us.user_name,
+               re.resume_no,
+               re.job_history,
+               TIMESTAMPDIFF(YEAR, us.user_birth, CURDATE()) -
+               (RIGHT(CURDATE(), 5) < RIGHT (us.user_birth, 5)) AS user_age
+        FROM tbl_like tl
+                 INNER JOIN tbl_user us ON tl.user_id = us.user_id
+                 INNER JOIN tbl_resume re ON us.user_id = re.user_id AND re.offer_yn = 'Y'
+        WHERE tl.like_type = 'C'
+          AND tl.company_id = #{company_id}
+        ORDER BY tl.like_date desc
+        LIMIT 3
+        ]]>
+    </select>
+
+    <select id="getCountByCompanyId">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM tbl_like tl
+                 INNER JOIN tbl_user us ON tl.user_id = us.user_id
+                 INNER JOIN tbl_resume re ON us.user_id = re.user_id AND re.offer_yn = 'Y'
+        WHERE tl.like_type = 'C'
+        AND tl.company_id = #{company_id}
+        ]]>
+    </select>
 </mapper>

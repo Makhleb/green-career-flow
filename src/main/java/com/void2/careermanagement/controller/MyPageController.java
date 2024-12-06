@@ -1,14 +1,9 @@
 package com.void2.careermanagement.controller;
 
 import com.void2.careermanagement.dao.ApplyDao;
+import com.void2.careermanagement.dao.LikeDao;
 import com.void2.careermanagement.dao.MyPageDao;
-import com.void2.careermanagement.dto.CompanyDto;
-import com.void2.careermanagement.dto.UserDto;
-import com.void2.careermanagement.dto.response.ApplyResponseDto;
-import com.void2.careermanagement.dto.response.JobPostResponseDto;
-import com.void2.careermanagement.dto.response.MyPageScrapDto;
-import com.void2.careermanagement.dto.response.ProposalResponseDto;
-import com.void2.careermanagement.dto.response.ResumeResponseDto;
+import com.void2.careermanagement.dto.response.*;
 import com.void2.careermanagement.service.ApplyService;
 import com.void2.careermanagement.service.JobPostService;
 import com.void2.careermanagement.service.MyPageService;
@@ -35,23 +30,19 @@ public class MyPageController {
 
     private final MyPageService myPageService;
     private final ApplyDao applyDao;
-    private JobPostService jobPostService;
-    private ApplyService applyService;
-    private MyPageDao myPageDao;
+    private final LikeDao likeDao;
+    private final JobPostService jobPostService;
+    private final ApplyService applyService;
+    private final MyPageDao myPageDao;
 
     @Autowired
-    public MyPageController(MyPageService myPageService, ApplyDao applyDao, JobPostService jobPostService, ApplyService applyService, MyPageDao myPageDao) {
+    public MyPageController(MyPageService myPageService, ApplyDao applyDao, JobPostService jobPostService, ApplyService applyService, MyPageDao myPageDao, LikeDao likeDao) {
         this.myPageService = myPageService;
         this.applyDao = applyDao;
         this.jobPostService = jobPostService;
         this.applyService = applyService;
         this.myPageDao = myPageDao;
-    }
-
-
-    public MyPageController(MyPageService myPageService, ApplyDao applyDao) {
-        this.myPageService = myPageService;
-        this.applyDao = applyDao;
+        this.likeDao = likeDao;
     }
 
     @GetMapping("/profile")
@@ -59,26 +50,37 @@ public class MyPageController {
         if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
         String userType = session.getAttribute("userType").toString();
         String returnUrl = "";
-        Object sessionUser = session.getAttribute("user");
+//        Object sessionUser = session.getAttribute("user");
+
+        String id = SessionUtil.getSessionUserId(session);
         if (userType.equals("U")) {
-            UserDto user = (UserDto) sessionUser;
-            String userId = user.getUserId(); // UserDto 객체의 userId 필드 접근
-            List<ResumeResponseDto> resumeList = myPageService.MyPageResumeListById(userId);
-            List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListByIdTop3(userId);
+//            UserDto user = (UserDto) sessionUser;
+//            String userId = user.getUserId(); // UserDto 객체의 userId 필드 접근
+
+            List<ResumeResponseDto> resumeList = myPageService.MyPageResumeListById(id);
+            List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListByIdTop3(id);
             model.addAttribute("resumeList", resumeList);
             model.addAttribute("scrapList", scrapList);
-            model.addAttribute("scrapSize", myPageDao.getCountScrapByUserId(userId));
+            model.addAttribute("scrapSize", myPageDao.getCountScrapByUserId(id));
             returnUrl = "/mypage/user-mypage";
         } else if (userType.equals("C")) {
-            CompanyDto user = (CompanyDto) sessionUser;
-            String companyId = user.getCompanyId();
-            List<ProposalResponseDto> proposalList = myPageService.MyPageProposalListByCompanyIdTop3(companyId);
-            model.addAttribute("proposalSize", myPageDao.getCountProposalByCompanyId(companyId));
-            model.addAttribute("plist", proposalList);
+//            CompanyDto user = (CompanyDto) sessionUser;
+//            String companyId = user.getCompanyId();
 
-            List<JobPostResponseDto> jobPostList = myPageService.MyPageJobPostListByCompanyIdTop3(companyId);
-            model.addAttribute("jobPostSize", myPageDao.getCountJobPostByCompanyId(companyId));
+            // 제안서 리스트
+            List<ProposalResponseDto> proposalList = myPageService.MyPageProposalListByCompanyIdTop3(id);
+            model.addAttribute("proposalSize", myPageDao.getCountProposalByCompanyId(id));
+            model.addAttribute("plist", proposalList);
+            
+            // 채용공고 리스트
+            List<JobPostResponseDto> jobPostList = myPageService.MyPageJobPostListByCompanyIdTop3(id);
+            model.addAttribute("jobPostSize", myPageDao.getCountJobPostByCompanyId(id));
             model.addAttribute("jobPostList", jobPostList);
+
+            // 좋아요 구직자 리스트
+            List<LikeResponseDto> likeList = likeDao.getLikeListByCompanyIdTop3(SessionUtil.getSessionUserId(session));
+            model.addAttribute("likeList", likeList);
+
             returnUrl = "/mypage/company-mypage";
         }
         return returnUrl;
@@ -92,13 +94,11 @@ public class MyPageController {
 
         String userType = session.getAttribute("userType").toString();
         String returnPage = "";
-        Object sessionUser = session.getAttribute("user");
+
+        String id = SessionUtil.getSessionUserId(session);
 
         if (userType.equals("U")) {
-            UserDto user = (UserDto) session.getAttribute("user");
-            String userId = user.getUserId();
-
-            List<ApplyResponseDto> applyList = applyDao.getApplyListByUserId(userId);
+            List<ApplyResponseDto> applyList = applyDao.getApplyListByUserId(id);
 
             model.addAttribute("applyList", applyList);
             returnPage = "/mypage/user-apply";
@@ -119,11 +119,8 @@ public class MyPageController {
         if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
         String userType = session.getAttribute("userType").toString();
         String returnPage = "";
-        Object sessionUser = session.getAttribute("user");
 
         if (userType.equals("C")) {
-            CompanyDto user = (CompanyDto) sessionUser;
-            String companyId = user.getCompanyId();
             List<ApplyResponseDto> applyList = applyService.getApplyListByJobPostNo(jobPostNo);
             System.out.println(applyList);
             model.addAttribute("applyList", applyList);
@@ -138,7 +135,8 @@ public class MyPageController {
 
         String userType = session.getAttribute("userType").toString();
         String returnPage = "";
-        Object sessionUser = session.getAttribute("user");
+
+        String id = SessionUtil.getSessionUserId(session);
 
         if (userType.equals("U")) {
 
@@ -146,15 +144,23 @@ public class MyPageController {
 
         } else if (userType.equals("C")) {
 
-            CompanyDto user = (CompanyDto) sessionUser;
-            String companyId = user.getCompanyId();
-            List<JobPostResponseDto> jobPostList = jobPostService.getJobPostListByCompanyId(companyId);
+            List<JobPostResponseDto> jobPostList = jobPostService.getJobPostListByCompanyId(id);
             System.out.println(jobPostList);
             model.addAttribute("jobPostList", jobPostList);
             returnPage = "/mypage/company-job-post";
 
         }
         return returnPage;
+    }
+
+    @GetMapping("/company-interest-user")
+    public String userInterestCompany(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if(SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
+
+        List<LikeResponseDto> likeList = likeDao.getLikeListByCompanyId(SessionUtil.getSessionUserId(session));
+
+        model.addAttribute("likeList", likeList);
+        return "/mypage/user-interest-company";
     }
 
 }
