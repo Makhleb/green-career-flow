@@ -21,13 +21,39 @@
     border: #8B1FFF solid 1px;
 }
 
-.applicant-item{
+.offerY-item{
     border : #8B1FFF 1px solid;
     border-radius: 5px;
     padding:20px;
     margin: 10px 0 20px 0;
 }
+.skill_codes{
+    margin-left: 400px;
+    transform: translateY(-10px);
+}
+
+.skill_box{
+    display: inline-block;
+    border: #8B1FFF solid 1px;
+    width:120px;
+    height: 26px;
+    margin: 10px;
+    border-radius: 20px;
+    text-align: center;
+    align-items: center;
+}
+
 .right{
     float: right;
+    margin-right: 30px;
     transform: translateY(-10px);
+}
+
+i {
+    font-size: 30px;
+    color: #8B1FFF;
+}
+
+.like-btn {
+    cursor: pointer;
 }
