@@ -31,4 +31,11 @@
         DELETE FROM tbl_community
         WHERE community_no = #{communityNo}
     </delete>
+
+    <select id="getListByUserId">
+        SELECT *
+        FROM tbl_community
+        WHERE user_id = #{userId}
+        ORDER BY community_no DESC
+    </select>
 </mapper>
