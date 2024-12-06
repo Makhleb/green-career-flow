@@ -54,6 +54,7 @@ public class JobPostController {
     @GetMapping("/register")
     public String register(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
+
         model.addAttribute("skillGubnList", gubnService.getGubnList(GroupCode.SKILL.name()));
         model.addAttribute("workTypeList", gubnService.getGubnList(GroupCode.WORK_TYPE.name()));
         model.addAttribute("workList", gubnService.getGubnList(GroupCode.WORK.name()));

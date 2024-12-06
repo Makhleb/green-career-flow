@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrapper {
+            margin: 0 auto;
+            width: 1500px;
+        }
+
+        .grid-container {
+            display: grid;
+            width: 100%;
+            grid-template-rows: 1fr auto;
+            grid-template-columns: 1fr auto;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .grid-item {
+            border-radius: 5px;
+            font-size: 22px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .grid-item > img {
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<main>
+    <div id="wrapper">
+        <div id="skill_select">
+            <select id="skillType">
+                <option value="" selected>기술스택</option>
+                <th:block th:each="skillType : ${skillGubnList}">
+                    <option th:value="${skillType.code}" th:text="${skillType.name}"></option>
+                </th:block>
+            </select>
+<!--            <select id="workType">-->
+<!--                <option value="" selected>경력</option>-->
+<!--                <th:block th:each="workType : ${workTypeList}">-->
+<!--                    <option th:value="${workType.code}" th:text="${workType.name}"></option>-->
+<!--                </th:block>-->
+<!--            </select>-->
+        </div>
+        <div id="container">
+            <br>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <div id="skillCodeList">
+                        <div class="grid_posting">
+                            <th:block>
+                                <div class="grid_posting_item" th:each="Recentlist : ${ulist}">
+                                    <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${Recentlist.jobPostNo})}">
+                                        <img th:src="@{/static/images/{companyImage}(companyImage=${Recentlist.companyImage})}"
+                                             style="width: 380px" height="250px">
+                                    </a>
+                                    <div class="grid_posting_item_enddate">
+                                        <th:block th:if="${Recentlist.endDate != null}">
+                                            [[${Recentlist.endDate}]]
+                                        </th:block>
+                                        <th:block th:if="${Recentlist.endDate == null}">
+                                            상시채용
+                                        </th:block>
+                                    </div>
+                                    <p>
+                                        [[${Recentlist.companyName}]]
+                                    </p>
+                                    <p th:text="${Recentlist.skillCodes}"></p>
+                                    <span>[[${Recentlist.companyAddress}]]
+                                <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                                <span th:if="${Recentlist.jobHistory > 0}"> 경력 [[${Recentlist.jobHistory}]]년 이상</span>
+                                <span th:if="${Recentlist.jobHistory <= 0}"> 신입 </span>
+                            </span>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
+</body>
+<script>
+    document.getElementById('skillType').addEventListener('change', function () {
+        const selectedSkillType = this.value;
+        console.log(selectedSkillType);
+        if (selectedSkillType) {
+            axios.get('/api/skillMatching/select',{
+                params: {
+                    skillCode : selectedSkillType
+                }
+            })
+                .then(function (response) {
+                    console.log(response);
+                    const data = response.data;
+                    const newList = document.getElementById('skillCodeList');
+                    newList.innerHTML = '';
+                    data.forEach((post) => {
+                        const newDiv = document.createElement("div");
+                        newDiv.innerHTML = `
+                        <div class="grid_posting">
+                            <a href="/job-post/detail/${post.jobPostNo}">
+                                <img src="/static/images/${post.companyImage}" style="width: 380px" height="250px" />
+                            </a>
+                            <div class="grid_posting_item_enddate">
+                                ${post.endDate != null ? post.endDate : '상시채용'}
+                            </div>
+                            <p>${post.companyName}</p>
+                            <p>${post.skillCodes}</p>
+                            <span>${post.companyAddress}
+                                <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                                <span>${post.jobHistory > 0 ? `경력 ${post.jobHistory}년 이상` : '신입'}</span>
+                            </span>
+                        </div>
+            `;
+                        newList.appendChild(newDiv);  // 새 div 요소를 기존 목록에 추가
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+    });
+
+</script>
+</html>

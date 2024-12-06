@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.void2.careermanagement.dao.UserSkillMatchingDao">
+    <select id="getRecentJobPostList" resultType="com.void2.careermanagement.dto.response.UserSkillMatchingResponseDto">
+        SELECT c.company_id, c.company_address, c.company_image, jp.job_post_no, jp.title, jp.job_history, jp.start_date, jp.end_date , c.company_name,
+        GROUP_CONCAT(jps.skill_code SEPARATOR ', ') AS skill_codes
+        FROM tbl_job_post jp
+        JOIN tbl_company c ON jp.company_id = c.company_id
+        JOIN tbl_job_post_skill jps ON jp.job_post_no = jps.job_post_no
+        GROUP BY jp.job_post_no
+        ORDER BY start_date DESC;
+    </select>
+    <select id="getSkillTypePostList" resultType="com.void2.careermanagement.dto.response.UserSkillMatchingResponseDto">
+        SELECT c.company_id, c.company_address, c.company_image, jp.job_post_no, jp.title, jp.job_history, jp.start_date, jp.end_date , c.company_name,
+        GROUP_CONCAT(jps.skill_code) AS skill_codes
+        FROM tbl_job_post jp
+        JOIN tbl_company c ON jp.company_id = c.company_id
+        JOIN tbl_job_post_skill jps ON jp.job_post_no = jps.job_post_no
+        GROUP BY jp.job_post_no
+        HAVING FIND_IN_SET(#{skillCode}, GROUP_CONCAT(jps.skill_code)) > 0
+        ORDER BY start_date DESC;
+<!--        SELECT c.company_id, c.company_address, c.company_image, jp.job_post_no, jp.title, jp.job_history, jp.start_date, jp.end_date , c.company_name-->
+<!--        FROM tbl_job_post jp-->
+<!--        JOIN tbl_company c ON jp.company_id = c.company_id-->
+<!--        JOIN tbl_job_post_skill jps ON jp.job_post_no = jps.job_post_no-->
+<!--        WHERE jps.skill_code = #{skillCode}-->
+<!--        GROUP BY jp.job_post_no-->
+<!--        ORDER BY start_date DESC-->
+    </select>
+<!--    <select id="getSkillListByJobPostNo" resultType="com.void2.careermanagement.dto.GubnDto">-->
+<!--        SELECT A.job_post_no, A.skill_code AS code, B.name AS name-->
+<!--        FROM tbl_job_post_skill A-->
+<!--        LEFT JOIN-->
+<!--        (SELECT CODE, NAME-->
+<!--        FROM tbl_gubn-->
+<!--        WHERE group_code = 'SKILL') B ON A.skill_code = B.code-->
+<!--        WHERE A.job_post_no = #{jobPostNo};-->
+<!--    </select>-->
+</mapper>
