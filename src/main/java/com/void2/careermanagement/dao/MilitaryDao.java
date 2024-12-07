@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface MilitaryDao {
     int insertMilitary(@Param("M")MilitaryDto militaryDto,@Param("resumeNoPk") int resumeNoPk);
+    MilitaryDto getMilitaryById(@Param("resumeNo") int resumeNo);
 }

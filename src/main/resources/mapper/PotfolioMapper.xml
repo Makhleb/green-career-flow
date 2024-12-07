@@ -11,5 +11,11 @@
             (#{resumeNoPk}, #{P.potfolioFilename})
         </foreach>
     </insert>
+    <select id="getPotfolio" resultType="com.void2.careermanagement.dto.PotfolioDto">
+        SELECT resume_no,
+        potfolio_filename
+        FROM tbl_potfolio
+        WHERE resume_no = #{resumeNo}
+    </select>
 </mapper>
 

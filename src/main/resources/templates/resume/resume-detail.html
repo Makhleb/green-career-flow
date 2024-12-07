@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>이력서 조회</title>
+</head>
+<body>
+<div th:replace="~{layout/fragments/header ::  header}"></div>
+<link rel="stylesheet" href="/static/css/resume-detail.css">
+<link rel="stylesheet" href="/static/css/common.css">
+<main>
+    <div class="vertical-center">
+        <div class="grid-row" style="gap: 6rem">
+            <div class="profile">
+                <div class="title flex-center">
+                    <span th:text="${session.user.userName}">이름</span>
+                    <span> 님</span>
+                    <span th:if="${totalResume.resume.jobHistory == 0}" class="half-circle">신입</span>
+                    <span th:unless="${totalResume.resume.jobHistory == 0}"
+                          th:text="${totalResume.resume.jobHistory} + '년차'" class="half-circle"></span>
+                </div>
+                <div class="sub-comment">
+                    <span th:if="${session.user.userGender} == 'F'">여성</span>
+                    <span th:unless="${session.user.userGender} == 'F'">남성</span>
+                    <span>,</span>
+                    <span th:text="${session.user.userBirth}">생년월일 </span>
+                    <span id="userAge">나이</span>
+                </div>
+                <div class="flex-row moreMargin">
+                    <div>
+                        <div class="oneMargin"><span class="sub-comment">이메일</span> <span
+                                th:text="${session.user.userEmail}">이메일내용</span></div>
+                        <div class="oneMargin"><span class="sub-comment">우편번호</span> <span
+                                th:text="${totalResume.resume.zonecode}">주소내용</span></div>
+                        <div class="oneMargin"><span class="sub-comment">희망근무지역</span> <span
+                                th:text="${totalResume.resume.wishArea}">내용</span></div>
+                        <div class="oneMargin"><span class="sub-comment">희망연봉</span> <span
+                                th:text="${totalResume.resume.wishSalary}">내용</span></div>
+                    </div>
+                    <div>
+                        <div class="oneMargin"><span class="sub-comment">휴대폰</span> <span
+                                th:text="${session.user.userPhone}">내용</span></div>
+                        <div class="oneMargin"><span class="sub-comment">희망직무</span> <span
+                                th:text="${totalResume.resume.workCode}">내용</span></div>
+                        <div class="oneMargin"><span class="sub-comment">희망근무시간</span> <span
+                                th:text="${totalResume.resume.wishTime}">내용</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="photo">
+                <img src="#" alt="사진이 존재하지 않습니다">
+            </div>
+        </div>
+        <section class="section">
+            <span class="title" th:text="${totalResume.resume.title}">이력서 제목 </span>
+            <span class="sub-comment" th:if="${totalResume.resume.modifyDate == null}"
+                  th:text="${#strings.substring(totalResume.resume.createDate, 0, 10)}"></span>
+            <span class="sub-comment" th:unless="${totalResume.resume.modifyDate == null}"
+                  th:text="${#strings.substring(totalResume.resume.modifyDate, 0, 10)}"></span>
+            <div class="sub-title">나의 스킬</div>
+            <div class="skills stack-wrapper">
+                <th:block th:each="skill : ${totalResume.resumeSkill}">
+                    <div class="skill">[[${skill.skillCode}]]</div>
+                </th:block>
+            </div>
+        </section>
+        <section class="section">
+            <div class="sub-title">병역사항</div>
+            <div><span class="sub-comment">병역사항</span> <span
+                    th:text="${totalResume.military.enlistDate} + '~' +${totalResume.military.releaseDate}">이메일내용</span>
+            </div>
+        </section>
+        <section class="section">
+            <div class="sub-title">학력</div>
+            <div class="flex-row">
+                <div>
+                    <div><span
+                            th:text="${totalResume.education.enterDate} + '~' +${totalResume.education.graduateDate}">이메일내용</span>
+                    </div>
+                    <div>졸업</div>
+                </div>
+                <div>
+                    <div>
+                        <span class="column-title" th:text="${totalResume.education.schoolName}"></span>
+                        <span th:text="${totalResume.education.specialty}" style="margin-left: 1rem"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <th:block th:each="activity : ${totalResume.activity}">
+            <section class="section">
+                <th:block th:if="${activity.activityType == 'JOB_CAREER'}">
+                    <div class="sub-title">직무 관련 활동</div>
+                    <div class="flex-row">
+                        <div th:text="${activity.startDate} + '~' +${activity.endDate}"></div>
+                        <div>
+                            <div th:text="${activity.activityCenterName}"></div>
+                            <div th:text="${activity.activityContent}"></div>
+                        </div>
+                    </div>
+                </th:block>
+            </section>
+            <section class="section">
+                <th:block th:if="${activity.activityType == 'JOB_ACT'}">
+                    <div class="sub-title">직무 활동</div>
+                    <div class="flex-row">
+                        <div th:text="${activity.startDate} + '~' +${activity.endDate}"></div>
+                        <div>
+                            <div th:text="${activity.activityCenterName}"></div>
+                            <div th:text="${activity.activityContent}"></div>
+                        </div>
+                    </div>
+                </th:block>
+            </section>
+            <section class="section">
+                <th:block th:if="${activity.activityType == 'SOCIAL_ACT'}">
+                    <div class="sub-title" th:if="${activity.activityType == 'SOCIAL_ACT'}">직무 관련 활동</div>
+                    <div class="flex-row">
+                        <div th:text="${activity.startDate} + '~' +${activity.endDate}"></div>
+                        <div>
+                            <div th:text="${activity.activityCenterName}"></div>
+                            <div th:text="${activity.activityContent}"></div>
+                        </div>
+                    </div>
+                </th:block>
+            </section>
+        </th:block>
+
+        <section class="section">
+            <div class="sub-title">자격증</div>
+            <th:block th:each="license : ${totalResume.license}">
+                <div class="flex-row license">
+                    <div th:text="${license.licenseName}"></div>
+                    <div th:text="${license.licenseCenterName}"></div>
+                    <div th:text="${license.passDate}"></div>
+                </div>
+            </th:block>
+        </section>
+        <section class="section">
+            <div class="sub-title">자기소개서</div>
+            <th:block th:each="introduce : ${totalResume.introduce}">
+                <div style="margin-bottom: 0.3rem; font-weight: 550" th:text="${introduce.title}"></div>
+                <div style="margin-bottom: 1.5rem" th:text="${introduce.content}"></div>
+            </th:block>
+        </section>
+        <section class="section">
+            <div class="sub-title">포트폴리오</div>
+            <div class="column-title">링크</div>
+            <div th:text="${totalResume.resume.portfolioLink}"></div>
+            <hr class="small-hr">
+            <div class="column-title">파일</div>
+            <th:block th:each="portfolio : ${totalResume.potfolio}">
+                <div th:text="${portfolio.potfolioFilename}"></div>
+            </th:block>
+
+        </section>
+    </div>
+</main>
+<div th:replace="~{layout/fragments/footer ::  footer}"></div>
+</body>
+</html>

@@ -8,7 +8,7 @@ window.onload = function sessionCheck() {
         location.href = "/";
     } else {
         base64img = userSession.companyImage;
-
+        console.log(base64img);
         $('#companyId').val(userSession.companyId);
         $('#companyPw').val(userSession.companyPw);
         $('#companyName').val(userSession.companyName);
@@ -21,11 +21,10 @@ window.onload = function sessionCheck() {
         $('#companyEmail').val(userSession.companyEmail);
         $('#companyContact').val(userSession.companyContact);
         $("#companyInfo").val(userSession.companyInfo);
-        $('.preview').attr('src', loadImage(userSession.companyImage) + base64img);
+        $('.preview').attr('src', loadImage(base64img));
         $('#companyEmployee').val(userSession.companyEmployee);
     }
 }
-
 
 
 /**
@@ -70,36 +69,34 @@ function sessionUpdate() {
  * 업데이트 함수
  */
 function update() {
-    if (confirm("정말루?")) {
-        axios.put("/api/company/account/update", {
-            companyId: $("#companyId").val(),
-            companyPw: $("#companyPw").val(),
-            companyName: $("#companyName").val(),
-            companyNumber: $("#companyNumber").val(),
-            companyZonecode: $("#companyZonecode").val(),
-            companyAddress: $("#companyAddress").val(),
-            companyAddressDetail: $("#companyAddressDetail").val(),
-            companyWebsite: $("#companyWebsite").val(),
-            companyEmail: $("#companyEmail").val(),
-            companyContact: $("#companyContact").val(),
-            companyBirth: $("#companyBirth").val(),
-            companyInfo: $("#companyInfo").val(),
-            companyImage: base64img,
-            companyEmployee: $('#companyEmployee').val()
+    axios.put("/api/company/account/update", {
+        companyId: $("#companyId").val(),
+        companyPw: $("#companyPw").val(),
+        companyName: $("#companyName").val(),
+        companyNumber: $("#companyNumber").val(),
+        companyZonecode: $("#companyZonecode").val(),
+        companyAddress: $("#companyAddress").val(),
+        companyAddressDetail: $("#companyAddressDetail").val(),
+        companyWebsite: $("#companyWebsite").val(),
+        companyEmail: $("#companyEmail").val(),
+        companyContact: $("#companyContact").val(),
+        companyBirth: $("#companyBirth").val(),
+        companyInfo: $("#companyInfo").val(),
+        companyImage: base64img,
+        companyEmployee: $('#companyEmployee').val()
+    })
+        .then(function (response) {
+            if (response.data) {
+                sessionUpdate()
+                alert("회원정보 수정 성공")
+                location.href = "/mypage/profile";
+            } else {
+                alert("오류 발생(수정되지 않음)");
+            }
         })
-            .then(function (response) {
-                if (response.data) {
-                    sessionUpdate()
-                    alert("회원정보 수정 성공")
-                    location.reload(true);
-                } else {
-                    alert("오류 발생(수정되지 않음)");
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-    }
+        .catch(function (error) {
+            console.log(error);
+        })
 }
 
 /**
