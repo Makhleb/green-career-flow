@@ -4,6 +4,17 @@
  * @param base64String
  * @returns {string}
  */
+$(function () {
+    const path = window.location.pathname;
+
+    path.concat('mypage');
+
+    const checkA = $('a').attr('href').concat(path);
+    console.log(checkA);
+    checkA.css('color', 'red');
+
+})
+
 function loadImage(base64String) {
 
     // console.log(base64String);
