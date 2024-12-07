@@ -272,8 +272,38 @@
         .info .label, .info .value {
             margin-right: 15px;
         }
+
+        .content-wrap {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .job-post-list {
+            border-radius: 5px;
+            font-size: 22px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .job-post-list img {
+            margin-top: 15px;
+            border-radius: 5px;
+            height: 200px;
+        }
+        .job-post-container {
+            display: flex;
+            gap: 3px;
+        }
+        .job-post-list span {
+            font-size: 17px;
+        }
+        .job-post-list div {
+            font-size: 17px;
+        }
+
     </style>
 </head>
+
 <body>
 <div th:replace="~{layout/fragments/header :: header}"></div>
 <main>
@@ -299,15 +329,45 @@
                 <img th:data-company-img="${companyInfo.companyImageBase64}" id="companyImg">
             </div>
         </div>
-        <div class="content-form">
-            <div class="title">
-                <p>회사소개</p>
-            </div>
-            <hr>
-            <div class="company-info" th:text="${companyInfo.companyInfo}">
+        <div class="content-wrap">
+            <div class="content-form">
+                <div class="title">
+                    <p>회사소개</p>
+                </div>
+                <hr>
+                <div class="company-info" th:text="${companyInfo.companyInfo}">
 
+                </div>
             </div>
+            <div class="content-form">
+                <div class="title">
+                    <p>채용중인 공고</p>
+                </div>
+                <hr>
+                <div class="job-post-list">
+                    <div class="job-post-container">
+                        <div class="job-post-item" th:each="company : ${companyInfo.jobPostList}">
+                            <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}">
+                                <img class="job-post-image">
+                            </a>
+                            <div class="job-post-enddate"> [[${company.endDate}]]</div>
+                            <p>
+                                [[${company.companyName}]]
+                            </p>
+                            <p>[[${company.title}]]</p>
+                            <span>
+                            [[${company.companyAddress}]]
+                            <span class="job-post-divider">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                            <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
+                            <span th:if="${company.jobHistory <= 0}"> 신입 </span>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
     </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
@@ -319,6 +379,7 @@
         const base64Img = document.querySelector('#companyImg').getAttribute("data-company-img");
 
         $('#companyImg').attr('src', loadImage(base64Img));
+        $('.job-post-image').attr('src', loadImage(base64Img));
     })
 
 </script>

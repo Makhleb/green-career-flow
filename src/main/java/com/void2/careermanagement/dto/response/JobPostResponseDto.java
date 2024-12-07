@@ -19,7 +19,8 @@ public class JobPostResponseDto {
     private String companyAddress;
     private String companyAddressDetail;
     private LocalDate companyBirth;
-    private String companyImage;
+    private byte[] companyImage;
+    private String companyImageBase64;
     private String companyEmail;
     private int companyEmployee;
     private String companyInfo;

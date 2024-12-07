@@ -3,115 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-  <link rel="stylesheet" th:href="@{/static/css/company-main.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/company-main.css}"/>
     <title>기업 메인페이지</title>
 </head>
 <body>
 <div th:replace="~{layout/fragments/header ::  header}"></div>
 <main>
     <div class="wrapper">
-      <div class="grid-container">
-          <div class="grid-item-left"></div>
-          <div class="grid-item">
-              <img th:src="@{/static/images/with_computer.jpg}">
-              <div class="imgText_main">Vo.2D<br>최고의 IT기업</div>
-          </div>
-          <div class="grid-item-blank" ></div>
-          <div class="grid-item">관심등록 인기 회원 Top 8</div>
-          <div class="grid-item">
-              <div class="grid-like-container_left">
-                  <div class="grid-like-item" th:each="user, userStat : ${uList}" th:if="${userStat.index >=0 && userStat.index < 4}">
+        <div class="grid-container">
+            <div class="grid-item-left"></div>
+            <div class="grid-item">
+                <img th:src="@{/static/images/with_computer.jpg}">
+                <div class="imgText_main">Vo.2D<br>최고의 IT기업</div>
+            </div>
+            <div class="grid-item-blank"></div>
+            <div class="grid-item">관심등록 인기 회원 Top 8</div>
+            <div class="grid-item">
+                <div class="grid-like-container_left">
+                    <div class="grid-like-item" th:each="user, userStat : ${uList}"
+                         th:if="${userStat.index >=0 && userStat.index < 4}">
                         <div class="flex-container">
                             <th:block th:if="${userStat.index == 0}">
-                                  <div class="grid-like-item-rank">Top [[${userStat.count}]]</div>
-                              </th:block>
-                              <th:block th:if="${userStat.index > 0 && userStat.index < 4}">
-                                  <div class="grid-like-item-rank2">Top [[${userStat.count}]]</div>
-                              </th:block>
-                              [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                              <th:block th:if="${user.jobHistory > 0}">
-                                  [[${user.jobHistory}]]년 이상
-                              </th:block>
-                              <th:block th:if="${user.jobHistory == 0}">
-                                  신입
-                              </th:block><br/>
+                                <div class="grid-like-item-rank">Top [[${userStat.count}]]</div>
+                            </th:block>
+                            <th:block th:if="${userStat.index > 0 && userStat.index < 4}">
+                                <div class="grid-like-item-rank2">Top [[${userStat.count}]]</div>
+                            </th:block>
+                            [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span
+                                class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                            <th:block th:if="${user.jobHistory > 0}">
+                                [[${user.jobHistory}]]년 이상
+                            </th:block>
+                            <th:block th:if="${user.jobHistory == 0}">
+                                신입
+                            </th:block>
+                            <br/>
                         </div>
-                      <span class="skill_codes">기술스택</span>
-                      <th:block th:each="skill : ${user.skillList}">
-                          <span class="skill_name">[[${skill.name}]]</span>
-                      </th:block>
-                  </div>
-              </div>
-              <div class="grid-like-container_right">
-                  <div class="grid-like-item" th:each="user, userStat : ${uList}" th:if="${userStat.index >= 4 && userStat.index < 8}">
-                      <div class="flex-container">
-                      <div class="grid-like-item-rank3">Top [[${userStat.count}]]</div>
-                      [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                      <th:block th:if="${user.jobHistory > 0}">
-                          [[${user.jobHistory}]]년 이상
-                      </th:block>
-                      <th:block th:if="${user.jobHistory == 0}">
-                          신입
-                      </th:block><br/>
-                      </div>
+                        <span class="skill_codes">기술스택</span>
+                        <th:block th:each="skill : ${user.skillList}">
+                            <span class="skill_name">[[${skill.name}]]</span>
+                        </th:block>
+                    </div>
+                </div>
+                <div class="grid-like-container_right">
+                    <div class="grid-like-item" th:each="user, userStat : ${uList}"
+                         th:if="${userStat.index >= 4 && userStat.index < 8}">
+                        <div class="flex-container">
+                            <div class="grid-like-item-rank3">Top [[${userStat.count}]]</div>
+                            [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span
+                                class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                            <th:block th:if="${user.jobHistory > 0}">
+                                [[${user.jobHistory}]]년 이상
+                            </th:block>
+                            <th:block th:if="${user.jobHistory == 0}">
+                                신입
+                            </th:block>
+                            <br/>
+                        </div>
 
-                      <span class="skill_codes">기술스택</span>
-                      <th:block th:each="skill : ${user.skillList}">
-                          <span class="skill_name">[[${skill.name}]]</span>
-                      </th:block>
-                  </div>
-              </div>
-          </div>
-          <div class="grid-item-blank" ></div>
-          <div class="grid-item">
-              최신 입사 지원 내역
-              <span style="float:right">
+                        <span class="skill_codes">기술스택</span>
+                        <th:block th:each="skill : ${user.skillList}">
+                            <span class="skill_name">[[${skill.name}]]</span>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item-blank"></div>
+            <div class="grid-item">
+                최신 입사 지원 내역
+                <span style="float:right">
                 <a href="/mypage/profile" style="color:darkgray">더보기<i class="bi bi-plus"></i></a>
             </span>
-          </div>
-          <div class="grid-item">
-              <th:block th:each="applicant : ${aListTop3}">
-                  <div class="grid-resume">
-                      <p>[[${applicant.jobPostTitle}]]</p>
-                      [[${applicant.userName}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${applicant.resumeTitle}]]<br/>
-                      [[${applicant.userGender}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span> [[${applicant.userAge}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                      <span th:if="${applicant.jobHistory > 0}"> 경력 [[${applicant.jobHistory}]]년 이상</span>
-                      <span th:if="${applicant.jobHistory == 0}"> 신입</span>
-                      <span class="right">
+            </div>
+            <div class="grid-item">
+                <th:block th:each="applicant : ${aListTop3}">
+                    <div class="grid-resume">
+                        <p>[[${applicant.jobPostTitle}]]</p>
+                        [[${applicant.userName}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${applicant.resumeTitle}]]<br/>
+                        [[${applicant.userGender}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                        [[${applicant.userAge}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                        <span th:if="${applicant.jobHistory > 0}"> 경력 [[${applicant.jobHistory}]]년 이상</span>
+                        <span th:if="${applicant.jobHistory == 0}"> 신입</span>
+                        <span class="right">
                           <span class="skill_codes">기술스택</span>
                           <th:block th:each="skill : ${applicant.skillList}">
                               <span class="skill_name">[[${skill.name}]]</span>
                           </th:block>
                       </span>
-                  </div>
-              </th:block>
-          </div>
-          <div class="grid-item-blank" ></div>
-          <div class="grid-item">
-              평점 높은 공고
-          </div>
-          <div class="grid-item">
-              <div class="grid_posting">
-                  <div class="grid_posting_item" th:each="company : ${cList}">
-                      <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}"><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
-                      <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
-                      <p>
-                          [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
-                          <i class="bi bi-star-fill" style="color:#F2AE2E"></i>&nbsp;&nbsp;
-                          <span th:text="${#numbers.formatDecimal(company.rating, 1, 1)}"></span>
-                      </p>
-                      <span>[[${company.companyAddress}]]
+                    </div>
+                </th:block>
+            </div>
+            <div class="grid-item-blank"></div>
+            <div class="grid-item">
+                평점 높은 공고
+            </div>
+            <div class="grid-item">
+                <div class="grid_posting">
+                    <div class="grid_posting_item" th:each="company : ${cList}">
+                        <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}">
+                            <img class="job-post-img" th:data-job-post-img="${company.companyImageBase64}">
+                        </a>
+                        <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
+                        <p>
+                            [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
+                            <i class="bi bi-star-fill" style="color:#F2AE2E"></i>&nbsp;&nbsp;
+                            <span th:text="${#numbers.formatDecimal(company.rating, 1, 1)}"></span>
+                        </p>
+                        <span>[[${company.companyAddress}]]
                         <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                         <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
                         <span th:if="${company.jobHistory <= 0}"> 신입 </span>
                     </span>
-                  </div>
-              </div>
-          </div>
-          <div class="grid-item-right"></div>
-      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-item-right"></div>
+        </div>
     </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
+<script src="/static/js/utils.js"></script>
+<script>
+
+    $(function () {
+        const jobPost = $('.job-post-img');
+        jobPost.each(function () {
+
+            $(this).attr('src', loadImage($(this).data('job-post-img'))); // src 속성 설정
+        });
+    })
+
+</script>
 </html>

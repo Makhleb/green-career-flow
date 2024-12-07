@@ -4,6 +4,7 @@ import com.void2.careermanagement.dao.JobPostDao;
 import com.void2.careermanagement.dto.request.JobPostRequestDto;
 import com.void2.careermanagement.dto.response.JobPostResponseDto;
 import com.void2.careermanagement.type.GroupCode;
+import com.void2.careermanagement.util.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,6 +84,9 @@ public class JobPostService {
         gubnList.add(GroupCode.JOB_RANK);
 
         JobPostResponseDto jobPostResponseDto = jobPostDao.getJobDetail(jobPostNo, gubnList.stream().map(Enum::name).toList());
+
+        jobPostResponseDto.setCompanyImageBase64(ImageUtil.encodeToBase64(jobPostResponseDto.getCompanyImage()));
+
         jobPostResponseDto.setBenefitList(jobPostDao.selectBenefitList(jobPostNo));
         jobPostResponseDto.setSkillList(jobPostDao.selectSkillList(jobPostNo));
         System.out.println(jobPostResponseDto);

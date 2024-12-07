@@ -3,6 +3,7 @@ package com.void2.careermanagement.service;
 import com.void2.careermanagement.dao.UserResumeDao;
 import com.void2.careermanagement.dto.response.ApplicantResponseDto;
 import com.void2.careermanagement.dto.response.UserResponseDto;
+import com.void2.careermanagement.util.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class UserResumeService {
         for (int i = 0; i < highLikeList.size(); i++) {
             highLikeList.get(i).setSkillList(userResumeDao.getSkillListByResumeNo(highLikeList.get(i).getResumeNo()));
         }
-        return highLikeList;
+        return setImageEncodeBase64(highLikeList);
     }
 
     public List<UserResponseDto> getUserResumeListByApplyIdTop3(String companyId) {
@@ -42,5 +43,12 @@ public class UserResumeService {
             userResumeList.get(i).setSkillList(userResumeDao.getSkillListByResumeNo(userResumeList.get(i).getResumeNo()));
         }
         return userResumeList;
+    }
+
+    public List<ApplicantResponseDto> setImageEncodeBase64(List<ApplicantResponseDto> highLikeList) {
+        highLikeList.forEach(dto -> {
+            dto.setCompanyImageBase64(ImageUtil.encodeToBase64(dto.getCompanyImage()));
+        });
+        return highLikeList;
     }
 }

@@ -2,6 +2,7 @@ package com.void2.careermanagement.service;
 
 import com.void2.careermanagement.dao.UserSkillMatchingDao;
 import com.void2.careermanagement.dto.response.UserSkillMatchingResponseDto;
+import com.void2.careermanagement.util.ImageUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,9 @@ public class UserSkillMatchingService {
     public List<UserSkillMatchingResponseDto> getSkillTypePostList(String skillCode){
         List<UserSkillMatchingResponseDto> list = userSkillMatchingDao.getSkillTypePostList(skillCode);
 
+        list.forEach(val -> {
+            val.setCompanyImageBase64(ImageUtil.encodeToBase64(val.getCompanyImage()));
+        });
 //        for (int i = 0; i < list.size(); i++) {
 //            list.get(i).setSkillList(userSkillMatchingDao.getSkillListByJobPostNo(list.get(i).getJobPostNo()));
 //        }

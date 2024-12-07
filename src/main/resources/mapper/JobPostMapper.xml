@@ -91,14 +91,14 @@
         A.process,
         A.start_date,
         A.end_date,
-        <!-- gubnList에서 각 항목의 NAME을 선택 -->
+        <!-- groupCodeList에서 각 항목의 NAME을 선택 -->
         <foreach collection="groupCodeList" item="groupCode" index="index" separator=",">
             ${groupCode}.NAME AS ${groupCode}_name
         </foreach>
         FROM
         tbl_job_post A
         LEFT JOIN tbl_company company ON A.company_id = company.company_id
-        <!-- gubnList를 기반으로 LEFT JOIN 생성 -->
+        <!-- groupCodeList를 기반으로 LEFT JOIN 생성 -->
         <foreach collection="groupCodeList" item="groupCode" index="index">
             LEFT JOIN (
             SELECT *
@@ -183,14 +183,14 @@
         A.process,
         A.start_date,
         A.end_date,
-        <!-- gubnList에서 각 항목의 NAME을 선택 -->
+        <!-- groupCodeList에서 각 항목의 NAME을 선택 -->
         <foreach collection="groupCodeList" item="groupCode" index="index" separator=",">
             ${groupCode}.NAME AS ${groupCode}_name
         </foreach>
         FROM
         tbl_job_post A
         LEFT JOIN tbl_company company ON A.company_id = company.company_id
-        <!-- gubnList를 기반으로 LEFT JOIN 생성 -->
+        <!-- groupCodeList를 기반으로 LEFT JOIN 생성 -->
         <foreach collection="groupCodeList" item="groupCode" index="index">
             LEFT JOIN (
             SELECT *

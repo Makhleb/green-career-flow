@@ -46,10 +46,11 @@
         }
 
         .container {
-            width: 60%;
+            /*width: 60%;*/
             display: flex;
             flex-direction: column;
             min-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -198,6 +199,7 @@
 
         .content-form-content {
             margin-top: 10px;
+            white-space: pre-wrap;
         }
 
         .content-form-content p {
@@ -376,6 +378,11 @@
             bottom: 0;
             margin-top: 10px;
         }
+        #companyImg {
+            width: 260px;
+            height: 125px;
+            margin: 5px 0;
+        }
     </style>
     <link rel="stylesheet" href="/static/css/common.css">
 </head>
@@ -435,7 +442,7 @@
                 </div>
             </div>
             <div class="top-sub-wrapper-right flex-col">
-                <img src="/static/images/heart.png">
+                <img id="companyImg" th:data-company-image="${jobPostInfo.companyImageBase64}">
                 <div class="company-info flex-col">
                     <p class="title">기업정보</p>
                     <div class="right-form flex-row">
@@ -459,7 +466,7 @@
                     </div>
                 </div>
                 <div class="company-detail-btn-container">
-                    <button th:onclick="'location.href=/company/detail/' + ${companyId}" id="company-detail-btn">기업 정보 >></button>
+                    <button th:onclick="|location.href='@{/company/detail/{companyId}(companyId=${jobPostInfo.companyId})}'|" id="company-detail-btn">기업 정보 >></button>
                 </div>
             </div>
         </div>
@@ -705,7 +712,12 @@
             alert("먼저 이력서를 선택해주세요.");
         }
     });
-</script>
 
+    $(function () {
+        const base64Img = document.querySelector('#companyImg').getAttribute("data-company-image");
+
+        $('#companyImg').attr('src', loadImage(base64Img));
+    })
+</script>
 </body>
 </html>

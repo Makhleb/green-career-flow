@@ -221,6 +221,10 @@
             width: 20px;
             min-width: 450px;
         }
+        #companyImg {
+            width: 260px;
+            height: 125px;
+        }
 
     </style>
     <link rel="stylesheet" href="/static/css/common.css">
@@ -276,7 +280,7 @@
                 </div>
             </div>
             <div class="top-sub-wrapper-right flex-col">
-                <img src="/static/images/heart.png">
+                <img id="companyImg" th:data-company-image="${jobPostInfo.companyImage}">
                 <div class="company-info flex-col">
                     <p class="title">기업정보</p>
                     <div class="right-form flex-row">
@@ -300,7 +304,7 @@
                     </div>
                 </div>
                 <div class="company-detail-btn-container">
-                    <button id="company-detail-btn">기업 정보 >></button>
+                    <button th:onclick="|location.href='@{/company/detail/{companyId}(companyId=${jobPostInfo.companyId})}'|" id="company-detail-btn">기업 정보 >></button>
                 </div>
             </div>
         </div>
@@ -378,4 +382,12 @@
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
+<script src="/static/js/utils.js"></script>
+<script>
+    $(function () {
+        const base64Img = document.querySelector('#companyImg').getAttribute("data-company-image");
+
+        $('#companyImg').attr('src', loadImage(base64Img));
+    })
+</script>
 </html>

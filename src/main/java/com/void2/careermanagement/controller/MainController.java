@@ -42,6 +42,8 @@ public class MainController {
 
                 UserDto sessionUser = (UserDto) session.getAttribute("user");
                 List<CompanyResponseDto> lList = companyService.getLikeCompanyList(sessionUser.getUserId());
+
+
                 if (!lList.isEmpty()) {
                     for (CompanyResponseDto l : lList) System.out.println(l);
                     isEmpty = "notEmpty";

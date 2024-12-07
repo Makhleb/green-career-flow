@@ -1,7 +1,6 @@
 package com.void2.careermanagement.controller;
 
 import com.void2.careermanagement.dao.ApplyDao;
-import com.void2.careermanagement.dao.JobPostDao;
 import com.void2.careermanagement.dao.LikeDao;
 import com.void2.careermanagement.dao.ScrapDao;
 import com.void2.careermanagement.dto.CompanyDto;
@@ -43,7 +42,7 @@ public class JobPostController {
     private final ApplyDao applyDao;
 
     @Autowired
-    public JobPostController(GubnService groupService, JobPostService jobPostService, LikeDao likeDao, ScrapDao scrapDao, ApplyDao applyDao, JobPostDao jobPostDao) {
+    public JobPostController(GubnService groupService, JobPostService jobPostService, LikeDao likeDao, ScrapDao scrapDao, ApplyDao applyDao) {
         this.gubnService = groupService;
         this.jobPostService = jobPostService;
         this.likeDao = likeDao;

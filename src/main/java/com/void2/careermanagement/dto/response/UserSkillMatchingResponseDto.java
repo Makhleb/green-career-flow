@@ -13,7 +13,6 @@ public class UserSkillMatchingResponseDto {
     private String companyId;         // 회사 ID
     private String companyName;
     private String companyAddress;  // 회사 주소
-    private String companyImage;
     private int jobPostNo;         // 채용 공고 번호
     private String title;           // 채용 공고 제목
     private int jobHistory;      // 업무 경력
@@ -21,6 +20,8 @@ public class UserSkillMatchingResponseDto {
     private LocalDate endDate;
     private String skillCodes;       // 기술 코드
     private String skillCode;       // 기술 코드
+    private byte[] companyImage;
+    private String companyImageBase64;
 
 //    private List<GubnDto> skillList;
 

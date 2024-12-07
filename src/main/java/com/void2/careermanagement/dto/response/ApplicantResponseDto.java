@@ -17,4 +17,6 @@ public class ApplicantResponseDto {
     private int likeCount;                      // 좋아요 수
     private String resumeTitle;                 //이력서 제목
     private List<GubnDto> skillList;            // 스킬리스트
+    private byte[] companyImage;
+    private String companyImageBase64;
 }

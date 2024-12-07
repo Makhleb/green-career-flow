@@ -21,7 +21,7 @@
             /*border: 1px solid black;*/
         }
 
-        #skillCodeList img{
+        #skillCodeList img {
             border-radius: 5px;
             margin-top: 20px;
             width: 100%;
@@ -29,14 +29,15 @@
             transition: transform 0.3s ease;
         }
 
-        #skillCodeList img:hover{
+        #skillCodeList img:hover {
             transform: scale(1.1);
             border-radius: 5px;
         }
-        .select_box{
+
+        .select_box {
             display: inline-block;
             border: #8B1FFF solid 1px;
-            width:120px;
+            width: 120px;
             height: 35px;
             margin: 10px;
             border-radius: 20px;
@@ -44,7 +45,7 @@
             align-items: center;
         }
 
-        .select_box:hover{
+        .select_box:hover {
             background-color: #8B1FFF;
             color: white;
         }
@@ -57,9 +58,10 @@
     <div id="wrapper">
         <div class="skill_select">
             <select id="skillType" class="select_box">
-                <option value="" selected disabled style="background-color: white; color:black;">기술스택</option>
+                <option value="" selected style="background-color: white; color:black;">기술스택</option>
                 <th:block th:each="skillType : ${skillGubnList}">
-                    <option th:value="${skillType.code}" th:text="${skillType.name}" style="background-color: white; color:black;"></option>
+                    <option th:value="${skillType.code}" th:text="${skillType.name}"
+                            style="background-color: white; color:black;"></option>
                 </th:block>
             </select>
         </div>
@@ -70,7 +72,9 @@
                 <!--                        <div class="grid_posting">-->
                 <div class="grid_posting_item" th:each="Recentlist : ${ulist}">
                     <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${Recentlist.jobPostNo})}">
-                        <img th:src="@{/static/images/{companyImage}(companyImage=${Recentlist.companyImage})}"
+                        <!--                        <img th:src="@{/static/images/{companyImage}(companyImage=${Recentlist.companyImage})}"-->
+                        <!--                             style="width: 380px" height="250px">-->
+                        <img class="company-image" th:data-company-image="${Recentlist.companyImageBase64}"
                              style="width: 380px" height="250px">
                     </a>
                     <!--                                    <div class="grid_posting_item_enddate">-->
@@ -101,27 +105,30 @@
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
+<script src="/static/js/utils.js"></script>
 <script>
     document.getElementById('skillType').addEventListener('change', function () {
         const selectedSkillType = this.value;
         console.log(selectedSkillType);
-        if (selectedSkillType) {
-            axios.get('/api/skillMatching/select', {
-                params: {
-                    skillCode: selectedSkillType
-                }
-            })
-                .then(function (response) {
-                    console.log(response);
-                    const data = response.data;
-                    const newList = document.getElementById('skillCodeList');
-                    newList.innerHTML = '';
-                    data.forEach((post) => {
-                        const newDiv = document.createElement("div");
-                        newDiv.innerHTML = `
+        // if (selectedSkillType) {
+        axios.get('/api/skillMatching/select', {
+            params: {
+                skillCode: selectedSkillType
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                const data = response.data;
+                const newList = document.getElementById('skillCodeList');
+                // const base64Img = document.querySelector('#companyImg').getAttribute("data-company-image");
+                newList.innerHTML = '';
+                data.forEach((post) => {
+                    const newDiv = document.createElement("div");
+                    const src = loadImage(post.companyImageBase64);
+                    newDiv.innerHTML = `
                         <div class="grid_posting">
                             <a href="/job-post/detail/${post.jobPostNo}">
-                                <img src="/static/images/${post.companyImage}" style="width: 380px" height="250px" />
+                                <img src="${src}" style="width: 380px" height="250px" />
                             </a>
                             <!--/*<div class="grid_posting_item_enddate">
                                 ${post.endDate != null ? post.endDate : '상시채용'}
@@ -134,14 +141,19 @@
                             </span>
                         </div>
             `;
-                        newList.appendChild(newDiv);  // 새 div 요소를 기존 목록에 추가
-                    });
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-        }
+                    newList.appendChild(newDiv);  // 새 div 요소를 기존 목록에 추가
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        // }
     });
 
+    $(function () {
+        $('.company-image').each(function () {
+            $(this).attr('src', loadImage($(this).data('company-image')));
+        });
+    })
 </script>
 </html>

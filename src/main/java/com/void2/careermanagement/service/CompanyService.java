@@ -27,14 +27,18 @@ public class CompanyService {
     }
 
     public List<CompanyResponseDto> getHighRatingCompanyList() {
-        return companyDao.getHighRatingList();
-    };
+        return setImageEncodeBase64(companyDao.getHighRatingList());
+    }
 
     public List<CompanyResponseDto> getFastDeadLineList() {
-        return companyDao.getFastEndDateList();
-    };
+        return setImageEncodeBase64(companyDao.getFastEndDateList());
+    }
 
-    public List<CompanyResponseDto> getLikeCompanyList(String id) {return companyDao.getLikeList(id);}
+    ;
+
+    public List<CompanyResponseDto> getLikeCompanyList(String id) {
+        return setImageEncodeBase64(companyDao.getLikeList(id));
+    }
 
     public CompanyResponseDto getCompanyInfoById(String id) {
         CompanyResponseDto companyInfo = companyDao.getCompanyInfoById(id);
@@ -52,6 +56,14 @@ public class CompanyService {
 
         companyInfo.setJobPostList(jobPostDao.getJobPostListByCompanyId(id, gubnList.stream().map(Enum::name).toList()));
         return companyInfo;
+    }
 
+    public List<CompanyResponseDto> setImageEncodeBase64(List<CompanyResponseDto> companyList) {
+        companyList.forEach(company -> {
+            if (company.getCompanyImageBase64() != null) {
+                company.setCompanyImageBase64(ImageUtil.encodeToBase64(company.getCompanyImage()));
+            }
+        });
+        return companyList;
     }
 }

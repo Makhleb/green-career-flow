@@ -9,132 +9,159 @@
 <body>
 <div th:replace="~{layout/fragments/header ::  header}"></div>
 <main>
-<div id="wrapper">
-    <div class="grid-container">
-        <div class="grid-item-left"></div>
-        <div class="grid-item">
-            <img th:src="@{/static/images/with_computer.jpg}">
-            <div class="imgText_main">Vo.2D<br>최고의 개발자 구인합니다.</div>
-            <a href="">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40" aria-hidden="true" id="Previous">
-                    <g clip-path="url(#clip0_2450_17212)">
-                        <path stroke="#ffffff" d="M39.5 20c0 10.77-8.73 19.5-19.5 19.5S.5 30.77.5 20 9.23.5 20 .5 39.5 9.23 39.5 20Z"></path>
-                        <path fill="#ffffff" fill-rule="evenodd" d="M23.09 26.84a.833.833 0 0 1-1.179 0l-6.25-6.25a.833.833 0 0 1 0-1.18l6.25-6.25a.833.833 0 0 1 1.179 1.18L17.43 20l5.66 5.66a.833.833 0 0 1 0 1.18Z" clip-rule="evenodd"></path>
-                    </g>
-                </svg>
-            </a>
-            <a href="">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40" aria-hidden="true" id="Next">
-                    <g clip-path="url(#clip0_2450_17215)">
-                        <path stroke="#ffffff" d="M39.5 20c0 10.77-8.73 19.5-19.5 19.5S.5 30.77.5 20 9.23.5 20 .5 39.5 9.23 39.5 20Z"></path>
-                        <path fill="#ffffff" fill-rule="evenodd" d="M16.911 13.16a.833.833 0 0 1 1.179 0l6.25 6.25a.833.833 0 0 1 0 1.18l-6.25 6.25a.833.833 0 1 1-1.179-1.18l5.66-5.66-5.66-5.66a.833.833 0 0 1 0-1.18Z" clip-rule="evenodd"></path>
-                    </g>
-                </svg>
-            </a>
-        </div>
-        <div class="grid-item-blank" ></div>
-        <div class="grid-item">이런 기업은 어때요?</div>
-        <div class="grid-item">
-            <img th:src="@{/static/images/airplane.jpg}">
-            <div class="imgText_left">
-                Vo.2D
-                <span class="side_line">|</span>
-                <span> 리프레쉬 휴가</span>
-                <p style="margin-top:10px">최장 90일 보장</p>
-                <p>비행기 값 50% 지원</p>
-                <p>회사 연계 리조트 무료 이용</p>
-            </div>
-            <img th:src="@{/static/images/cook.jpg}" style="float: right;">
-            <div class="imgText_right">
-                C.ook
-                <span class="side_line">|</span>
-                <span>구내식당 무료 이용</span>
-                <p style="margin-top:10px">뷔페식 운영</p>
-                <p>주말 이용 가능</p>
-                <p>균형잡인 아침, 점심, 저녁 제공</p>
-            </div>
-        </div>
-        <!--로그인 시 보여지는 부분-->
-        <th:block th:if="${session.user != null}">
-            <div class="grid-item-blank"></div>
+    <div id="wrapper">
+        <div class="grid-container">
+            <div class="grid-item-left"></div>
             <div class="grid-item">
-                관심 기업 공고
-                <span style="float:right">
+                <img th:src="@{/static/images/with_computer.jpg}">
+                <div class="imgText_main">Vo.2D<br>최고의 개발자 구인합니다.</div>
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40"
+                         aria-hidden="true" id="Previous">
+                        <g clip-path="url(#clip0_2450_17212)">
+                            <path stroke="#ffffff"
+                                  d="M39.5 20c0 10.77-8.73 19.5-19.5 19.5S.5 30.77.5 20 9.23.5 20 .5 39.5 9.23 39.5 20Z"></path>
+                            <path fill="#ffffff" fill-rule="evenodd"
+                                  d="M23.09 26.84a.833.833 0 0 1-1.179 0l-6.25-6.25a.833.833 0 0 1 0-1.18l6.25-6.25a.833.833 0 0 1 1.179 1.18L17.43 20l5.66 5.66a.833.833 0 0 1 0 1.18Z"
+                                  clip-rule="evenodd"></path>
+                        </g>
+                    </svg>
+                </a>
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none" viewBox="0 0 40 40"
+                         aria-hidden="true" id="Next">
+                        <g clip-path="url(#clip0_2450_17215)">
+                            <path stroke="#ffffff"
+                                  d="M39.5 20c0 10.77-8.73 19.5-19.5 19.5S.5 30.77.5 20 9.23.5 20 .5 39.5 9.23 39.5 20Z"></path>
+                            <path fill="#ffffff" fill-rule="evenodd"
+                                  d="M16.911 13.16a.833.833 0 0 1 1.179 0l6.25 6.25a.833.833 0 0 1 0 1.18l-6.25 6.25a.833.833 0 1 1-1.179-1.18l5.66-5.66-5.66-5.66a.833.833 0 0 1 0-1.18Z"
+                                  clip-rule="evenodd"></path>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+            <div class="grid-item-blank"></div>
+            <div class="grid-item">이런 기업은 어때요?</div>
+            <div class="grid-item">
+                <img th:src="@{/static/images/airplane.jpg}">
+                <div class="imgText_left">
+                    Vo.2D
+                    <span class="side_line">|</span>
+                    <span> 리프레쉬 휴가</span>
+                    <p style="margin-top:10px">최장 90일 보장</p>
+                    <p>비행기 값 50% 지원</p>
+                    <p>회사 연계 리조트 무료 이용</p>
+                </div>
+                <img th:src="@{/static/images/cook.jpg}" style="float: right;">
+                <div class="imgText_right">
+                    C.ook
+                    <span class="side_line">|</span>
+                    <span>구내식당 무료 이용</span>
+                    <p style="margin-top:10px">뷔페식 운영</p>
+                    <p>주말 이용 가능</p>
+                    <p>균형잡인 아침, 점심, 저녁 제공</p>
+                </div>
+            </div>
+            <!--로그인 시 보여지는 부분-->
+            <th:block th:if="${session.user != null}">
+                <div class="grid-item-blank"></div>
+                <div class="grid-item">
+                    관심 기업 공고
+                    <span style="float:right">
                     <a href="/mypage/user-interest-company" style="color:darkgray">더보기<i class="bi bi-plus"></i></a>
                 </span>
-            </div>
-            <div class="grid-item">
-                <div class="grid_posting">
-                    <th:block th:if="${isEmpty == 'notEmpty'}">
-                        <div class="grid_posting_item" th:each="company : ${lList}">
-                            <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}"><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
-                            <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
-                            <p>
-                                [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
-                                <i class="bi bi-suit-heart-fill" style="color:#8B1FFF"></i>
-                            </p>
-                            <p>[[${company.title}]]</p>
-                            <span>[[${company.companyAddress}]]
+                </div>
+                <div class="grid-item">
+                    <div class="grid_posting">
+                        <th:block th:if="${isEmpty == 'notEmpty'}">
+                            <div class="grid_posting_item" th:each="company : ${lList}">
+                                <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}">
+                                    <img class="job-post-img" th:data-job-post-img="${company.companyImageBase64}">
+                                </a>
+                                <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
+                                <p>
+                                    [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
+                                    <i class="bi bi-suit-heart-fill" style="color:#8B1FFF"></i>
+                                </p>
+                                <p>[[${company.title}]]</p>
+                                <span>[[${company.companyAddress}]]
                                 <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                                 <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
                                 <span th:if="${company.jobHistory <= 0}"> 신입 </span>
                             </span>
-                        </div>
-                    </th:block>
-                    <th:block th:if="${isEmpty != 'notEmpty'}">
-                        <span style="padding:10px; color: gray; text-align: left">관심 기업 공고가 없습니다.</span>
-                    </th:block>
+                            </div>
+                        </th:block>
+                        <th:block th:if="${isEmpty != 'notEmpty'}">
+                            <span style="padding:10px; color: gray; text-align: left">관심 기업 공고가 없습니다.</span>
+                        </th:block>
+                    </div>
                 </div>
+            </th:block>
+            <div class="grid-item-blank"></div>
+            <div class="grid-item">
+                평점 높은 공고
             </div>
-        </th:block>
-        <div class="grid-item-blank" ></div>
-        <div class="grid-item">
-            평점 높은 공고
-        </div>
-        <div class="grid-item">
-            <div class="grid_posting">
-                <div class="grid_posting_item" th:each="company : ${cList}">
-                    <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}"><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
-                    <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
-                    <p>
-                        [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
-                        <i class="bi bi-star-fill" style="color:#F2AE2E"></i>&nbsp;&nbsp;
-                        <span th:text="${#numbers.formatDecimal(company.rating, 1, 1)}"></span>
-                    </p>
-                    <p>[[${company.title}]]</p>
-                    <span>[[${company.companyAddress}]]
+            <div class="grid-item">
+                <div class="grid_posting">
+                    <div class="grid_posting_item" th:each="company : ${cList}">
+                        <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}"><img
+                                class="job-post-img" th:data-job-post-img="${company.companyImageBase64}">
+                        </a>
+                        <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
+                        <p>
+                            [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
+                            <i class="bi bi-star-fill" style="color:#F2AE2E"></i>&nbsp;&nbsp;
+                            <span th:text="${#numbers.formatDecimal(company.rating, 1, 1)}"></span>
+                        </p>
+                        <p>[[${company.title}]]</p>
+                        <span>[[${company.companyAddress}]]
                         <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                         <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
                         <span th:if="${company.jobHistory <= 0}"> 신입 </span>
                     </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="grid-item"></div>
-        <div class="grid-item">
-            채용 임박 공고
-        </div>
-        <div class="grid-item">
-            <div class="grid_posting">
-                <div class="grid_posting_item" th:each="company : ${eList}">
-                    <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}"><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
-                    <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
-                    <p>
-                        [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
-                    </p>
-                    <p>[[${company.title}]]</p>
-                    <span>[[${company.companyAddress}]]
+            <div class="grid-item"></div>
+            <div class="grid-item">
+                채용 임박 공고
+            </div>
+            <div class="grid-item">
+                <div class="grid_posting">
+                    <div class="grid_posting_item" th:each="company : ${eList}">
+                        <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}">
+<!--                            <img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}">-->
+                            <img class="job-post-img" th:data-job-post-img="${company.companyImageBase64}">
+                        </a>
+                        <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>
+                        <p>
+                            [[${company.companyName}]]&nbsp;&nbsp;&nbsp;
+                        </p>
+                        <p>[[${company.title}]]</p>
+                        <span>[[${company.companyAddress}]]
                         <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                         <span th:if="${company.jobHistory > 0}"> 경력 [[${company.jobHistory}]]년 이상</span>
                         <span th:if="${company.jobHistory <= 0}"> 신입 </span>
                     </span>
+                    </div>
                 </div>
             </div>
+            <div class="grid-item-right"></div>
         </div>
-        <div class="grid-item-right"></div>
     </div>
-</div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
+<script src="/static/js/utils.js"></script>
+<script>
+
+    $(function () {
+        const jobPost = $('.job-post-img');
+        jobPost.each(function () {
+
+            $(this).attr('src', loadImage($(this).data('job-post-img'))); // src 속성 설정
+        });
+    })
+
+</script>
 </html>

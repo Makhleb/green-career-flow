@@ -19,7 +19,7 @@
         JOIN tbl_company c ON jp.company_id = c.company_id
         JOIN tbl_job_post_skill jps ON jp.job_post_no = jps.job_post_no
         GROUP BY jp.job_post_no
-        HAVING FIND_IN_SET(#{skillCode}, GROUP_CONCAT(jps.skill_code)) > 0
+        HAVING #{skillCode} = '' OR FIND_IN_SET(#{skillCode}, GROUP_CONCAT(jps.skill_code)) > 0
         ORDER BY start_date DESC;
 <!--        SELECT c.company_id, c.company_address, c.company_image, jp.job_post_no, jp.title, jp.job_history, jp.start_date, jp.end_date , c.company_name-->
 <!--        FROM tbl_job_post jp-->

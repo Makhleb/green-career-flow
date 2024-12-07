@@ -16,7 +16,7 @@
                     WHEN j.end_date IS NULL THEN '상시'
                     ELSE CONCAT('D-', DATEDIFF(j.end_date, NOW()))
                     END AS end_date,
-                j.job_post_no
+                j.job_post_no, c.company_image
             FROM tbl_job_post j
                      LEFT JOIN tbl_company c ON j.company_id = c.company_id
                      LEFT JOIN tbl_company_score s ON j.company_id = s.company_id
@@ -36,7 +36,7 @@
                 WHEN j.end_date IS NULL THEN '상시'
                 ELSE CONCAT('D-', DATEDIFF(j.end_date, NOW()))
                 END AS end_date,
-                j.job_post_no
+                j.job_post_no, c.company_image
         FROM tbl_job_post j
         LEFT JOIN tbl_company c ON j.company_id = c.company_id
         LEFT JOIN tbl_company_score s ON j.company_id = s.company_id
@@ -51,7 +51,8 @@
                CASE
                    WHEN j.end_date IS NULL THEN '상시'
                    ELSE CONCAT('D-', DATEDIFF(j.end_date, NOW()))
-                   END AS end_date
+                   END AS end_date, c.company_image
+
         FROM tbl_job_post j
                  LEFT JOIN tbl_company c ON j.company_id = c.company_id
                  LEFT JOIN tbl_company_score s ON j.company_id = s.company_id
