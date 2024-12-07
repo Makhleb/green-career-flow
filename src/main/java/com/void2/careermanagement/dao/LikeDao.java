@@ -1,5 +1,6 @@
 package com.void2.careermanagement.dao;
 
+import com.void2.careermanagement.dto.GubnDto;
 import com.void2.careermanagement.dto.response.LikeResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -30,4 +31,6 @@ public interface LikeDao {
     List<LikeResponseDto> getLikeListByCompanyIdTop3(String companyId);
     
     int getCountByCompanyId(String companyId);
+
+    List<GubnDto> selectSkillList(int resumeNo);
 }

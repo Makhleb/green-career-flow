@@ -1,8 +1,10 @@
 package com.void2.careermanagement.controller;
 
 import com.void2.careermanagement.dao.ApplyDao;
+import com.void2.careermanagement.dao.BoardDao;
 import com.void2.careermanagement.dao.LikeDao;
 import com.void2.careermanagement.dao.MyPageDao;
+import com.void2.careermanagement.dto.BoardDto;
 import com.void2.careermanagement.dto.response.*;
 import com.void2.careermanagement.service.ApplyService;
 import com.void2.careermanagement.service.JobPostService;
@@ -34,15 +36,18 @@ public class MyPageController {
     private final JobPostService jobPostService;
     private final ApplyService applyService;
     private final MyPageDao myPageDao;
+    private final BoardDao boardDao;
+
 
     @Autowired
-    public MyPageController(MyPageService myPageService, ApplyDao applyDao, JobPostService jobPostService, ApplyService applyService, MyPageDao myPageDao, LikeDao likeDao) {
+    public MyPageController(MyPageService myPageService, ApplyDao applyDao, JobPostService jobPostService, ApplyService applyService, MyPageDao myPageDao, LikeDao likeDao, BoardDao boardDao) {
         this.myPageService = myPageService;
         this.applyDao = applyDao;
         this.jobPostService = jobPostService;
         this.applyService = applyService;
         this.myPageDao = myPageDao;
         this.likeDao = likeDao;
+        this.boardDao = boardDao;
     }
 
     @GetMapping("/profile")
@@ -71,7 +76,7 @@ public class MyPageController {
             List<ProposalResponseDto> proposalList = myPageService.MyPageProposalListByCompanyIdTop3(id);
             model.addAttribute("proposalSize", myPageDao.getCountProposalByCompanyId(id));
             model.addAttribute("plist", proposalList);
-            
+
             // 채용공고 리스트
             List<JobPostResponseDto> jobPostList = myPageService.MyPageJobPostListByCompanyIdTop3(id);
             model.addAttribute("jobPostSize", myPageDao.getCountJobPostByCompanyId(id));
@@ -80,6 +85,14 @@ public class MyPageController {
             // 좋아요 구직자 리스트
             List<LikeResponseDto> likeList = likeDao.getLikeListByCompanyIdTop3(SessionUtil.getSessionUserId(session));
             model.addAttribute("likeList", likeList);
+            model.addAttribute("likeSize", likeDao.getCountByCompanyId(id));
+
+//            System.out.println(likeList);
+
+            for (int i = 0; i < likeList.size(); i++) {
+                LikeResponseDto like = likeList.get(i);
+                like.setSkillList(likeDao.selectSkillList(like.getResumeNo()));
+            }
 
             returnUrl = "/mypage/company-mypage";
         }
@@ -155,12 +168,33 @@ public class MyPageController {
 
     @GetMapping("/company-interest-user")
     public String userInterestCompany(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if(SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
+        if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
 
-        List<LikeResponseDto> likeList = likeDao.getLikeListByCompanyId(SessionUtil.getSessionUserId(session));
+        String id = SessionUtil.getSessionUserId(session);
+
+        // 좋아요 구직자 리스트
+        List<LikeResponseDto> likeList = likeDao.getLikeListByCompanyId(id);
 
         model.addAttribute("likeList", likeList);
-        return "/mypage/user-interest-company";
+        model.addAttribute("likeSize", likeDao.getCountByCompanyId(id));
+
+        for (int i = 0; i < likeList.size(); i++) {
+            LikeResponseDto like = likeList.get(i);
+            like.setSkillList(likeDao.selectSkillList(like.getResumeNo()));
+        }
+
+        return "/mypage/company-interest-user";
     }
 
+    @GetMapping("/user-board")
+    public String userBoard(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
+        String id = SessionUtil.getSessionUserId(session);
+
+        List<BoardDto> boardList = boardDao.getListByUserId(id);
+
+        model.addAttribute("boardList", boardList);
+
+        return "/mypage/user-board";
+    }
 }

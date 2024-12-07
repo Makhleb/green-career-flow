@@ -8,13 +8,13 @@
   <p><strong>나의 알림</strong></p>
   <ul>
     <li><a th:href="@{/mypage/proposal}">제안서</a></li>
-    <li><a href="">내가 쓴 게시글</a></li>
+    <li><a href="/mypage/user-board">내가 쓴 게시글</a></li>
     <li><a href="/mypage/user-interest-company">관심 기업</a></li>
   </ul>
   <hr>
   <p><strong>나의 이력서</strong></p>
   <ul>
-    <li><a href="">이력서 등록</a></li>
+    <li><a href="/resume/create">이력서 등록</a></li>
     <li><a href="">이력서 조회</a></li>
     <li><a href="/mypage/apply">지원이력</a></li>
   </ul>
@@ -26,7 +26,7 @@
 </aside>
 
 <aside th:fragment="asideCompany">
-  <h3><strong>[[${session.user.companyName}]] <i class="bi bi-building-fill"></i></strong></h3>
+  <h3><strong>[[${session.user.companyName}]] <i class="bi bi-buildings-fill"></i></strong></h3>
   <hr>
   <p><strong>채용공고</strong></p>
   <ul>
@@ -36,12 +36,12 @@
   <hr>
   <p><strong>나의 제안서</strong></p>
   <ul>
-    <li><a href="/mypage/proposal">제안서 보내기</a></li>
+    <li><a href="/mypage/proposal-registForm">제안서 보내기</a></li>
     <li><a th:href="@{/mypage/proposal}">제안서 목록</a></li>
   </ul>
   <hr>
   <p><strong>관심 구직자</strong></p>
   <ul>
-    <li><a href="">구직자 목록</a></li>
+    <li><a href="/mypage/company-interest-user">구직자 목록</a></li>
   </ul>
 </aside>

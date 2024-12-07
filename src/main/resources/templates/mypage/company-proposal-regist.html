@@ -83,7 +83,7 @@
             <div class="box">
                 <form th:action="@{/mypage/regist}" method="post">
                     <div id="formTitle">제목 <input type="text" name="title" placeholder="제목을 입력하세요"></div><br>
-                    <div>받는 사람 (ID) <input type="text" name="userId" id="formUserId" placeholder="받는 사람을 입력하세요"></div><br>
+                    <div>받는 사람 (ID) <input th:value="${userId == null ? '' : userId}" type="text" name="userId" id="formUserId" placeholder="받는 사람을 입력하세요"></div><br>
                     <div> <input type="hidden" name="companyId" id="formCompanyId" th:value="${session.user.CompanyId}"></div><br>
                     <div><textarea id="formContent" name="content" placeholder="내용을 입력하세요"></textarea></div><br>
                     <div>연락처 : <input type="text" id="formPhone" name="phone"></div><br>

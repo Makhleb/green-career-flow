@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.void2.careermanagement.dao.CompanySkillMappingDao">
+
+    <select id="getSkillMatchingList">
+        <![CDATA[
+        SELECT u.user_id, r.resume_no, u.user_name, r.title, u.user_gender, r.job_history, r.wish_salary,
+                TIMESTAMPDIFF(YEAR, u.user_birth, CURDATE())-(RIGHT(CURDATE(), 5) < RIGHT(u.user_birth, 5)) AS user_age,
+                r.create_date,
+                IF((SELECT user_id FROM tbl_like WHERE user_id = r.user_id AND like_type ='C' AND company_id = #{companyId}) IS NULL, 'N', 'Y') AS like_yn
+        FROM tbl_resume r
+            LEFT JOIN tbl_user u ON r.user_id = u.user_id
+        WHERE r.offer_yn = 'Y' AND
+                r.resume_no IN(
+                SELECT resume_no
+                FROM tbl_resume_skill
+                WHERE skill_code IN
+                (SELECT CODE
+                FROM tbl_gubn
+                WHERE group_code = "skill" AND (#{skillCode} = '' OR CODE = #{skillCode})))
+        ORDER BY r.create_date desc;
+        ]]>
+    </select>
+</mapper>

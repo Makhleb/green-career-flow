@@ -53,10 +53,6 @@
             text-decoration: none;
         }
 
-        .box_item {
-            /*border-bottom: 1px solid #8B1FFF;*/
-        }
-
         #proposal_item_icon, #like_item_icon {
             width: 100px;
             height: 65px;
@@ -214,14 +210,17 @@
         a:visited {
             color: inherit; /* 기본 텍스트 색상과 동일하게 설정 */
         }
+
         .skill-content {
             width: 100%;
             display: flex;
             align-items: center;
         }
-        .skill-content span{
+
+        .skill-content span {
             width: 60px;
         }
+
         .like-right-content {
             display: flex;
             justify-content: center;
@@ -239,90 +238,10 @@
     <div th:replace="~{layout/fragments/aside :: asideCompany}"></div>
     <div id="main_content">
         <div th:replace="~{layout/fragments/mypage-title :: title(${session.userType == 'U' ? session.user.userName : session.user.companyName}, ${session.userType})}"></div>
-        <div class="container">
-            <div class="title">
-                <h4 th:text="${'채용공고(' + jobPostSize + ')'}"></h4>
-                <a href="/mypage/job-post"> 더보기 + </a>
-            </div>
-            <hr>
-        </div>
-        <div class="container">
-            <div class="job-box">
-                <div th:each="jobPost : ${jobPostList}" class="job-item">
-                    <div class="job-item-content">
-                        <div class="job-content-title">
-                            <a th:text="${jobPost.title}" th:href="'/job-post/detail/' + ${jobPost.jobPostNo}"></a>
-                            <p>&nbsp;|&nbsp;</p>
-                            <div class="job-content-form">
-                                <p class="job-value"
-                                   th:text="${#temporals.format(jobPost.startDate, 'yy. MM. dd. a h:mm')}"></p>
-                            </div>
-                            <p>&nbsp;~&nbsp;</p>
-                            <div class="job-content-form">
-                                <p class="job-value"
-                                   th:text="${jobPost.endDate eq null ? '상시' : #temporals.format(jobPost.endDate, 'yy. MM. dd. a h:mm')}"></p>
-                            </div>
-                        </div>
-                        <div class="job-content">
-                            <div class="job-content-form">
-                                <div class="job-label">근무형태</div>
-                                <p class="job-value" th:text="${jobPost.workTypeName}"></p>
-                            </div>
-                            <p>&nbsp;|&nbsp;</p>
-                            <div class="job-content-form">
-                                <div class="job-label">직급/직책</div>
-                                <p class="job-value" th:text="${jobPost.jobRankName}"></p>
-                            </div>
-                            <p>&nbsp;|&nbsp;</p>
-                            <div class="job-content-form">
-                                <div class="job-label">직무</div>
-                                <p class="job-value" th:text="${jobPost.workName}"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="job-right-content">
-                        <a th:href="'/job-post/update/' + ${jobPost.jobPostNo}">수정</a>
-                        <a href="#" onclick="deleteJobPost(this)" th:data-job-post-no="${jobPost.jobPostNo}">삭제</a>
-                        <a th:href="'/mypage/apply/'+ ${jobPost.jobPostNo}">지원이력</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="container">
-            <div class="title">
-                <h4 th:text="'나의 제안서 ('+${proposalSize}+')'">나의 제안서 (0)</h4>
-                <a th:href="@{/mypage/proposal}"> 더보기 + </a>
-            </div>
-            <hr>
-            <div class="box">
-                <div class="box_item" th:each="dto : ${plist}">
-                    <div id="proposal_items">
-                        <div class="item_icon">
-                            <th:block th:if="${dto.readDate == null}">
-                                <i class="bi bi-envelope"></i>
-                            </th:block>
-                            <th:block th:if="${dto.readDate != null}">
-                                <i class="bi bi-envelope-open"></i>
-                            </th:block>
-                        </div>
-                        <div class="item_content">
-                            <div class="content_title"><strong th:text="${dto.title}">제안서 제목</strong></div>
-                            <div class="content">
-                                <p th:text="${dto.userName}">구직자 이름</p>
-                                <p th:text="${#temporals.format(dto.date, 'yyyy/MM/dd')}">YYYY/MM/DD</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="container">
             <div class="title">
                 <h4 th:text="${'관심 구직자 (' + likeSize +')'}">관심 구직자 (0)</h4>
-                <a href="/mypage/company-interest-user"> 더보기 + </a>
             </div>
             <hr>
             <div class="box">
@@ -358,26 +277,6 @@
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 <script>
-    function deleteJobPost(ele) {
-
-        if (confirm("삭제하시겠습니까?")) {
-            axios.delete("/api/job-post/" + ele.getAttribute('data-job-post-no'))
-                .then(res => {
-                    console.log(res);
-                    if (res.data == 1) {
-                        alert("삭제되었습니다.");
-                        location.reload();
-                    } else {
-                        alert("삭제 실패");
-                    }
-                })
-                .catch(error => {
-                    alert("삭제실패");
-                    console.log(error);
-                })
-        }
-
-    }
     function likeUser(ele) {
         if (confirm("삭제하시겠습니까?")) {
             axios.post("/api/like/" + ele.getAttribute('data-user-id'))

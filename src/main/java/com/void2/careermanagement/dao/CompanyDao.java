@@ -15,5 +15,6 @@ public interface CompanyDao {
     public List<CompanyResponseDto> getHighRatingList();
     public List<CompanyResponseDto> getFastEndDateList();
     public List<CompanyResponseDto> getLikeList(String id);
+    CompanyResponseDto getCompanyInfoById(String id);
 
 }
