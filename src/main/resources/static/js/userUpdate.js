@@ -41,7 +41,7 @@ function update() {
             if (response.data) {
                 sessionUpdate()
                 alert("회원정보 수정 성공")
-                location.reload(true);
+                location.href = "/mypage/profile";
             } else {
                 alert("오류 발생(수정되지 않음)");
             }

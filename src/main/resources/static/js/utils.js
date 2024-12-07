@@ -18,11 +18,11 @@ function loadImage(base64String) {
     switch (header) {
         case "255,216,255,224": // JPEG 파일 서명
         case "255,216,255,225": // JPEG EXIF 서명
-            return "data:image/jpeg;base64,";
+            return "data:image/jpeg;base64," + base64String;
         case "137,80,78,71": // PNG 파일 서명
-            return "data:image/png;base64,";
+            return "data:image/png;base64," + base64String;
         case "71,73,70,56": // GIF 파일 서명
-            return "data:image/gif;base64,";
+            return "data:image/gif;base64," + base64String;
         default:
             return "unknown";
     }
