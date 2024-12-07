@@ -85,7 +85,7 @@
                             <!--                    <option>프론트엔드</option>-->
                         </select>
                         <input id="wishArea" placeholder="희망근무지역">
-                        <input id="wishSalary" placeholder="희망 연봉">
+                        <input type="number" id="wishSalary" placeholder="희망 연봉">
                     </div>
                 </div>
             </div>
@@ -148,8 +148,8 @@
                             <option th:value="${education.code}" th:text="${education.name}"></option>
                         </th:block>
                     </select>
-                    <input id="enterDate" placeholder="입학년월">
-                    <input id="graduateDate" placeholder="졸업년월">
+                    <input type="number" id="enterDate" placeholder="입학년월">
+                    <input type="number" id="graduateDate" placeholder="졸업년월">
                 </div>
                 <div class="flex-row">
                     <input id="schoolName" placeholder="학교명">
@@ -165,8 +165,8 @@
                             <option th:value="${military.code}" th:text="${military.name}"></option>
                         </th:block>
                     </select>
-                    <input type="date" id="enlistDate" placeholder="입대년월">
-                    <input type="date" id="releaseDate" placeholder="전역년월">
+                    <input type="month" id="enlistDate" placeholder="입대년월">
+                    <input type="month" id="releaseDate" placeholder="전역년월">
                 </div>
             </div>
             <div class="form margin">
@@ -459,6 +459,7 @@
                 if (response.data !== 0) {
                     alert("이력서 등록 성공");
                     upload(response.data);
+                    location.href = "/detail/" + response.data;
                 } else{
                     alert("오류 발생. 이력서 등록 실패")
                 }
