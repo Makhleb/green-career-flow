@@ -11,4 +11,12 @@
             (#{resumeNoPk}, #{L.licenseName}, #{L.licenseCenterName}, #{L.passDate})
         </foreach>
     </insert>
+    <select id="getLicense" resultType="com.void2.careermanagement.dto.LicenseDto">
+        SELECT resume_no,
+        license_name,
+        license_center_name,
+        pass_date
+        FROM tbl_license
+        WHERE resume_no = #{resumeNo}
+    </select>
 </mapper>

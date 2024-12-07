@@ -9,4 +9,5 @@ import java.util.List;
 @Mapper
 public interface ResumeSkillDao {
     void insertResumeSkill(@Param("list") List<ResumeSkillDto> resumeSkillDtoList, @Param("resumeNoPk") int resumeNoPk);
+    List<ResumeSkillDto> getResumeSkill(@Param("resumeNo")int resumeNo);
 }

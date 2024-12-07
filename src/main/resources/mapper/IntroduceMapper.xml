@@ -11,4 +11,12 @@
             (#{resumeNoPk}, #{I.title}, #{I.content}, #{I.order})
         </foreach>
     </insert>
+    <select id="getIntroduceDtoList" resultType="com.void2.careermanagement.dto.IntroduceDto">
+        SELECT resume_no,
+        title,
+        content,
+        `order`
+        FROM tbl_introduce
+        WHERE resume_no = #{resumeNo}
+    </select>
 </mapper>

@@ -9,4 +9,5 @@ import java.util.List;
 @Mapper
 public interface PotfolioDao {
     void insertPotfolio(@Param("list") List<PotfolioDto> potfolioDtoList,@Param("resumeNoPk") int resumeNoPk);
+    List<PotfolioDto> getPotfolio(@Param("resumeNo") int resumeNo);
 }

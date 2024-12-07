@@ -23,4 +23,15 @@
             #{A.activityType})
         </foreach>
     </insert>
+    <select id="getActivity" resultType="com.void2.careermanagement.dto.ActivityDto">
+        SELECT resume_no,
+        `order`,
+        start_date,
+        end_date,
+        activity_center_name,
+        activity_content,
+        activity_type
+        FROM tbl_activity
+        WHERE resume_no = #{resumeNo}
+    </select>
 </mapper>

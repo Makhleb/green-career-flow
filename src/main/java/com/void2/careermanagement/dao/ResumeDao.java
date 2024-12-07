@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 public interface ResumeDao {
     List<ResumeResponseDto> getValidResumeListByUserId(String userId);
+    ResumeResponseDto getResumeByResumeId(int resumeNo);
     int insertResume(@Param("R")ResumeRequestDto resumeRequestDto);
     int maxResumeNo();
     int updateResume(ResumeRequestDto resumeRequestDto);

@@ -9,5 +9,10 @@
         VALUES
         (#{resumeNoPk}, #{E.educationCode}, #{E.schoolName}, #{E.specialty}, #{E.enterDate}, #{E.graduateDate})
     </insert>
+    <select id="getEducation" resultType="com.void2.careermanagement.dto.EducationDto">
+        SELECT resume_no, education_code, school_name, specialty, enter_date, graduate_date
+        FROM tbl_education
+        WHERE resume_no = #{resumeNo}
+    </select>
 </mapper>
 

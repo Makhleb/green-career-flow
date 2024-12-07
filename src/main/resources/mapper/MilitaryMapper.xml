@@ -9,4 +9,12 @@
         VALUES
         (#{resumeNoPk}, #{M.enlistDate}, #{M.releaseDate}, #{M.militaryCode})
     </insert>
+    <select id="getMilitaryById" resultType="com.void2.careermanagement.dto.MilitaryDto">
+        SELECT resume_no,
+        enlist_date,
+        release_date,
+        military_code
+        FROM tbl_military
+        WHERE resume_no = #{resumeNo}
+    </select>
 </mapper>

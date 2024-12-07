@@ -158,7 +158,6 @@
             </div>
             <div class="form margin">
                 <p>병력 사항</p>
-                <!--                todo 저기에 data-name을 추가해야하나? -->
                 <div class="flex-row">
                     <select id="militaryCode" placeholder="복무 유형">
                         <option value="" selected>구분</option>
@@ -251,7 +250,6 @@
     function addressFind() {
         new daum.Postcode({
             oncomplete: function (data) {
-                console.log(data);
                 $('#userZonecode').val(data.zonecode);
                 $('#userAddress').val(data.address);
             }
@@ -282,7 +280,6 @@
                 $('label[for="imgAttachment"]').hide();
                 $('.close').show();
                 base64img = e.target.result;
-                console.log(base64img);
             }
             reader.readAsDataURL(file); // 파일을 Base64로 읽음
         }
@@ -336,7 +333,9 @@
         }
     }
 
+    // todo 전부 null이면 모든 값이 null인 dto가 생성되요. 이럼 무조건 등록되지 않을까요? 값이 없을때 null로 보내기로 합시다.
     function resumeTotalInfo() {
+        base64img = (base64img == null)? null : base64img.split(',')[1];
         let wishTime = $('#wishTimeStart').val() + '-' + $('#wishTimeEnd').val();
         let basicResume = {
             resumeNo: null,
@@ -345,7 +344,7 @@
             addressDetail: $('#userAddressDetail').val(),
             zonecode: $('#userZonecode').val(),
             userId: userSession.userId,
-            image: base64img.split(',')[1],
+            image: base64img,
             wishArea: $('#wishArea').val(),
             wishSalary: $('#wishSalary').val(),
             wishTime: wishTime,
@@ -409,7 +408,6 @@
 
         let activityArr = [];
         $('.act-board').each(function (index) {
-            console.log($(this).data('name'));
             activityArr.push({
                 resumeNo: 0,
                 order: index + 1,
@@ -442,6 +440,8 @@
     }
 
     function resumeRegist() {
+        console.log(resumeTotalInfo());
+
         if(checkDuplicateValues('.introTitle')) {
            alert("자기소개서는 중복된 제목으로 작성할 수 없습니다.");
            return;
@@ -450,6 +450,8 @@
             alert("자격증은 중복하여 추가할 수 없습니다.");
             return;
         }
+
+
 
         axios.post('/api/resume/create/full', resumeTotalInfo())
             .then(function (response) {
