@@ -22,6 +22,11 @@ public class ResumeController {
         this.resumeService = resumeService;
     }
 
+    @GetMapping("/list")
+    public String list(Model model) {
+        return "resume/resume-list";
+    }
+
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("activityTypes", ActivityType.values());
