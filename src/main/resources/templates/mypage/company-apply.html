@@ -240,7 +240,8 @@
                         </div>
                     </div>
                     <div class="right-content">
-                        <select class="pass-yn" th:data-resume-no="${apply.resumeNo}" th:data-job-post-no="${apply.jobPostNo}">
+                        <select class="pass-yn" th:data-resume-no="${apply.resumeNo}"
+                                th:data-job-post-no="${apply.jobPostNo}">
                             <option th:selected="${apply.passYn eq null}" value="">미확인</option>
                             <option th:selected="${apply.passYn eq 'Y'}" value="Y">합격</option>
                             <option th:selected="${apply.passYn eq 'N'}" value="N">불합격</option>
@@ -260,27 +261,34 @@
             // 변경 전 값 저장
             previousValue = $(this).find(':selected').val();
         }).on('change', function (event) {
-            const selectVal = $(this).find(':selected').val();
+            const selectOption = $(this).find(':selected');
+            const selectVal = selectOption.val();
             if (selectVal === '') {
                 alert("미확인 처리는 불가능합니다.");
                 event.preventDefault();
                 $(this).val(previousValue);
                 return;
+            } else {
+                if (confirm("정말 " + selectOption.text() + "처리 하시겠습니까?")) {
+                    axios.post('/api/apply/pass', {
+                        jobPostNo: this.getAttribute('data-job-post-no'),
+                        resumeNo: this.getAttribute('data-resume-no'),
+                        passYn: selectVal
+                    })
+                        .then(res => {
+                            console.log(res);
+                            if (res.data == 1) {
+                                alert(($(this).val() === 'Y' ? '합격' : '불합격') + '처리되었습니다.');
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                } else {
+                    $(this).val(previousValue);
+                    return;
+                }
             }
-            axios.post('/api/apply/pass', {
-                jobPostNo: this.getAttribute('data-job-post-no'),
-                resumeNo: this.getAttribute('data-resume-no'),
-                passYn: selectVal
-            })
-                .then(res => {
-                    console.log(res);
-                    if (res.data == 1) {
-                        alert(($(this).val() === 'Y' ? '합격' : '불합격') + '처리되었습니다.');
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                })
         })
     })
 </script>
