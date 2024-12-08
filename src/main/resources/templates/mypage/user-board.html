@@ -121,14 +121,18 @@
         .value {
             margin: 0 4px 0 4px;
         }
-
         a {
             text-decoration-line: none;
         }
 
         a:link,
         a:visited {
-            color: inherit; /* 기본 텍스트 색상과 동일하게 설정 */
+            /*color: inherit; !* 기본 텍스트 색상과 동일하게 설정 *!*/
+        }
+
+        aside a {
+            color: gray;
+            text-decoration: none;
         }
 
     </style>
@@ -209,4 +213,5 @@
     }
 
 </script>
+<script src="/static/js/utils.js"></script>
 </html>
