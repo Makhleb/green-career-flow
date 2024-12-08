@@ -8,8 +8,8 @@ import java.time.LocalDate;
 public class ActivityDto {
   private int resumeNo;
   private int order;
-  private LocalDate startDate;
-  private LocalDate endDate;
+  private String startDate;
+  private String endDate;
   private String activityCenterName;
   private String activityContent;
   private String activityType;

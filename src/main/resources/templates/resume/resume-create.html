@@ -165,8 +165,8 @@
                             <option th:value="${military.code}" th:text="${military.name}"></option>
                         </th:block>
                     </select>
-                    <input type="date" id="enlistDate" placeholder="입대년월">
-                    <input type="date" id="releaseDate" placeholder="전역년월">
+                    <input type="number" id="enlistDate" placeholder="입대년월">
+                    <input type="number" id="releaseDate" placeholder="전역년월">
                 </div>
             </div>
             <div class="form margin">
@@ -175,7 +175,7 @@
                     <div class="flex-row license-board" data-name="license">
                         <input class="licenseName" placeholder="자격증명">
                         <input class="licenseCenterName" placeholder="발행처">
-                        <input class="passDate" placeholder="합격년월">
+                        <input type="number" class="passDate" placeholder="합격년월">
                     </div>
                     <div class="plus-btn-container flex-row">
                         <div class="plus-btn flex-row" onclick="addElement('license')">
@@ -195,8 +195,8 @@
                     <div class="act-board" th:data-name="${activityType.name()}">
                         <div class="flex-row">
                             <input class="actCenterName" placeholder="활동기관명">
-                            <input type="date" class="actStart" placeholder="시작년월">
-                            <input type="date" class="actEnd" placeholder="종료년월">
+                            <input type="number" class="actStart" placeholder="시작년월">
+                            <input type="number" class="actEnd" placeholder="종료년월">
                         </div>
                         <textarea class="actContents"></textarea>
                     </div>
@@ -227,6 +227,7 @@
 </body>
 <script th:inline="javascript">
     const userSession = [[${session.user}]];
+    const userOffered = [[${offered}]];
 </script>
 <script>
     let base64img = null;
@@ -450,8 +451,10 @@
             alert("자격증은 중복하여 추가할 수 없습니다.");
             return;
         }
-
-
+        if(userOffered !== 0 && $("input[name='options']:checked").val() === 'Y'){
+            alert("포지션 제안은 한 이력서만 등록가능합니다.");
+            return;
+        }
 
         axios.post('/api/resume/create/full', resumeTotalInfo())
             .then(function (response) {
@@ -459,7 +462,7 @@
                 if (response.data !== 0) {
                     alert("이력서 등록 성공");
                     upload(response.data);
-                    location.href = "/detail/" + response.data;
+                    location.href = "/mypage/resume-list";
                 } else{
                     alert("오류 발생. 이력서 등록 실패")
                 }

@@ -27,8 +27,13 @@
           AND is_not_empty(address)
           AND (SELECT COUNT(user_id) FROM tbl_introduce WHERE user_id = #{user_id}) > 0
     </select>
+
     <select id="maxResumeNo">
         SELECT MAX(resume_no) from tbl_resume
+    </select>
+
+    <select id="findByOffer" resultType="_integer">
+        SELECT COUNT(*) FROM tbl_resume WHERE offer_yn = 'Y' AND user_id = #{userId};
     </select>
 
     <select id="getResumeByResumeId" resultType="com.void2.careermanagement.dto.response.ResumeResponseDto">

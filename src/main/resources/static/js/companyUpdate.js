@@ -82,7 +82,7 @@ function update() {
         companyContact: $("#companyContact").val(),
         companyBirth: $("#companyBirth").val(),
         companyInfo: $("#companyInfo").val(),
-        companyImage: base64img,
+        companyImage: base64img.split(',')[1],
         companyEmployee: $('#companyEmployee').val()
     })
         .then(function (response) {

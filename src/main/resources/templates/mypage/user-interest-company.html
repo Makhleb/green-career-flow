@@ -31,31 +31,34 @@
             padding: 5px 10px; /* 버튼 내부 여백 */
             border-radius: 20px; /* 둥근 모서리 */
         }
+
         #interest_container {
             width: 620px;
             margin: 20px 0;
         }
 
-        #interest_container h4{
+        #interest_container h4 {
             margin: 10px;
         }
 
-        .interest_grid{
+        .interest_grid {
             margin-top: 30px;
             display: grid;
             grid-template-rows: 1fr repeat( auto-fill, auto);
             grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
-        .interest_grid_item{
+
+        .interest_grid_item {
         }
 
-        .interest_grid_item > p{
+        .interest_grid_item > p {
             padding-top: 5px;
             font-size: 14px;
         }
-        .interest_grid_item > a > img{
-            width:100%;
+
+        .interest_grid_item > a > img {
+            width: 100%;
             border-radius: 5px;
         }
 
@@ -64,46 +67,55 @@
     <title>구직자 관심 기업</title>
 </head>
 <body>
-    <div th:replace="~{layout/fragments/header :: header}"></div>
-    <main>
-        <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
-        <div id="main_content">
-            <div th:replace="~{layout/fragments/mypage-title :: title(${session.userType == 'U' ? session.user.userName : session.user.companyName}, ${session.userType})}"></div>
+<div th:replace="~{layout/fragments/header :: header}"></div>
+<main>
+    <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
+    <div id="main_content">
+        <div th:replace="~{layout/fragments/mypage-title :: title(${session.userType == 'U' ? session.user.userName : session.user.companyName}, ${session.userType})}"></div>
 
-            <div id="interest_container">
-                <h4>관심기업([[${uiList.size()}]])</h4>
-                <hr>
-                <div class="interest_grid">
-                    <th:block th:if="${isEmpty == 'notEmpty'}">
-                        <div class="interest_grid_item" th:each="company, state : ${uiList}">
-                            <a href=""><img th:src="@{/static/images/{companyImage}(companyImage=${company.companyImage})}"></a>
-                            <p style="font-weight: 500; font-size: 16px;">[[${company.companyName}]]&nbsp;&nbsp;&nbsp;
-                                    <i class="bi bi-suit-heart-fill likeIcon"
-                                       style="color:#8B1FFF"
-                                       th:id="'likeIcon' + ${state.count}"
-                                       th:data-company-id="${company.companyId}">
-                                    </i>
-                            </p>
-                            <p>[[${company.companyAddress}]] [[${company.companyAddressDetail}]]</p>
-                            <p>[[${company.companyEmail}]]</p>
-                        </div>
-                    </th:block>
-                    <th:block th:if="${isEmpty == 'Empty'}">
-                        <span style="color: gray; margin-top: 10px">관심기업을 등록해보세요..</span>
-                    </th:block>
-                </div>
+        <div id="interest_container">
+            <h4>관심기업([[${uiList.size()}]])</h4>
+            <hr>
+            <div class="interest_grid">
+                <th:block th:if="${isEmpty == 'notEmpty'}">
+                    <div class="interest_grid_item" th:each="company, state : ${uiList}">
+                        <a href="#"><img class="companyImage" th:attr="data-company=${company.companyImageBase64}" src="#" alt="Company Image"></a>
+                        <p style="font-weight: 500; font-size: 16px;">[[${company.companyName}]]&nbsp;&nbsp;&nbsp;
+                            <i class="bi bi-suit-heart-fill likeIcon"
+                               style="color:#8B1FFF"
+                               th:id="'likeIcon' + ${state.count}"
+                               th:data-company-id="${company.companyId}">
+                            </i>
+                        </p>
+                        <p>[[${company.companyAddress}]] [[${company.companyAddressDetail}]]</p>
+                        <p>[[${company.companyEmail}]]</p>
+                    </div>
+                </th:block>
+                <th:block th:if="${isEmpty == 'Empty'}">
+                    <span style="color: gray; margin-top: 10px">관심기업을 등록해보세요..</span>
+                </th:block>
             </div>
         </div>
+    </div>
 
-    </main>
-    <div th:replace="~{layout/fragments/footer :: footer}"></div>
+</main>
+<div th:replace="~{layout/fragments/footer :: footer}"></div>
+<script src="/static/js/utils.js"></script>
 <script>
-    document.querySelectorAll('.likeIcon').forEach(function(icon){
-        icon.addEventListener('click', function(event){
+    $(function () {
+        const company = $('.companyImage');
+        company.each(function () {
+
+            $(this).attr('src', loadImage($(this).data('company'))); // src 속성 설정
+        });
+    })
+
+    document.querySelectorAll('.likeIcon').forEach(function (icon) {
+        icon.addEventListener('click', function (event) {
             let userConfirmed = confirm('선택된 관심기업을 삭제하시겠습니까?');
-            if(userConfirmed){
+            if (userConfirmed) {
                 let companyId = event.target.getAttribute('data-company-id');
-                location.href="/mypage/delete-interest-company?companyId="+companyId;
+                location.href = "/mypage/delete-interest-company?companyId=" + companyId;
             }
         })
     })
