@@ -158,7 +158,6 @@
     $(function () {
         const jobPost = $('.job-post-img');
         jobPost.each(function () {
-            console.log($(this).data('job-post-img'));
             $(this).attr('src', loadImage($(this).data('job-post-img'))); // src 속성 설정
         });
     })
