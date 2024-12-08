@@ -24,6 +24,10 @@ public class MyPageService {
         return myPageDao.MyPageResumeListById(userId);
     }
 
+    public List<ResumeResponseDto> FullResumeListById(String userId) {
+        return myPageDao.FullResumeListById(userId);
+    }
+
     public List<MyPageScrapDto> MyPageScrapListByIdTop3(String userId) {
         return myPageDao.MyPageScrapListByIdTop3(userId);
     }
