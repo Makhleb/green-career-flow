@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         hr {
             background-color: #8B1FFF;
@@ -303,11 +306,89 @@
         .job-post-list div {
             font-size: 17px;
         }
+
         /* 크 성장했다잉 */
         a[role='button'] {
             user-select: none;
             cursor: pointer;
         }
+
+        /* 모달 스타일 */
+        .modal {
+            display: none; /* 기본적으로 숨겨놓기 */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+            overflow: auto;
+        }
+
+        /* 모달 내용 스타일 */
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        /* 닫기 버튼 */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 별점 UI 스타일 */
+        .rating {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        /* 기본 별 색상 */
+        .star {
+            font-size: 40px; /* 별 크기 */
+            color: #d3d3d3; /* 기본 색은 회색 */
+            cursor: pointer;
+            transition: color 0.3s ease; /* 부드럽게 색 변화 */
+        }
+
+        /* 호버 시 색깔 변경 */
+        .star.hover, .star.selected {
+            color: #FFD700; /* 호버 및 클릭 후 별색을 금색으로 변경 */
+        }
+
+        /* 클릭한 별 이후의 상태 */
+        .star.selected {
+            color: #FFD700; /* 클릭 후 색상도 금색 */
+        }
+
+        /* 버튼 스타일 */
+        button {
+            padding: 10px;
+            background-color: #8B1FFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #9a3bff;
+        }
+
 
     </style>
 </head>
@@ -317,7 +398,8 @@
 <main>
     <div class="container">
         <div class="top-title">
-            <p id="companyName" th:text="${companyInfo.companyName}" th:data-company-name="${companyInfo.companyName}"></p>
+            <p id="companyName" th:text="${companyInfo.companyName}"
+               th:data-company-name="${companyInfo.companyName}"></p>
             <div class="info-form flex-row">
                 <div class="info">
                     <div class="label">주소</div>
@@ -334,7 +416,13 @@
                 </div>
                 <div class="info">
                     <div class="label">직원수</div>
-                    <div class="value" th:text="${companyInfo.companyEmployee} + '명'"></div>
+                    <div class="value" th:text="${#numbers.formatInteger(companyInfo.companyEmployee, 0, 'COMMA')} + '명'"></div>
+                </div>
+                <div class="info">
+                    <div class="label">별점</div>
+                    <div class="value" th:text="${companyInfo.rating == 0 ? '등록된 별점이 없습니다.' : companyInfo.rating + '점'}"></div>
+                    <a th:if="${session.userType != 'C'}" class="label" role="button" id="btn-star"
+                       th:data-user-rating="${userRating}" onclick="openScoreModal()">별점 주기</a>
                 </div>
                 <img th:data-company-img="${companyInfo.companyImageBase64}" id="companyImg">
             </div>
@@ -377,6 +465,26 @@
         </div>
 
     </div>
+    <!-- 별점 주기 모달 -->
+    <div id="scoreModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeScoreModal()">&times;</span>
+            <h2>별점 주기</h2>
+            <div class="star-rating">
+                <span class="star" data-value="1"><i onclick="selectStar(1)" onmouseover="hoverStar(1)"
+                                                     onmouseout="removeHover(1)" class="fas fa-star"></i></span>
+                <span class="star" data-value="2"><i onclick="selectStar(2)" onmouseover="hoverStar(2)"
+                                                     onmouseout="removeHover(2)" class="fas fa-star"></i></span>
+                <span class="star" data-value="3"><i onclick="selectStar(3)" onmouseover="hoverStar(3)"
+                                                     onmouseout="removeHover(3)" class="fas fa-star"></i></span>
+                <span class="star" data-value="4"><i onclick="selectStar(4)" onmouseover="hoverStar(4)"
+                                                     onmouseout="removeHover(4)" class="fas fa-star"></i></span>
+                <span class="star" data-value="5"><i onclick="selectStar(5)" onmouseover="hoverStar(5)"
+                                                     onmouseout="removeHover(5)" class="fas fa-star"></i></span>
+            </div>
+            <button onclick="submitRating(this)" th:data-company-id="${companyId}">별점 제출</button>
+        </div>
+    </div>
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
@@ -404,7 +512,6 @@
                 center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                 level: 3 // 지도의 확대 레벨
             };
-
 
 
         // 지도를 생성합니다
@@ -439,11 +546,95 @@
 
                 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                 map.setCenter(coords);
-
-                mapContainer.style.display = 'none'; // 숨겨놓을라고 추가함
             }
+            mapContainer.style.display = 'none'; // 숨겨놓을라고 추가함
         });
     })
+
+    // 모달 열기
+    function openScoreModal() {
+        const modal = document.getElementById('scoreModal');
+        modal.style.display = 'block';
+    }
+
+    // 모달 닫기
+    function closeScoreModal() {
+        const modal = document.getElementById('scoreModal');
+        modal.style.display = 'none';
+    }
+
+    // 클릭된 별 번호 (1~5)
+    let selectedStar = 0;
+
+    $(function () {
+        selectedStar = $('#btn-star').data('user-rating');
+        selectStar(selectedStar);
+    })
+
+    // 클릭 시 선택된 별 및 그 이전 별의 색을 변경
+    function selectStar(starNumber) {
+        selectedStar = starNumber;  // 선택된 별 번호 저장
+
+        // 모든 별을 초기화
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star, index) => {
+            if (index < starNumber) {
+                star.classList.add('selected');  // 선택된 별과 그 이전 별은 gold
+            } else {
+                star.classList.remove('selected');  // 나머지 별은 기본 색상
+            }
+        });
+    }
+
+    // 호버 시 색을 변경
+    function hoverStar(starNumber) {
+        // 마우스를 올린 별과 그 이전 별은 호버 색상 적용
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star, index) => {
+            if (index < starNumber) {
+                star.classList.add('hover');
+            } else {
+                star.classList.remove('hover');
+            }
+        });
+    }
+
+    // 호버를 뗐을 때 호버 색상 제거
+    function removeHover() {
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star) => {
+            star.classList.remove('hover');
+        });
+    }
+
+    // 별점 제출 (예시)
+    function submitRating(ele) {
+        if (selectedStar > 0) {
+            // alert(`별점 ${selectedStar}점을 주셨습니다.`);
+            closeScoreModal();
+            axios.post("/api/rating", null, {
+                params: {
+                    companyId: ele.getAttribute('data-company-id'),
+                    score: selectedStar
+                }
+            })
+                .then(res => {
+                    console.log(res);
+                    if (res.data == -1) {
+                        savePrevPageToSession("로그인 후 사용해주세요.");
+                    } else if (res.data == 1) {
+                        alert("별점이 등록되었습니다.");
+                        location.reload();
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        } else {
+            alert('별점을 선택해 주세요!');
+        }
+    }
+
 
 </script>
 </html>

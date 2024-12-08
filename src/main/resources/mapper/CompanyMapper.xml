@@ -63,8 +63,11 @@
         ]]>
     </select>
     <select id="getCompanyInfoById">
-        SELECT *
-        FROM tbl_company
-        WHERE company_id = #{companyId}
+        SELECT
+            company.*,
+            IFNULL(SUM(s.score)/COUNT(s.user_id), 0) AS rating
+        FROM tbl_company company
+        LEFT JOIN tbl_company_score s ON company.company_id = s.company_id
+        WHERE company.company_id = #{companyId}
     </select>
 </mapper>
