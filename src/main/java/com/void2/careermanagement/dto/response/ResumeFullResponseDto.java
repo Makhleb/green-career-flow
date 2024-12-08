@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResumeFullResponseDto {
+    private UserDto user;
     private ResumeResponseDto resume;
     private List<ActivityDto> activity;
     private EducationDto education;

@@ -197,4 +197,15 @@ public class MyPageController {
 
         return "/mypage/user-board";
     }
+
+    /**
+     * 이력서 조회
+     */
+    @GetMapping("/resume-list")
+    public String list(Model model, HttpSession session) {
+        String id = SessionUtil.getSessionUserId(session);
+        List<ResumeResponseDto> resumeList = myPageService.MyPageResumeListById(id);
+        model.addAttribute("resumeList", resumeList);
+        return "resume/resume-list";
+    }
 }

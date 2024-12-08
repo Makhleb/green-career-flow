@@ -9,8 +9,8 @@ import java.time.LocalDate;
 public class MilitaryDto {
 
   private int resumeNo;
-  private LocalDate enlistDate;
-  private LocalDate releaseDate;
+  private String enlistDate;
+  private String releaseDate;
   private String militaryCode;
 }
 

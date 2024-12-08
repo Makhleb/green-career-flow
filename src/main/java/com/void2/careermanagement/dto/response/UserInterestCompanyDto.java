@@ -9,9 +9,10 @@ import lombok.Data;
 @Data
 public class UserInterestCompanyDto {
     private String companyId;
-    private String companyImage;
+    private byte[] companyImage;
     private String companyName;
     private String companyAddress;
     private String companyAddressDetail;
     private String companyEmail;
+    private String companyImageBase64;
 }

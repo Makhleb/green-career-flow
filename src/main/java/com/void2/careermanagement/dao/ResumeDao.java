@@ -13,6 +13,7 @@ public interface ResumeDao {
     ResumeResponseDto getResumeByResumeId(int resumeNo);
     int insertResume(@Param("R")ResumeRequestDto resumeRequestDto);
     int maxResumeNo();
+    int findByOffer(String userId);
     int updateResume(ResumeRequestDto resumeRequestDto);
     int deleteResume(ResumeRequestDto resumeRequestDto);
 }
