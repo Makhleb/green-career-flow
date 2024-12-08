@@ -251,7 +251,7 @@
                             <i onclick="likeUser(this)" th:data-user-id="${like.userId}" class="bi bi-suit-heart-fill like-btn"></i>
                         </div>
                         <div class="like-content">
-                            <div class="content_title">
+                            <div class="content_title" th:onclick="'gotoDetail('+ ${like.resumeNo} +')'" style="cursor: pointer;">
                                 <strong th:text="${like.userName + '(' + like.userId + ')'}">관심 구직자 이름(아이디)</strong>
                                 <p class="age" th:text="${'|&nbsp;' + like.userAge + '세&nbsp;'}">|&nbsp;99세&nbsp;</p>
                                 <p class="job-history" th:text="${'|&nbsp;경력 ' +  like.jobHistory + '년'}">|&nbsp;경력
@@ -277,6 +277,10 @@
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 <script>
+    function gotoDetail(resumeNo) {
+        location.href = '/resume/detail/' + resumeNo;
+    }
+
     function likeUser(ele) {
         if (confirm("삭제하시겠습니까?")) {
             axios.post("/api/like/" + ele.getAttribute('data-user-id'))

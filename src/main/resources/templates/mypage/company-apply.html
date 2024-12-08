@@ -212,7 +212,7 @@
             <div class="box">
                 <div th:each="apply : ${applyList}" class="items">
                     <div class="item_content">
-                        <div class="content_title">
+                        <div class="content_title" th:onclick="'gotoDetail('+ ${apply.resumeNo} +')'" style="cursor: pointer;">
                             <strong th:text="${apply.userName + '(' + apply.userId + ')'}"></strong>
                             <p>&nbsp;|&nbsp;</p>
                             <p th:text="${apply.userAge} + '세'"></p>
@@ -255,6 +255,10 @@
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 <script>
+    function gotoDetail(resumeNo) {
+        location.href = '/resume/detail/' + resumeNo;
+    }
+
     $(function () {
         let previousValue = null;
         $('.pass-yn').on('focus', function () {

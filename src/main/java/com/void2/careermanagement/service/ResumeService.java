@@ -2,6 +2,7 @@ package com.void2.careermanagement.service;
 
 import com.void2.careermanagement.dao.*;
 import com.void2.careermanagement.dto.ActivityDto;
+import com.void2.careermanagement.dto.UserDto;
 import com.void2.careermanagement.dto.request.ResumeFullRequestDto;
 import com.void2.careermanagement.dto.response.ResumeFullResponseDto;
 import com.void2.careermanagement.dto.response.ResumeResponseDto;
@@ -25,8 +26,9 @@ public class ResumeService {
     private final LicenseDao licenseDao;
     private final PotfolioDao potfolioDao;
     private final ResumeSkillDao resumeSkillDao;
+    private final UserAccountDao userAccountDao;
 
-    public ResumeService(ResumeDao resumeDao, ActivityDao activityDao, EducationDao educationDao, IntroduceDao introduceDao, MilitaryDao militaryDao, LicenseDao licenseDao, PotfolioDao potfolioDao, ResumeSkillDao resumeSkillDao) {
+    public ResumeService(ResumeDao resumeDao, ActivityDao activityDao, EducationDao educationDao, IntroduceDao introduceDao, MilitaryDao militaryDao, LicenseDao licenseDao, PotfolioDao potfolioDao, ResumeSkillDao resumeSkillDao, UserAccountDao userAccountDao) {
         this.resumeDao = resumeDao;
         this.activityDao = activityDao;
         this.educationDao = educationDao;
@@ -35,6 +37,7 @@ public class ResumeService {
         this.licenseDao = licenseDao;
         this.potfolioDao = potfolioDao;
         this.resumeSkillDao = resumeSkillDao;
+        this.userAccountDao = userAccountDao;
     }
 
     /**
@@ -75,7 +78,10 @@ public class ResumeService {
     }
 
     public ResumeFullResponseDto getTotalResume(int resumeNo) {
+        String userId = resumeDao.getResumeByResumeId(resumeNo).getUserId();
+        UserDto userInfo =  userAccountDao.sessionSelect(userId);
         return new ResumeFullResponseDto(
+                userInfo,
                 resumeDao.getResumeByResumeId(resumeNo),
                 activityDao.getActivity(resumeNo),
                 educationDao.getEducation(resumeNo),

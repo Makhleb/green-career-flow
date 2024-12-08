@@ -9,29 +9,34 @@
 <link rel="stylesheet" href="/static/css/resume-detail.css">
 <link rel="stylesheet" href="/static/css/common.css">
 <main>
-    <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
+    <th:block th:if="${session.userType == 'U'}">
+        <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
+    </th:block>
+    <th:block th:if="${session.userType == 'C'}">
+        <div th:replace="~{layout/fragments/aside :: asideCompany}"></div>
+    </th:block>
     <div id="main_content">
     <div class="vertical-center">
         <div class="grid-row" style="gap: 6rem">
             <div class="profile">
                 <div class="title flex-center">
-                    <span th:text="${session.user.userName}">이름</span>
+                    <span th:text="${totalResume.user.userName}">이름</span>
                     <span> 님</span>
                     <span th:if="${totalResume.resume.jobHistory == 0}" class="half-circle">신입</span>
                     <span th:unless="${totalResume.resume.jobHistory == 0}"
                           th:text="${totalResume.resume.jobHistory} + '년차'" class="half-circle"></span>
                 </div>
                 <div class="sub-comment">
-                    <span th:if="${session.user.userGender} == 'F'">여성</span>
-                    <span th:unless="${session.user.userGender} == 'F'">남성</span>
+                    <span th:if="${totalResume.user.userGender} == 'F'">여성</span>
+                    <span th:unless="${totalResume.user.userGender} == 'F'">남성</span>
                     <span>,</span>
-                    <span th:text="${session.user.userBirth}">생년월일 </span>
+                    <span th:text="${totalResume.user.userBirth}">생년월일 </span>
                     <span id="userAge">나이</span>
                 </div>
                 <div class="flex-row moreMargin">
                     <div>
                         <div class="oneMargin"><span class="sub-comment">이메일</span> <span
-                                th:text="${session.user.userEmail}">이메일내용</span></div>
+                                th:text="${totalResume.user.userEmail}">이메일내용</span></div>
                         <div class="oneMargin"><span class="sub-comment">우편번호</span> <span
                                 th:text="${totalResume.resume.zonecode}">주소내용</span></div>
                         <div class="oneMargin"><span class="sub-comment">희망근무지역</span> <span
@@ -41,7 +46,7 @@
                     </div>
                     <div>
                         <div class="oneMargin"><span class="sub-comment">휴대폰</span> <span
-                                th:text="${session.user.userPhone}">내용</span></div>
+                                th:text="${totalResume.user.userPhone}">내용</span></div>
                         <div class="oneMargin"><span class="sub-comment">희망직무</span> <span
                                 th:text="${totalResume.resume.workCode}">내용</span></div>
                         <div class="oneMargin"><span class="sub-comment">희망근무시간</span> <span
@@ -152,7 +157,10 @@
             <hr class="small-hr">
             <div class="column-title">파일</div>
             <th:block th:each="portfolio : ${totalResume.potfolio}">
-                <div th:text="${portfolio.potfolioFilename}"></div>
+                [[${portfolio.potfolioFilename}]]<br>
+<!--                <a th:href="@{'/static/portfolio/' + ${totalResume.user.userId} + '/' + ${totalResume.resume.resumeNo}}" th:download="${portfolio.potfolioFilename}">-->
+<!--                    [[${portfolio.potfolioFilename}]]-->
+<!--                </a><br>-->
             </th:block>
 
         </section>

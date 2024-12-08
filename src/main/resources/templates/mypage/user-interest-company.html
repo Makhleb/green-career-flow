@@ -79,10 +79,10 @@
             <div class="interest_grid">
                 <th:block th:if="${isEmpty == 'notEmpty'}">
                     <div class="interest_grid_item" th:each="company, state : ${uiList}">
-                        <a href="#"><img class="companyImage" th:attr="data-company=${company.companyImageBase64}" src="#" alt="Company Image"></a>
+                        <a th:href="'/company/detail/'+ ${company.getCompanyId()}"><img class="companyImage" th:attr="data-company=${company.companyImageBase64}" src="#" alt="Company Image"></a>
                         <p style="font-weight: 500; font-size: 16px;">[[${company.companyName}]]&nbsp;&nbsp;&nbsp;
                             <i class="bi bi-suit-heart-fill likeIcon"
-                               style="color:#8B1FFF"
+                               style="color:#8B1FFF; cursor: pointer"
                                th:id="'likeIcon' + ${state.count}"
                                th:data-company-id="${company.companyId}">
                             </i>
