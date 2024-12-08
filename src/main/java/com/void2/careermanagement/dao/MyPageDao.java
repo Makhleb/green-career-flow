@@ -16,6 +16,7 @@ import java.util.List;
 public interface MyPageDao {
 
     public List<ResumeResponseDto> MyPageResumeListById(String userId);
+    public List<ResumeResponseDto> FullResumeListById(String userId);
     public List<MyPageScrapDto> MyPageScrapListByIdTop3(String userId);
 
     public List<ProposalResponseDto> MyPageProposalListByCompanyIdTop3(String CompanyId);
