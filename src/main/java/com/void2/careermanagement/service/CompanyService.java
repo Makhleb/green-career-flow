@@ -59,11 +59,11 @@ public class CompanyService {
     }
 
     public List<CompanyResponseDto> setImageEncodeBase64(List<CompanyResponseDto> companyList) {
-        companyList.forEach(company -> {
-            if (company.getCompanyImageBase64() != null) {
-                company.setCompanyImageBase64(ImageUtil.encodeToBase64(company.getCompanyImage()));
-            }
-        });
+
+        for(CompanyResponseDto company : companyList) {
+            company.setCompanyImageBase64(ImageUtil.encodeToBase64(company.getCompanyImage()));
+        }
+
         return companyList;
     }
 }

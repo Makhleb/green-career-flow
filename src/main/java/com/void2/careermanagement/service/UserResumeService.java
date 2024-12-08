@@ -46,9 +46,9 @@ public class UserResumeService {
     }
 
     public List<ApplicantResponseDto> setImageEncodeBase64(List<ApplicantResponseDto> highLikeList) {
-        highLikeList.forEach(dto -> {
+        for(ApplicantResponseDto dto : highLikeList) {
             dto.setCompanyImageBase64(ImageUtil.encodeToBase64(dto.getCompanyImage()));
-        });
+        }
         return highLikeList;
     }
 }
