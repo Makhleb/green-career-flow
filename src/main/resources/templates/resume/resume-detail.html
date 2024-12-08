@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="/static/css/resume-detail.css">
 <link rel="stylesheet" href="/static/css/common.css">
 <main>
+    <div th:replace="~{layout/fragments/aside :: asideUser}"></div>
+    <div id="main_content">
     <div class="vertical-center">
         <div class="grid-row" style="gap: 6rem">
             <div class="profile">
@@ -154,6 +156,7 @@
             </th:block>
 
         </section>
+    </div>
     </div>
 </main>
 <div th:replace="~{layout/fragments/footer ::  footer}"></div>

@@ -6,6 +6,29 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+#title {
+    display: flex;
+    margin: 20px 20px 20px 0;
+    align-items: center;
+    gap: 10px;
+}
+
+#regist_btn {
+    width: 80px;
+    height: 30px;
+    line-height: 15px;
+    font-size: 15px;
+    background-color: #B067FF; /* 보라색 배경 */
+    color: white;
+    border: none;
+    padding: 5px 10px; /* 버튼 내부 여백 */
+    border-radius: 20px; /* 둥근 모서리 */
+}
+
+#main_content{
+    width: 60%;
+}
+
 hr{
     background-color: #8B1FFF;
     height: 1px;
@@ -75,11 +98,6 @@ div, span{
 
 main{
     display: flex;
-}
-
-.vertical-center{
-    width: 60%;
-    margin: 0 auto;
 }
 
 .column-title{
