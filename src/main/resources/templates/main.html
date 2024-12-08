@@ -76,7 +76,6 @@
                         <th:block th:if="${isEmpty == 'notEmpty'}">
                             <div class="grid_posting_item" th:each="company : ${lList}">
                                 <a th:href="@{/job-post/detail/{jobPostNo}(jobPostNo=${company.jobPostNo})}">
-                                    <span th:text="${company.companyImageBase64}"></span>
                                     <img class="job-post-img" th:data-job-post-img="${company.companyImageBase64}">
                                 </a>
                                 <div class="grid_posting_item_enddate"> [[${company.endDate}]]</div>

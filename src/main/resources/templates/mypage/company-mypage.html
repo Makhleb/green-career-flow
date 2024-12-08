@@ -311,7 +311,7 @@
                             </th:block>
                         </div>
                         <div class="item_content">
-                            <div class="content_title"><strong th:text="${dto.title}">제안서 제목</strong></div>
+                            <div class="content_title"><strong th:text="${dto.title}" th:onclick="'gotoProposal('+${dto.proposalNo}+')'" style="cursor:pointer;">제안서 제목</strong></div>
                             <div class="content">
                                 <p th:text="${dto.userName}">구직자 이름</p>
                                 <p th:text="${#temporals.format(dto.date, 'yyyy/MM/dd')}">YYYY/MM/DD</p>
@@ -361,6 +361,10 @@
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
 <script>
+    function gotoProposal(proposalNo) {
+        location.href = "/mypage/proposal_detail/" + proposalNo;
+    }
+
     function gotoDetail(resumeNo) {
         location.href = '/resume/detail/' + resumeNo;
     }

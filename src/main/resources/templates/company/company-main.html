@@ -22,7 +22,8 @@
                 <div class="grid-like-container_left">
                     <div class="grid-like-item" th:each="user, userStat : ${uList}"
                          th:if="${userStat.index >=0 && userStat.index < 4}">
-                        <div class="flex-container" th:onclick="'gotoDetail('+ ${user.resumeNo} +')'" style="cursor: pointer;">
+                        <div class="flex-container" th:onclick="'gotoDetail('+ ${user.resumeNo} +')'"
+                             style="cursor: pointer;">
                             <th:block th:if="${userStat.index == 0}">
                                 <div class="grid-like-item-rank">Top [[${userStat.count}]]</div>
                             </th:block>
@@ -48,7 +49,8 @@
                 <div class="grid-like-container_right">
                     <div class="grid-like-item" th:each="user, userStat : ${uList}"
                          th:if="${userStat.index >= 4 && userStat.index < 8}">
-                        <div class="flex-container" th:onclick="'gotoDetail('+ ${user.resumeNo} +')'" style="cursor: pointer;">
+                        <div class="flex-container" th:onclick="'gotoDetail('+ ${user.resumeNo} +')'"
+                             style="cursor: pointer;">
                             <div class="grid-like-item-rank3">Top [[${userStat.count}]]</div>
                             [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span
                                 class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
@@ -78,12 +80,15 @@
             <div class="grid-item">
                 <th:block th:each="applicant : ${aListTop3}">
                     <div class="grid-resume">
-                        <p>[[${applicant.jobPostTitle}]]</p>
+                        <p th:onclick="'gotoJobPost(' + ${applicant.jobPostNo} + ')'" style="cursor:pointer;">
+                            [[${applicant.jobPostTitle}]]</p>
+                        <span th:onclick="'gotoDetail(' + ${applicant.resumeNo} + ')'" style="cursor: pointer;">
                         [[${applicant.userName}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${applicant.resumeTitle}]]<br/>
                         [[${applicant.userGender}]] <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                         [[${applicant.userAge}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                         <span th:if="${applicant.jobHistory > 0}"> 경력 [[${applicant.jobHistory}]]년 이상</span>
                         <span th:if="${applicant.jobHistory == 0}"> 신입</span>
+                        </span>
                         <span class="right">
                           <span class="skill_codes">기술스택</span>
                           <th:block th:each="skill : ${applicant.skillList}">
@@ -125,6 +130,10 @@
 </body>
 <script src="/static/js/utils.js"></script>
 <script>
+    function gotoJobPost(jobPostNo) {
+        location.href = '/job-post/detail/' + jobPostNo;
+    }
+
     function gotoDetail(resumeNo) {
         location.href = '/resume/detail/' + resumeNo;
     }
