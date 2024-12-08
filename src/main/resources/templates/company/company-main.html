@@ -22,7 +22,7 @@
                 <div class="grid-like-container_left">
                     <div class="grid-like-item" th:each="user, userStat : ${uList}"
                          th:if="${userStat.index >=0 && userStat.index < 4}">
-                        <div class="flex-container">
+                        <div class="flex-container" th:onclick="'gotoDetail('+ ${user.resumeNo} +')'" style="cursor: pointer;">
                             <th:block th:if="${userStat.index == 0}">
                                 <div class="grid-like-item-rank">Top [[${userStat.count}]]</div>
                             </th:block>
@@ -125,6 +125,9 @@
 </body>
 <script src="/static/js/utils.js"></script>
 <script>
+    function gotoDetail(resumeNo) {
+        location.href = '/resume/detail/' + resumeNo;
+    }
 
     $(function () {
         const jobPost = $('.job-post-img');
