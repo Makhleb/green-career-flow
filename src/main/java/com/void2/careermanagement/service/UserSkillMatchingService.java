@@ -20,6 +20,10 @@ public class UserSkillMatchingService {
 
     public List<UserSkillMatchingResponseDto> getRecentJobPostList(){
         List<UserSkillMatchingResponseDto> list = userSkillMatchingDao.getRecentJobPostList();
+
+        for(UserSkillMatchingResponseDto val : list){
+            val.setCompanyImageBase64(ImageUtil.encodeToBase64(val.getCompanyImage()));
+        }
         return list;
     }
 
