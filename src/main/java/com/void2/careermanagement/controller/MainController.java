@@ -84,6 +84,7 @@ public class MainController {
     //평점 높은 회사 리스트
     void getHighRatingCompanyList(Model model) {
         List<CompanyResponseDto> cList = companyService.getHighRatingCompanyList();
+        System.out.println(cList);
         //for(CompanyResponseDto c : cList) System.out.println(c);
         model.addAttribute("cList", cList);
     }

@@ -427,7 +427,7 @@
                         <div class="left-form flex-row">
                             <div class="label">연봉</div>
                             <div class="value"
-                                 th:text="${#strings.isEmpty(jobPostInfo.jobSalary) || jobPostInfo.jobSalary == 0 ? '회사 내규에 따름' : #numbers.formatInteger(jobPostInfo.jobSalary,3,'COMMA') + '원'}"></div>
+                                 th:text="${#strings.isEmpty(jobPostInfo.jobSalary) || jobPostInfo.jobSalary == 0 ? '회사 내규에 따름' : #numbers.formatInteger(jobPostInfo.jobSalary,3,'COMMA') + '만원'}"></div>
                         </div>
                         <div class="left-form flex-row">
                             <div class="label">직급/직책</div>

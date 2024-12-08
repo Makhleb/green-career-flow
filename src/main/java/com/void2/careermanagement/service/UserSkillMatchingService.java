@@ -26,15 +26,9 @@ public class UserSkillMatchingService {
     public List<UserSkillMatchingResponseDto> getSkillTypePostList(String skillCode){
         List<UserSkillMatchingResponseDto> list = userSkillMatchingDao.getSkillTypePostList(skillCode);
 
-        list.forEach(val -> {
+        for(UserSkillMatchingResponseDto val : list){
             val.setCompanyImageBase64(ImageUtil.encodeToBase64(val.getCompanyImage()));
-        });
-//        for (int i = 0; i < list.size(); i++) {
-//            list.get(i).setSkillList(userSkillMatchingDao.getSkillListByJobPostNo(list.get(i).getJobPostNo()));
-//        }
-//        for(UserSkillMatchingResponseDto dto : list){
-//            System.out.println(dto);
-//        }
+        }
         return list;
     }
 }
