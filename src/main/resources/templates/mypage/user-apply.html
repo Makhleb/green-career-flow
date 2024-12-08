@@ -64,7 +64,7 @@
             flex-direction: column;
             justify-content: space-between;
             font-size: 13px;
-            color: gray;
+            /*color: gray;*/
             /*align-items: center;*/
             /*align-content: center;*/
 
@@ -158,7 +158,11 @@
 
         a:link,
         a:visited {
-            color: inherit; /* 기본 텍스트 색상과 동일하게 설정 */
+            /*color: inherit; !* 기본 텍스트 색상과 동일하게 설정 *!*/
+        }
+        aside a {
+            color: gray;
+            text-decoration: none;
         }
 
     </style>
@@ -215,4 +219,5 @@
 </main>
 <div th:replace="~{layout/fragments/footer :: footer}"></div>
 </body>
+<script src="/static/js/utils.js"></script>
 </html>

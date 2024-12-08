@@ -1,20 +1,23 @@
+
+$(function () {
+    const path = window.location.pathname;
+
+    // 마이페이지 일 때만 돌게 설정했음
+    if (path.includes('mypage')) {
+        console.log(path);
+        const checkA = $(`a[href="${path}"]`);
+
+        console.log(checkA);
+        checkA.css('color', '#8B1FFF');
+    }
+})
+
 /**
  * 이미지 타입 분석 함수
  * 이미지 출력시 src="return값" + base64String으로 사용
  * @param base64String
  * @returns {string}
  */
-$(function () {
-    const path = window.location.pathname;
-
-    path.concat('mypage');
-
-    const checkA = $('a').attr('href').concat(path);
-    console.log(checkA);
-    checkA.css('color', 'red');
-
-})
-
 function loadImage(base64String) {
 
     // console.log(base64String);
