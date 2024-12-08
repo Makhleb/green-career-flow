@@ -12,6 +12,10 @@
     align-items: center;
     gap: 10px;
 }
+#fileDownload:hover{
+    color: #8B1FFF;
+    transition: all 0.3s ease;
+}
 
 #regist_btn {
     width: 80px;
