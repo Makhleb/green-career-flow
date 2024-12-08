@@ -61,10 +61,12 @@
             });
 
             skillMatchingItem.innerHTML = `
-
-                    ${skillMatchingUser.userName} <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span> ${skillMatchingUser.title} <br/>
-                    ${skillMatchingUser.userGender} <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span> ${skillMatchingUser.userAge} <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                    ${skillMatchingUser.jobHistory > 0 ? `경력 ${skillMatchingUser.jobHistory}년 이상` : '신입'}<br/>
+                    <div style="display: inline;cursor: pointer;" onclick="location.href = '/resume/detail/${skillMatchingUser.resumeNo}">
+                        ${skillMatchingUser.userName} <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span> ${skillMatchingUser.title} <br/>
+                        ${skillMatchingUser.userGender} <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span> ${skillMatchingUser.userAge} <span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                        ${skillMatchingUser.jobHistory > 0 ? `경력 ${skillMatchingUser.jobHistory}년 이상` : '신입'}
+                    </div>
+                    <br/>
                     <span class="skill_codes">기술스택:</span> ${skillHtml}
 
 

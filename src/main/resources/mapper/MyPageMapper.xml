@@ -14,7 +14,16 @@
         ORDER BY resume_no DESC
         LIMIT 3;
     </select>
-<!--    todo 위 코드 동일하게 limit만 지워서 사용합시다.-->
+    <select id="FullResumeListById" resultType="com.void2.careermanagement.dto.response.ResumeResponseDto">
+        SELECT resume_no
+        , title
+        , user_id
+        , create_date
+        , modify_date
+        FROM tbl_resume
+        WHERE user_id = #{userId}
+        ORDER BY resume_no DESC;
+    </select>
     <select id="MyPageScrapListByIdTop3" resultType="com.void2.careermanagement.dto.response.MyPageScrapDto">
         SELECT j.user_id, j.job_post_no, jp.title, jp.end_date
         , c.company_id, c.company_name, j.scrap_date

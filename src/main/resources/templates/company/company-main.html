@@ -48,7 +48,7 @@
                 <div class="grid-like-container_right">
                     <div class="grid-like-item" th:each="user, userStat : ${uList}"
                          th:if="${userStat.index >= 4 && userStat.index < 8}">
-                        <div class="flex-container">
+                        <div class="flex-container" th:onclick="'gotoDetail('+ ${user.resumeNo} +')'" style="cursor: pointer;">
                             <div class="grid-like-item-rank3">Top [[${userStat.count}]]</div>
                             [[${user.userName}]]<span class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>[[${user.userAge}]]세<span
                                 class="side_line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>

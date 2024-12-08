@@ -204,7 +204,7 @@ public class MyPageController {
     @GetMapping("/resume-list")
     public String list(Model model, HttpSession session) {
         String id = SessionUtil.getSessionUserId(session);
-        List<ResumeResponseDto> resumeList = myPageService.MyPageResumeListById(id);
+        List<ResumeResponseDto> resumeList = myPageService.FullResumeListById(id);
         model.addAttribute("resumeList", resumeList);
         return "resume/resume-list";
     }
