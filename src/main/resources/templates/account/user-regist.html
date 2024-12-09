@@ -23,7 +23,7 @@
         <div class="input-contents view-div" id="user-container">
             <div class="input-explain"><span class="red-point">* </span>아이디</div>
             <div class="id-container">
-                <input type="text" id="userId" data-name="아이디" placeholder="아이디를 입력하세요" maxlength="20">
+                <input onchange="duplicateId = true;" type="text" id="userId" data-name="아이디" placeholder="아이디를 입력하세요" maxlength="20">
                 <button class="sub-btn" onclick="duplicateCheck()">중복 확인</button>
             </div>
             <div class="input-explain"><span class="red-point">* </span>패스워드</div>
