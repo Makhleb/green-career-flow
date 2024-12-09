@@ -45,10 +45,8 @@ public class MainController {
 
 
                 if (!lList.isEmpty()) {
-                    for (CompanyResponseDto l : lList) System.out.println(l);
                     isEmpty = "notEmpty";
                     model.addAttribute("lList", lList);
-
                 }
                 model.addAttribute("isEmpty", isEmpty);
                 getHighRatingCompanyList(model);
@@ -69,7 +67,7 @@ public class MainController {
                 //최근 입사지원내역 리스트
                 List<UserResponseDto> aListTop3 = userResumeService.getUserResumeListByApplyIdTop3(sessionUser.getCompanyId());
                 if (!aListTop3.isEmpty()) {
-                    for (UserResponseDto a : aListTop3) System.out.println(a);
+
                     isEmpty = "notEmpty";
                     model.addAttribute("aListTop3", aListTop3);
 
@@ -84,7 +82,7 @@ public class MainController {
     //평점 높은 회사 리스트
     void getHighRatingCompanyList(Model model) {
         List<CompanyResponseDto> cList = companyService.getHighRatingCompanyList();
-        System.out.println(cList);
+
         //for(CompanyResponseDto c : cList) System.out.println(c);
         model.addAttribute("cList", cList);
     }

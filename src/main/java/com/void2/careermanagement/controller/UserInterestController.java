@@ -32,8 +32,9 @@ public class UserInterestController {
     @GetMapping("/user-interest-company")
     public String userInterestCompany(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
+
         String isEmpty = "Empty";
-        System.out.println("user-interest-company...");
+
         UserDto sessionUser = (UserDto)session.getAttribute("user");
         List<UserInterestCompanyDto> uiList = userInterestCompanyService.getUserInterestCompanyList(sessionUser.getUserId());
         if(!uiList.isEmpty()) {
@@ -49,7 +50,6 @@ public class UserInterestController {
     public String deleteInterestCompany(@RequestParam("companyId") String companyId,
                                         Model model, HttpSession session) {
         UserDto sessionUser = (UserDto)session.getAttribute("user");
-        System.out.println(companyId);
 
         userInterestCompanyService.removeUserInterestCompany(companyId, sessionUser.getUserId());
         return "redirect:/mypage/user-interest-company";

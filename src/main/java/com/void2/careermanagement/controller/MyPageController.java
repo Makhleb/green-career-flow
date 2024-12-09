@@ -130,12 +130,13 @@ public class MyPageController {
     @GetMapping("/apply/{jobPostNo}")
     public String apply(@PathVariable int jobPostNo, HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
+
         String userType = session.getAttribute("userType").toString();
         String returnPage = "";
 
         if (userType.equals("C")) {
             List<ApplyResponseDto> applyList = applyService.getApplyListByJobPostNo(jobPostNo);
-            System.out.println(applyList);
+
             model.addAttribute("applyList", applyList);
             returnPage = "/mypage/company-apply";
         }
@@ -158,7 +159,7 @@ public class MyPageController {
         } else if (userType.equals("C")) {
 
             List<JobPostResponseDto> jobPostList = jobPostService.getJobPostListByCompanyId(id);
-            System.out.println(jobPostList);
+
             model.addAttribute("jobPostList", jobPostList);
             returnPage = "/mypage/company-job-post";
 

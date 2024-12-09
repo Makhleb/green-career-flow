@@ -21,7 +21,7 @@ public class UserSkillMatchingApiController {
 
     @GetMapping("/select")
     public List<UserSkillMatchingResponseDto> getSkillType(@RequestParam("skillCode") String skillCode) {
-        System.out.println(skillCode);
+
         List<UserSkillMatchingResponseDto> list = userSkillMatchingService.getSkillTypePostList(skillCode);
         return list;
     }

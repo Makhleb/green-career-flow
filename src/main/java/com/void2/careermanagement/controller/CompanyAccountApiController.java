@@ -20,7 +20,7 @@ public class CompanyAccountApiController {
 
     @PostMapping("/login")
     public String userLogin(@RequestBody CompanyDto companyDto, HttpSession session) {
-        System.out.println(companyDto);
+
         CompanyDto sessionCompany = companyAccountDao.loginCompanySelect(companyDto);
         if (sessionCompany != null) {
             session.setAttribute("user", sessionCompany);

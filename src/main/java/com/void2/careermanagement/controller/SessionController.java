@@ -18,7 +18,7 @@ public class SessionController {
     @PostMapping("/savePrevPage")
     public String savePrevPage(@RequestBody Map<String, String> data, HttpSession session) {
         String prevPage = data.get("prevPage");
-        System.out.println(prevPage);
+
         if (prevPage != null && !prevPage.isEmpty()) {
             session.setAttribute("prevPage", prevPage); // 세션에 저장
         }

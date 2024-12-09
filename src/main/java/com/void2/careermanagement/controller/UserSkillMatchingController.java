@@ -28,8 +28,9 @@ public class UserSkillMatchingController {
     @RequestMapping("/user-skill-matching")
     public String skillMatching(Model model) {
         List<UserSkillMatchingResponseDto> ulist = userSkillMatchingService.getSkillTypePostList("");
+
         model.addAttribute("ulist", ulist);
-        System.out.println(ulist);
+
         model.addAttribute("skillGubnList", gubnService.getGubnList(GroupCode.SKILL.name()));
         model.addAttribute("workTypeList", gubnService.getGubnList(GroupCode.WORK_TYPE.name()));
         return "/skillMatching/user-skill-matching";

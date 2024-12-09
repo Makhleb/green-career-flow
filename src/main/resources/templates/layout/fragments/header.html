@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<header th:fragment="header">
+<header th:style="${session.user != null and session.userType == 'C' ? 'background-color: #8B1FFF;' : 'background-color: inherit;'}"
+        th:fragment="header">
     <!-- 외부 스타일 및 스크립트 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

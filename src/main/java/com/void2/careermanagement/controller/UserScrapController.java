@@ -33,12 +33,13 @@ public class UserScrapController {
     @GetMapping("/user-scrap-company")
     public String userScrapCompany(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if(SessionUtil.sessionUserCheckRedirectLogin(session, request, response)) return null;
+
         String isEmpty = "Empty";
         UserDto sessionUser = (UserDto) session.getAttribute("user");
         //나의 스크랩 보기
         List<MyPageScrapDto> scrapList = myPageService.MyPageScrapListById(sessionUser.getUserId());
+
         if(!scrapList.isEmpty()) {
-            for(MyPageScrapDto s:scrapList)  System.out.println(s);
 
             isEmpty = "notEmpty";
         }

@@ -35,7 +35,6 @@ public class JobPostService {
             jobPostDao.insertJobPost(jopPostRequestDto);
             int maxNo = jobPostDao.maxJopPostNo();
 
-            System.out.println(jopPostRequestDto);
             List<String> benefits = jopPostRequestDto.getBenefitList(); //복리후생
             List<String> skillList = jopPostRequestDto.getSkillList(); // 스킬리스트
             if (!benefits.isEmpty()) jobPostDao.insertJobPostBenefit(maxNo, benefits);
@@ -89,9 +88,7 @@ public class JobPostService {
 
         jobPostResponseDto.setBenefitList(jobPostDao.selectBenefitList(jobPostNo));
         jobPostResponseDto.setSkillList(jobPostDao.selectSkillList(jobPostNo));
-        System.out.println(jobPostResponseDto);
-        System.out.println(jobPostResponseDto.getBenefitList());
-        System.out.println(jobPostResponseDto.getSkillList());
+
         return jobPostResponseDto;
 
     }

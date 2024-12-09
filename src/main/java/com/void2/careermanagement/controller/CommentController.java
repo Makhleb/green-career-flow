@@ -19,7 +19,6 @@ public class CommentController {
 
     @PostMapping("/commentregist")
     public void registcomment(@RequestBody CommentDto commentDto, Model model) {
-        System.out.println(commentDto);
         commentService.registComment(commentDto);
     }
 
